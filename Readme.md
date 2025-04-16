@@ -1,0 +1,1 @@
+Template: Abschlussarbeiten des Studiengangs Angewandte Informatik an der HTW Berlin C. Schmidt, angepasst von Gefei Zhang & Justin Gebert
