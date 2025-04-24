@@ -1,3 +1,91 @@
-\section{Automated Repair in CI/CD }
-\section{LLM-Driven Agents and Sandbox Execution}
-\section{Safety and Isolation Mechanisms}
+\section{Functional Requirements}
+
+\begin{table}[ht]
+    \centering
+    \small
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{5cm} p{4cm} @{}}
+        \toprule
+        \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
+        \midrule
+        F0 & Issue Gathering
+        & Query GitHub for all open issues labeled \texttt{BUG} in the repository.
+        & \texttt{runAgent} logs list of fetched issue numbers and URLs. \\[4pt]
+        F1 & Fetch Code
+        & Fetch each QuixBugs problem into a fresh workspace (via \texttt{git clone} or local copy).
+        & After F1, workspace/issue/ contains the correct source files. \\[4pt]
+        F2 & Apply Patch
+        & Apply an LLM-generated diff patch to the workspace files.
+        & After patch, \texttt{git diff} output matches the patch payload. \\[4pt]
+        F3 & Build \& Test
+        & Run the project's test suite inside a Docker container and capture pass/fail status.
+        & Docker exit code = 0 for pass and a JSON report file exists. \\[4pt]
+        F4 & Report Results
+        & Open a PR or post a comment on GitHub with the diff and summary metrics.
+        & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
+        F5 & Modular Stages
+        & Implement stages IssueGather, Fetch, Patch, Test, Report as separate modules.
+        & Each stage can be toggled on or off via configuration without breaking the pipeline. \\[4pt]
+        F6 & Metrics Collection
+        & Log fix-rate, CI-cycle time, and sandbox events in CSV or JSON format.
+        & A metrics file contains fields: issue, pass/fail, time, incidents. \\[4pt]
+        F7 & Per-Issue Trigger
+        & Execute F1--F4 for each fetched issue in sequence and aggregate results.
+        & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\[4pt]
+        F8 & GitHub Integration
+        & Use the GitHub API (with \texttt{GITHUB\_TOKEN}) to list issues, create branches, open PRs, and post comments.
+        & All GitHub API calls succeed without manual intervention. \\
+        \bottomrule
+    \end{tabular*}
+    \caption{Functional requirements (F0--F8)}
+\end{table}
+
+\section{Non-Functional and Safety Requirements}
+
+\begin{table}[ht]
+    \centering
+    \small
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{5cm} p{4cm} @{}}
+        \toprule
+        \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
+        \midrule
+        N1 & Performance Budget
+        & Total wall-clock time per issue run <= X minutes (including Docker startup).
+        & Average CI-cycle time across issues <= X minutes. \\[4pt]
+        N2 & Resource Limits
+        & Docker container limited to <= X GB RAM and <= X CPU cores.
+        & Launched with \texttt{--memory=Xg --cpus=X}; verify via container stats. \\[4pt]
+        N3 & Reproducibility
+        & Runs are deterministic given identical repo state and config.
+        & Multiple runs on the same issue yield identical metrics. \\[4pt]
+        N4 & Configurability
+        & User can specify issue labels, timeouts, resource caps, and stage toggles via YAML or JSON.
+        & Changing the config file alters agent behavior accordingly. \\[4pt]
+        N5 & Scheduling Config
+        & Workflow can be scheduled via cron or manually triggered (GitHub Actions workflow\_dispatch).
+        & Adjusting the schedule in Actions YAML takes effect. \\[4pt]
+        \midrule
+        S1 & Filesystem Isolation
+        & Prevent reads/writes outside the workspace directory (no escapes).
+        & Attempts to access paths outside workspace/ are blocked and logged. \\[4pt]
+        S2 & Network Whitelist
+        & Block all outbound network traffic except to configured LLM API endpoints.
+        & Non-LLM outbound connections are refused by Docker network policy. \\[4pt]
+        S3 & Rollback on Failure
+        & On test or policy failure, auto-reclone a fresh workspace copy before retry.
+        & After failure, workspace resets to its pre-run state. \\[4pt]
+        S4 & Command Whitelisting
+        & Only allow predefined shell commands (e.g., git, pytest, npm test); block others.
+        & Forbidden commands (e.g., rm -rf /) are denied. \\
+        \bottomrule
+    \end{tabular*}
+    \caption{Non-Functional (N1--N5) and Safety (S1--S4) requirements}
+\end{table}
+
+\section{Benchmark Setup}
+
+\begin{itemize}
+    \item QuixBugs problems (Python).
+    \item Prepare a base Docker image (e.g., \texttt{python:3.10}) with pytest and JSON-report support.
+    \item Ensure each workspace clone is clean (no leftover artifacts).
+    \item Record benchmark IDs and Docker image tags in a configuration file for reproducibility.
+\end{itemize}
