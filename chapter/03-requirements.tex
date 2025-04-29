@@ -3,7 +3,7 @@
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{5cm} p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{7cm} p{4cm} @{}}
         \toprule
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
@@ -11,7 +11,7 @@
         & Query GitHub for all open issues labeled \texttt{BUG} in the repository.
         & \texttt{runAgent} logs list of fetched issue numbers and URLs. \\[4pt]
         F1 & Fetch Code
-        & Fetch each QuixBugs problem into a fresh workspace (via \texttt{git clone} or local copy).
+        & Fetch the code referenced by the issue into a fresh workspace (via Docker mount).
         & After F1, workspace/issue/ contains the correct source files. \\[4pt]
         F2 & Apply Patch
         & Apply an LLM-generated diff patch to the workspace files.
@@ -23,7 +23,7 @@
         & Open a PR or post a comment on GitHub with the diff and summary metrics.
         & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
         F5 & Modular Stages
-        & Implement stages IssueGather, Fetch, Patch, Test, Report as separate modules.
+        & Implement stages x,y,z as separate modules to generate working patches.
         & Each stage can be toggled on or off via configuration without breaking the pipeline. \\[4pt]
         F6 & Metrics Collection
         & Log fix-rate, CI-cycle time, and sandbox events in CSV or JSON format.
@@ -33,7 +33,10 @@
         & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\[4pt]
         F8 & GitHub Integration
         & Use the GitHub API (with \texttt{GITHUB\_TOKEN}) to list issues, create branches, open PRs, and post comments.
-        & All GitHub API calls succeed without manual intervention. \\
+        & All GitHub API calls succeed without manual intervention. \\ [4pt]
+        F9 & Cost Accounting
+        & The system shall record prompt tokens, completion-tokens and total cost per issue aggregated into a metrics file.
+        & The metrics file contains fields: issue, prompt-tokens, completion-tokens, cost. \\[4pt]
         \bottomrule
     \end{tabular*}
     \caption{Functional requirements (F0--F8)}
@@ -49,7 +52,7 @@
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
         N1 & Performance Budget
-        & Total wall-clock time per issue run <= X minutes (including Docker startup).
+        & Total wall-clock time per issue run $\leq$ X minutes (including Docker startup).
         & Average CI-cycle time across issues <= X minutes. \\[4pt]
         N2 & Resource Limits
         & Docker container limited to <= X GB RAM and <= X CPU cores.
@@ -63,6 +66,9 @@
         N5 & Scheduling Config
         & Workflow can be scheduled via cron or manually triggered (GitHub Actions workflow\_dispatch).
         & Adjusting the schedule in Actions YAML takes effect. \\[4pt]
+        N6 & Cost Budget
+        & cost per issue run <= X
+        & Average cost across issues <= X. \\[4pt]
         \midrule
         S1 & Filesystem Isolation
         & Prevent reads/writes outside the workspace directory (no escapes).
