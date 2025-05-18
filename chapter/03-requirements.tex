@@ -3,12 +3,12 @@
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{7cm} p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{2cm} p{7cm} p{4cm} @{}}
         \toprule
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
         F0 & Issue Gathering
-        & Query GitHub for all open issues labeled \texttt{BUG} in the repository.
+        & Query GitHub for open issues labeled \texttt{BUG} in the repository.
         & \texttt{runAgent} logs list of fetched issue numbers and URLs. \\[4pt]
         F1 & Fetch Code
         & Fetch the code referenced by the issue into a fresh workspace (via Docker mount).
@@ -22,9 +22,9 @@
         F4 & Report Results
         & Open a PR or post a comment on GitHub with the diff and summary metrics.
         & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
-        F5 & Modular Stages
-        & Implement stages x,y,z as separate modules to generate working patches.
-        & Each stage can be toggled on or off via configuration without breaking the pipeline. \\[4pt]
+        % F5 & Modular Stages
+        % & Implement stages x,y,z as separate modules to generate working patches.
+        % & Each stage can be toggled on or off via configuration without breaking the pipeline. \\[4pt]
         F6 & Metrics Collection
         & Log fix-rate, CI-cycle time, and sandbox events in CSV or JSON format.
         & A metrics file contains fields: issue, pass/fail, time, incidents. \\[4pt]
@@ -47,7 +47,7 @@
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{3cm} p{5cm} p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{2cm} p{5cm} p{4cm} @{}}
         \toprule
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
@@ -69,6 +69,9 @@
         N6 & Cost Budget
         & cost per issue run <= X
         & Average cost across issues <= X. \\[4pt]
+        N7 & Portability
+        & The system can be deployed on any repository on GitHub.
+        & The system can be deployed on any repository on GitHub. \\[4pt]
         \midrule
         S1 & Filesystem Isolation
         & Prevent reads/writes outside the workspace directory (no escapes).
