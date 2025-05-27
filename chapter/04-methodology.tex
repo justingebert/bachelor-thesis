@@ -1,27 +1,45 @@
 \section{Preparation}
 \subsection{Dataset Selection}
 quixbugs, a small problem set in python \cite{linQuixBugsMultilingualProgram2017}
+consisting of 40 carefully crafted python programs with bug.
+
+
+mostly algorithmical problems hard to solve for humans without diving deep into the fucntionaltity of the desired programm
+
+
 
 if archieved swe bench \cite{jimenezSWEbenchCanLanguage2024}
 
-\subsection{System Architecture}
-
-IMAGE of Figma diagram
-
-\subsection{System Components}
-
-ci pipeline
-agent core
-
-\subsection{System Configuration}
+%TODO remove repetitive mentioneing of effectiveness and integration of the system
 
 \section{Evaluation Stragegy and Metrics}
+
+metrics to evaluate the system's performance, effectiveness in repairing software bugs and integration into a real world software developemnt lifecycle are crucial for understanding its impact and areas for improvement. Our evaluation will focus on quantitative and qualitative metrics, ensuring a comprehensive assessment of the system's capabilities.
+
+\subsection{Evaluation Strategy}
+The evaluation strategy will involve the following steps:
+1. **Dataset Preparation**: Use the QuixBugs dataset, which contains a variety of small-scale software bugs in Python, to test the system's repair capabilities.
+2. **System Configuration**: Set up the system in a controlled environment, ensuring that it integrates into a real world sfotware development envrioment. Having acess to nesseary resources and tools for the repair process.
+3. **Execution of Repair Process**: Run the system through the bug fixing lifecycle, from issue creation to pull request generation, while monitoring its performance.
+4. **Data Collection**: Collect data on the system's performance during the repair process, including execution time, success rates, and any encountered issues. Metrics listed \ref{Metrics}.
+5. **Analysis of Results**: Analyze the collected data to evaluate the system's bug repairing capabilities and integration, focusing on both quantitative metrics and qualitative feedback from the repair process.
+\subsection{Metrics}
+For Evaluation we will focus on several key metrics to assess the system's performance and abilites in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle. The following metrics will be used:
+- **Overall Execution Time in CI/CD**: Evaluate the time taken for the system to execute within a CI/CD pipeline, providing insights into its performance in real-world development environments.
+- **Execution Time of Docker Agent**: Measure the time taken by the Containerized agent to execute the repair process, which helps in understanding the efficiency of the containerized environment and help evaluate the computer overhead of CICD.
+- **Repair Success Rate**: Calculate the percentage of successfully repaired bugs out of the total number of bugs attempted by using test results.
+- **Number of Attempts**: Track the number of attempts made by the system to repair each bug.
+- **Number of Code Issues**: Count the total number of code issues identified and attempted to be repaired by the system.
+- **Cost per Issue**: Calculate the cost associated with repairing each bug, considering factors such as resource usage, execution time, and any additional overhead.
+
+
+
 - Metrics:
-- Execution Time
-- Execution Time in CI/CD
+- Full Execution Time in CI/CD
+- Execution Time of docker agent
+- Execution Time per Stage
 - Repair Success Rate
 - nubmer of Attempts
-- Security issues
-- Number of Vulnerabilities
+- number of code issues
 - Cost per issue
 

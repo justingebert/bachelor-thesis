@@ -4,6 +4,16 @@ Software engineering is a complex dicipline consisting of constant
 
 Continous Integration and Continous Deployment (CI/CD) is a software development practice that emphasizes frequent integration of code changes into a shared repository, followed by automated testing and deployment. This approach aims to enhance collaboration, reduce integration issues, and accelerate the delivery of high-quality software.
 
+
+\subsection{code hosting platforms}
+github is whre open soruces lives and development takes place. It is a platform that allows developers to host, share, and collaborate on code repositories. GitHub provides version control, issue tracking, and collaboration tools, making it a popular choice for open-source projects and software development teams.
+
+allows for integration of systems liek rennovate
+
+
+software development moves more and more towards lightlz coupled mullti microsversives which makes code repositories smaller but more numerous. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies. 
+
+
 Bug fixing is a highly resource intensive task in software engineering, consiting of multiple stages .
 
 APR:
@@ -11,23 +21,29 @@ APR:
 this is where APR comes into play
 \section{Automated Programm Repair}
 
+Automated Program Repair (APR) helps developers fix bugs
+
+
 \section{Evolution of Automated Program Repair}
 % TODO cite 
-
-
-
+Earliest APR techniques were based on version control history, using the history to roll back to a previous version of the code part, where no issues were present. This approach, while effective in some cases, often lacked the ability to perserve new features. (more like instant rollback)
 history based
 
-tempalte based
+Initial tempalte based repair,
+apply predefined transformtions to the code based on rules
 
-the emerge of llm based techniques
+The emerge of llm based techniques
+LLM based APR techniques have demonstrated siognificant uimrpovemetns over all other state of the art technqiues, benfitintting from theor coding knowledge \cite{hossainDeepDiveLarge2024}
 
 Agent Based
+agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions  \cite{yangSWEagentAgentComputerInterfaces2024}.
 
 llms lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}
 
 complex agent arcitectures produce good results espically paired with containerized environments. Emphasis on quality insureance and Devops practices \cite{puvvadiCodingAgentsComprehensive2025}
 
+
+modern aprs usally consist of multiple stages, including localization, repair, and validation. These stages are often implemented as separate modules, allowing for flexibility and modularity in the repair process \cite{yangSWEagentAgentComputerInterfaces2024}.
 
 \section{LLMs in Software Engineering}
 
@@ -44,6 +60,8 @@ looking into Agents using tools, LLMs + RAG,
 
 \section{LM-Based Tool Use and CI Context}
 
+this way there is no harmfull code executed on own machiene, its encapsulated mutliple times container in Ci runner
+
 
 \section{Related Work - Existing Systems}
 
@@ -55,3 +73,9 @@ FixAgegent \cite{leeUnifiedDebuggingApproach2024}
 swe agent \cite{yangSWEagentAgentComputerInterfaces2024}
 
 Agentless minimal system \cite{xiaAgentlessDemystifyingLLMbased2024}
+claims exsiting systems are too complex and compute/costs intensive.
+lacks the ability to control the decision planning.
+they use a minimalist approach using localization, repair and validation.
+
+
+this appraoch inspried the thesis to test how a simple approach will perform in a real world scendario on a code hosting platform.
