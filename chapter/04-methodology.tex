@@ -7,6 +7,10 @@ consisting of 40 carefully crafted python programs with bug.
 mostly algorithmical problems hard to solve for humans without diving deep into the fucntionaltity of the desired programm
 
 
+cleaned the repo so only bugs and nesseary tests for validation are present, removing all other files and folders to ensure a clean environment for the system to operate in.
+
+prepared the dataset and created a github repository with the dataset, including the necessary tests for validation. This repository will serve as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs.
+
 
 if archieved swe bench \cite{jimenezSWEbenchCanLanguage2024}
 
@@ -19,10 +23,11 @@ metrics to evaluate the system's performance, effectiveness in repairing softwar
 \subsection{Evaluation Strategy}
 The evaluation strategy will involve the following steps:
 1. **Dataset Preparation**: Use the QuixBugs dataset, which contains a variety of small-scale software bugs in Python, to test the system's repair capabilities.
-2. **System Configuration**: Set up the system in a controlled environment, ensuring that it integrates into a real world sfotware development envrioment. Having acess to nesseary resources and tools for the repair process.
+2. **System Configuration - Process Review**: Set up the system in a controlled environment, ensuring that it integrates into a real world sfotware development envrioment. Having acess to nesseary resources and tools for the repair process.
 3. **Execution of Repair Process**: Run the system through the bug fixing lifecycle, from issue creation to pull request generation, while monitoring its performance.
+5. **Automatic Evaluation**: During a the repair process the tests are executed to validate the repairs made by the system. The system will automatically evaluate the success of each repair attempt based on the test results and report it. (for swe bench just evalutation -> results)
 4. **Data Collection**: Collect data on the system's performance during the repair process, including execution time, success rates, and any encountered issues. Metrics listed \ref{Metrics}.
-5. **Analysis of Results**: Analyze the collected data to evaluate the system's bug repairing capabilities and integration, focusing on both quantitative metrics and qualitative feedback from the repair process.
+5. **Analysis of Results**: Analyze the collected data to evaluate the system's bug repairing capabilities and integration, focusing on both quantitative metrics and qualitative feedback from the repair process. +manual inspection / comapre with correct solution
 \subsection{Metrics}
 For Evaluation we will focus on several key metrics to assess the system's performance and abilites in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle. The following metrics will be used:
 - **Overall Execution Time in CI/CD**: Evaluate the time taken for the system to execute within a CI/CD pipeline, providing insights into its performance in real-world development environments.
