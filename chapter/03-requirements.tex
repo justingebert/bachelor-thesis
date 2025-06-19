@@ -1,100 +1,85 @@
+- for this prototype we constructed Requirements which the system shall statisfy
+- we split into functional requirements: t.3.1 (EXPLAINATION), nonfucntional Requirements combined with security requriemnts
+
+- these requiremtns allow for better planning and priotisation during development.
+- the satisfaction of all the requriemtns will allow for evaluation of the integration into the software development lifecycle
+
 \section{Functional Requirements}
 
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{2cm} p{7cm} p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{0.2cm} p{2cm} p{7cm} p{4cm} @{}}
         \toprule
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
-        F0 & Issue Gathering
-        & Query GitHub for open issues labeled \texttt{BUG} in the repository.
-        & \texttt{runAgent} logs list of fetched issue numbers and URLs. \\[4pt]
-        F1 & Fetch Code
-        & Fetch the code referenced by the issue into a fresh workspace (via Docker mount).
-        & After F1, workspace/issue/ contains the correct source files. \\[4pt]
-        F2 & Apply Patch
-        & Apply an LLM-generated diff patch to the workspace files.
-        & After patch, \texttt{git diff} output matches the patch payload. \\[4pt]
-        F3 & Build \& Test
-        & Run the project's test suite inside a Docker container and capture pass/fail status.
-        & Docker exit code = 0 for pass and a JSON report file exists. \\[4pt]
-        F4 & Report Results
+        F0 & Multi Trigger
+        & The Pipeline can be triggered: manually, scheudled via cron, or by GitHub issue creation/labeling.
+        & Runs can be found for these triggers \\[4pt]
+        F1 & Issue Gathering
+        & Retrieve GitHub repository issues and filter them for correct state and configured labeles \texttt{BUG}.
+        & \texttt{gate} logs list of fetched issues.  \\[4pt]
+        F2 & Code Checkout
+        & Fetch the repository code into a fresh workspace and branch (via Docker mount).
+        & After F1, workspace/ contains the correct source files. \\[4pt]
+        F3 & Issue Localization
+        & Use LLM to analyze the issue description and identify relevant files.
+        & LLM output contains file paths with files that shall be edited. \\[4pt]
+        F4 & Fix Generation
+        & Use LLM to edit the identified files.
+        & LLM output contains adjusted content for the identified files. \\[4pt]
+        F5 & Change Validation
+        & Run format, lint and relevant tests and capture pass/fail status.
+        & Logs show build and test results. \\[4pt]
+        F6 & Iterative Patch Generation (retry logic)
+        & If F4 reports failures, retry F4--F5 up to X times.
+        & After retries, either F4 passes or fails with no further retries. \\[4pt]
+        F7 & Apply Patch
+        & Commit LLM-generated edits and generate patch.
+        & Git history shows a new commit which is referencing the Github issue \\[4pt]
+        F8 & Result Reporting
         & Open a PR or post a comment on GitHub with the diff and summary metrics.
         & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
-        % F5 & Modular Stages
-        % & Implement stages x,y,z as separate modules to generate working patches.
-        % & Each stage can be toggled on or off via configuration without breaking the pipeline. \\[4pt]
-        F6 & Metrics Collection
-        & Log fix-rate, CI-cycle time, and sandbox events in CSV or JSON format.
-        & A metrics file contains fields: issue, pass/fail, time, incidents. \\[4pt]
-        F7 & Per-Issue Trigger
-        & Execute F1--F4 for each fetched issue in sequence and aggregate results.
-        & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\[4pt]
-        F8 & GitHub Integration
-        & Use the GitHub API (with \texttt{GITHUB\_TOKEN}) to list issues, create branches, open PRs, and post comments.
-        & All GitHub API calls succeed without manual intervention. \\ [4pt]
-        F9 & Cost Accounting
-        & The system shall record prompt tokens, completion-tokens and total cost per issue aggregated into a metrics file.
-        & The metrics file contains fields: issue, prompt-tokens, completion-tokens, cost. \\[4pt]
+        F9 & Logs and Metrics Collection
+        & Provide log files and Metrics with fix-rate, attempt history, timings, token ussage.
+        & A metrics file contains fields: issue, success, timings, stages. \\[4pt]
+
+        % F1 & Per Issue Workflow
+        % & Execute F1--F4 for each fetched issue in sequence and aggregate results.
+        % & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\[4pt]
+        % F12 & GitHub Integration
+        % & Use the GitHub API (with \texttt{GITHUB\_TOKEN}) to list issues, create branches, open PRs, and post comments.
+        % & All GitHub API calls succeed without manual intervention. \\ [4pt]
         \bottomrule
     \end{tabular*}
     \caption{Functional requirements (F0--F8)}
 \end{table}
 
-\section{Non-Functional and Safety Requirements}
+\section{Non-Functional Requirements}
 
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{1cm} p{2cm} p{5cm} p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{0.2cm} p{2cm} p{7cm} p{4cm} @{}}
         \toprule
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
-        N1 & Performance Budget
-        & Total wall-clock time per issue run $\leq$ X minutes (including Docker startup).
-        & Average CI-cycle time across issues <= X minutes. \\[4pt]
-        N2 & Resource Limits
-        & Docker container limited to <= X GB RAM and <= X CPU cores.
-        & Launched with \texttt{--memory=Xg --cpus=X}; verify via container stats. \\[4pt]
-        N3 & Reproducibility
-        & Runs are deterministic given identical repo state and config.
-        & Multiple runs on the same issue yield identical metrics. \\[4pt]
-        N4 & Configurability
-        & User can specify issue labels, timeouts, resource caps, and stage toggles via YAML or JSON.
+        N1 & Containerized Execution
+        & All agent code runs in CI runner in a Docker container to isloate it.
+        & Workflow shows Docker container usage \\[4pt]
+        N2 & Configurability
+        & User can specify issue labels, branches, attempts, LLM models via YAML.
         & Changing the config file alters agent behavior accordingly. \\[4pt]
-        N5 & Scheduling Config
-        & Workflow can be scheduled via cron or manually triggered (GitHub Actions workflow\_dispatch).
-        & Adjusting the schedule in Actions YAML takes effect. \\[4pt]
-        N6 & Cost Budget
-        & cost per issue run <= X
-        & Average cost across issues <= X. \\[4pt]
-        N7 & Portability
+        N3 & Portability
         & The system can be deployed on any repository on GitHub.
-        & The system can be deployed on any repository on GitHub. \\[4pt]
-        \midrule
-        S1 & Filesystem Isolation
-        & Prevent reads/writes outside the workspace directory (no escapes).
-        & Attempts to access paths outside workspace/ are blocked and logged. \\[4pt]
-        S2 & Network Whitelist
-        & Block all outbound network traffic except to configured LLM API endpoints.
-        & Non-LLM outbound connections are refused by Docker network policy. \\[4pt]
-        S3 & Rollback on Failure
-        & On test or policy failure, auto-reclone a fresh workspace copy before retry.
-        & After failure, workspace resets to its pre-run state. \\[4pt]
-        S4 & Command Whitelisting
-        & Only allow predefined shell commands (e.g., git, pytest, npm test); block others.
-        & Forbidden commands (e.g., rm -rf /) are denied. \\
+        & ??? \\[4pt]
+        N4 & Reproducibility
+        & Runs are deterministic given identical repo state and config.
+        & Multiple runs on the same issue report similar metrics. \\[4pt]
+        N5 & Oberability
+        & The system provides logs and metrics for each run, including execution times, token usage and success rate.
+        & Logs and metrics files are generated after each run, containing all relevant data. \\[4pt]
         \bottomrule
     \end{tabular*}
-    \caption{Non-Functional (N1--N5) and Safety (S1--S4) requirements}
+    \caption{Non-Functional (N1--N5) requirements}
 \end{table}
-
-\section{Benchmark Setup}
-
-\begin{itemize}
-    \item QuixBugs problems (Python).
-    \item Prepare a base Docker image (e.g., \texttt{python:3.10}) with pytest and JSON-report support.
-    \item Ensure each workspace clone is clean (no leftover artifacts).
-    \item Record benchmark IDs and Docker image tags in a configuration file for reproducibility.
-\end{itemize}

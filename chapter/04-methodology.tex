@@ -1,24 +1,20 @@
 \section{Preparation}
 \subsection{Dataset Selection}
-quixbugs, a small problem set in python \cite{linQuixBugsMultilingualProgram2017}
-consisting of 40 carefully crafted python programs with bug.
+For the evaluation of the APR integration into the software development lifecycle, we selected the Quixbugs dataset \cite{linQuixBugsMultilingualProgram2017} as our primary benchmark for testing APR integration. This dataset is well-suited for our purposes due to its focus on small-scale software bugs in Python. It consists of 40 algortithmic bugs each in one file consisting of a single erroinums line , each with a correspoding tests for repair validation. Because these bugs where developed as challending problems for developers \cite{linQuixBugsMultilingualProgram2017}, we can evaluate if our system can take over the complex fixing of small bugs without developer intervention to prevent context switching for developers.
 
+Compared to other APR benchmarks like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} Quixbugs is relaivly small which accelerates setup and development.
 
-mostly algorithmical problems hard to solve for humans without diving deep into the fucntionaltity of the desired programm
+if archieved I will ad swe bench lite later \cite{jimenezSWEbenchCanLanguage2024}
 
+\subsection{Dataset Preparation / setup}
+To mirrow realistic software development environment, we prepared the Quixbugs dataset by creating a GitHub repository. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
 
-cleaned the repo so only bugs and nesseary tests for validation are present, removing all other files and folders to ensure a clean environment for the system to operate in.
-
-prepared the dataset and created a github repository with the dataset, including the necessary tests for validation. This repository will serve as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs.
-
-
-if archieved swe bench \cite{jimenezSWEbenchCanLanguage2024}
+We automatically generated a GitHub issue for each bug, using a consistent template that captures just the Title of the Problem. These issues serve as the entry points to our APR pipeline.
 
 %TODO remove repetitive mentioneing of effectiveness and integration of the system
-
 \section{Evaluation Stragegy and Metrics}
 
-metrics to evaluate the system's performance, effectiveness in repairing software bugs and integration into a real world software developemnt lifecycle are crucial for understanding its impact and areas for improvement. Our evaluation will focus on quantitative and qualitative metrics, ensuring a comprehensive assessment of the system's capabilities.
+metrics to evaluate the system's performance, effectiveness in repairing software bugs and integration into a real world software developemnt lifecycle are crucial for understanding its impact and areas for improvement. 
 
 \subsection{Evaluation Strategy}
 The evaluation strategy will involve the following steps:
@@ -45,6 +41,15 @@ For Evaluation we will focus on several key metrics to assess the system's perfo
 - Execution Time per Stage
 - Repair Success Rate
 - nubmer of Attempts
-- number of code issues
 - Cost per issue
+- Token Usage
 
+
+
+
+what I evaluate:
+script execution time + CICD overhead
+one issue vs mutliple issue times
+model vs model metrics 
+costs
+attemps vs no attemps in all these categories
