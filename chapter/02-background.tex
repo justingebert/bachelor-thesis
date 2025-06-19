@@ -11,7 +11,7 @@ github is whre open soruces lives and development takes place. It is a platform 
 allows for integration of systems liek rennovate
 
 
-software development moves more and more towards lightlz coupled mullti microsversives which makes code repositories smaller but more numerous. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies. 
+software development moves more and more towards lightlz coupled mullti microsversives which makes code repositories smaller but more numerous. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies.
 
 
 Bug fixing is a highly resource intensive task in software engineering, consiting of multiple stages .
@@ -30,7 +30,7 @@ this is where APR comes into play
 Automated Program Repair (APR) helps developers fix bugs
 
 
-\section{Evolution of Automated Program Repair}
+\subsection{Evolution of Automated Program Repair}
 % TODO cite 
 Earliest APR techniques were based on version control history, using the history to roll back to a previous version of the code part, where no issues were present. This approach, while effective in some cases, often lacked the ability to perserve new features. (more like instant rollback)
 history based
@@ -51,6 +51,7 @@ complex agent arcitectures produce good results espically paired with containeri
 
 modern aprs usally consist of multiple stages, including localization, repair, and validation. These stages are often implemented as separate modules, allowing for flexibility and modularity in the repair process \cite{yangSWEagentAgentComputerInterfaces2024}.
 
+
 \section{LLMs in Software Engineering}
 
 modern large language models have billions of paramters, are pre-tained on massive codesbases which results in extraordinary capbilites in this area  \cite{chenUnveilingPitfallsUnderstanding2025}.
@@ -69,7 +70,6 @@ looking into Agents using tools, LLMs + RAG,
 CI allows seemless integration...
 this way there is no harmfull code executed on own machiene, its encapsulated mutliple times container in Ci runner
 
-
 \section{Related Work - Existing Systems}
 
 
@@ -86,3 +86,8 @@ they use a minimalist approach using localization, repair and validation.
 
 
 this appraoch inspried the thesis to test how a simple approach will perform in a real world scendario on a code hosting platform.
+
+
+--point out areas where current systems see limitation
+
+-- during the research for this thesis, full integrations where published by companies like OpenAI Codex and Github Copilot - but these are not open source 

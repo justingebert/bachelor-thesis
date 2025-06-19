@@ -366,6 +366,24 @@
   file = {/Users/justingebert/Zotero/storage/86DUHN6D/Sobania et al. - 2023 - An Analysis of the Automatic Bug Fixing Performance of ChatGPT.pdf;/Users/justingebert/Zotero/storage/EQ7Z8GHT/10189263.html}
 }
 
+@article{tangLargeLanguageModels2024,
+  title = {Large {{Language Models Meet Automated Program Repair}}: {{Innovations}}, {{Challenges}} and {{Solutions}}},
+  shorttitle = {Large {{Language Models Meet Automated Program Repair}}},
+  author = {Tang, Yiting},
+  year = {2024},
+  month = dec,
+  journal = {Applied and Computational Engineering},
+  volume = {117},
+  number = {1},
+  pages = {22--30},
+  issn = {2755-2721, 2755-273X},
+  doi = {10.54254/2755-2721/2024.18303},
+  urldate = {2025-06-01},
+  abstract = {As the field of Automated Program Repair (APR) continues to evolve, traditional Neural Program Repair (NPR) methods, while successful in low-resource computing scenarios, still confront numerous challenges, including the demand for extensive training data, the limited generality of specially designed networks, and a lack of robustness. In recent years, Large Language Models (LLMs) have demonstrated remarkable efficacy in downstream code-related tasks, thanks to their potent comprehension and text generation capabilities, gradually emerging as pivotal tools in automated program repair. Compared to NPR techniques, LLM-based APRs exhibit superior repair performance and enhanced generality, leading to their increasing adoption in APR tasks. Currently, the performance of zero-shot LLM-based APRs has surpassed that of NPR. LLM-based APRs have issues, such as excessive fine-tuning costs, data leakage concerns, and a shortage of domain-specific knowledge. This paper aims to review and summarize the latest advancements in LLM-based APRs from the perspectives of innovation, challenges, and solutions, providing researchers with profound insights and future directions.},
+  langid = {english},
+  file = {/Users/justingebert/Zotero/storage/55V4UMVI/Tang - 2024 - Large Language Models Meet Automated Program Repair Innovations, Challenges and Solutions.pdf}
+}
+
 @article{tufanoEmpiricalStudyLearning2019,
   title = {An {{Empirical Study}} on {{Learning Bug-Fixing Patches}} in the {{Wild}} via {{Neural Machine Translation}}},
   author = {Tufano, Michele and Watson, Cody and Bavota, Gabriele and Penta, Massimiliano Di and White, Martin and Poshyvanyk, Denys},
@@ -441,6 +459,24 @@
   abstract = {Automated Program Repair (APR) aims to help developers automatically patch software bugs. However, current state-of-the-art traditional and learning-based APR techniques face the problem of limited patch variety, failing to fix complicated bugs. This is mainly due to the reliance on bug-fixing datasets to craft fix templates (traditional) or directly predict potential patches (learning-based). Large Pre-Trained Language Models (LLMs), trained using billions of text/code tokens, can potentially help avoid this issue. Very recently, researchers have directly leveraged LLMs for APR without relying on any bug-fixing datasets. Meanwhile, such existing work either failed to include state-of-the-art LLMs or was not evaluated on realistic datasets. Thus, the true power of modern LLMs on the important APR problem is yet to be revealed. In this work, we perform the first extensive study on directly applying LLMs for APR. We select 9 recent state-of-the-art LLMs, including both generative and infilling models, ranging from 125M to 20B in size. We designed 3 different repair settings to evaluate the different ways we can use LLMs to generate patches: 1) generate the entire patch function, 2) fill in a chunk of code given the prefix and suffix 3) output a single line fix. We apply the LLMs under these repair settings on 5 datasets across 3 different languages and compare different LLMs in the number of bugs fixed, generation speed and compilation rate. We also compare the LLMs against recent state-of-the-art APR tools. Our study demonstrates that directly applying state-of-the-art LLMs can already substantially outperform all existing APR techniques on all our datasets. Among the studied LLMs, the scaling effect exists for APR where larger models tend to achieve better performance. Also, we show for the first time that suffix code after the buggy line (adopted in infilling-style APR) is important in not only generating more fixes but more patches with higher compilation rate. Besides patch generation, the LLMs consider correct patches to be more natural than other ones, and can even be leveraged for effective patch ranking or patch correctness checking. Lastly, we show that LLM-based APR can be further substantially boosted via: 1) increasing the sample size, and 2) incorporating fix template information.},
   keywords = {Automated Program Repair,Codes,Computer bugs,Distance measurement,Faces,Machine Learning,Maintenance engineering,Software,Task analysis},
   file = {/Users/justingebert/Zotero/storage/WPX5SX7L/Xia et al. - 2023 - Automated Program Repair in the Era of Large Pre-trained Language Models.pdf}
+}
+
+@inproceedings{xiaAutomatedProgramRepair2023a,
+  title = {Automated {{Program Repair}} in the {{Era}} of {{Large Pre-trained Language Models}}},
+  booktitle = {2023 {{IEEE}}/{{ACM}} 45th {{International Conference}} on {{Software Engineering}} ({{ICSE}})},
+  author = {Xia, Chunqiu Steven and Wei, Yuxiang and Zhang, Lingming},
+  year = {2023},
+  month = may,
+  pages = {1482--1494},
+  publisher = {IEEE},
+  address = {Melbourne, Australia},
+  doi = {10.1109/ICSE48619.2023.00129},
+  urldate = {2025-06-19},
+  abstract = {Automated Program Repair (APR) aims to help developers automatically patch software bugs. However, current state-of-the-art traditional and learning-based APR techniques face the problem of limited patch variety, failing to fix complicated bugs. This is mainly due to the reliance on bug-fixing datasets to craft fix templates (traditional) or directly predict potential patches (learning-based). Large Pre-Trained Language Models (LLMs), trained using billions of text/code tokens, can potentially help avoid this issue. Very recently, researchers have directly leveraged LLMs for APR without relying on any bugfixing datasets. Meanwhile, such existing work either failed to include state-of-the-art LLMs or was not evaluated on realistic datasets. Thus, the true power of modern LLMs on the important APR problem is yet to be revealed.},
+  copyright = {https://doi.org/10.15223/policy-029},
+  isbn = {978-1-6654-5701-9},
+  langid = {english},
+  file = {/Users/justingebert/Zotero/storage/3LFIYMLQ/Xia et al. - 2023 - Automated Program Repair in the Era of Large Pre-trained Language Models.pdf}
 }
 
 @inproceedings{xiaAutomatedProgramRepair2024,
