@@ -72,7 +72,9 @@ The agent core is designed to be modular and extensible, allowing for future enh
 
 
 \textbf{CI/CD Pipeline:}\\
-The Pipeline is written in YAML acoording to the Github CICD standard. \ref{} It is made up of the Triggers and 3 Jobs: 'gate', 'skipped' and 'bugfix'.
+The Pipeline is written in YAML acoording to the Github CICD standard. \ref{}
+We will use runners hosted by Github which takes awayt the overhead of managing our own runners but comes at the cost of unknown performance and avaiablity
+It is made up of the Triggers and 3 Jobs: 'gate', 'skipped' and 'bugfix'.
 The triggers are set up first and will allow the execution of the APR process.
 Triggers can resutls in two types of runs:
 processing of all bug issues in correct state on manual execution requrest of the workflow (``workflow\_dispatch'') or scheudled execution (``cron'').
