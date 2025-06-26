@@ -55,82 +55,98 @@ also provides a manged soltution for integrating CI into reposiries by writing w
     \label{fig:simple action}
 \end{figure}
 
-Since constant feedback and reviews of code play an imporatnt role in agile workflows github also provides a pull request feature. Pull Requests allow for proposal of changes to the codebase, with an integrated review process which allows for collaboration and review before changes are integrated into the production codebase. This process is essential for maintaining code quality and ensuring that changes are thoroughly vetted before being merged into the main branch. \cite{githubdoc}
+Since constant feedback and reviews of code play an imporatnt role in agile workflows github also provides a pull request feature. Pull Requests allow for proposal of changes to the codebase, with an integrated review process which allows for collaboration and review before changes are integrated into the production codebase.
+Code changes are displayed in a diff format allowing reviews to see and dig into the changes made.
+This process is essential for maintaining code quality and ensuring that changes are validated before being merged. \cite{githubdoc}
 
-\section{LLMs in Software Development}
+\section{Generative Ai in Software Development}
+
+\subsection{Generative AI and Large Language Models}
+Gen ai is subfield of Ai
+
+LLms work using human langague data
+
+relatively new advancement are AI Agents which let LLMs interact with the environment and plan their actions
+
+\subsection{Generative AI in Software Development}
+%TODO Table of models? also mention open source?
 Generative AI is reshaping software development by autoamting various tasks. Modern large language models have billions of paramters, are pre-tained on massive codesbases which results in extraordinary capbilites in this area  \cite{chenUnveilingPitfallsUnderstanding2025}.
-Therefore LLMs get applied in generating code, debugging, refacting and testing. \cite{sauvolaFutureSoftwareDevelopment2024,bhargavmallampatiRoleGenerativeAI2025} By using LLMs to enhance these tasks developemtn cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025}.
-Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions for dirrent tasks \cite{bhargavmallampatiRoleGenerativeAI2025}.
+Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions for dirrent tasks \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,
+    bhargavmallampatiRoleGenerativeAI2025 }. LLms can generate code in diffrent programmming languages. With python being the to supoorted \cite{}
+By using LLMs to enhance these tasks developemtn cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025,kalliamvakouResearchQuantifyingGitHub2022}. Furthermore these tools have postive impacts like improving developer statisfaction and reducing congintive load \cite{kalliamvakouResearchQuantifyingGitHub2022}.
 
-Still Problems exsist as Gneerative Ai:
-is very researouce intensive
-eithical diellemas and interlecutal property issues \cite{sauvolaFutureSoftwareDevelopment2024}
+Although Generative Ai get adpoted really quickly in many areas of software development this transition still faces callenges and limitations.
+LLMs have issues working on tasks that are outside their scope of training or require specific domain knowledge \cite{houLargeLanguageModels2024}.
+Additionally LLMs have limited context windows, which can lead to challenges when working with large codebases or complex projects where context windows are too small ofr true contextual or requiremtns understanding \cite{bhargavmallampatiRoleGenerativeAI2025}.
+When generating code LLMs can produce incorrect or insecure code, which can lead to further bugs and vulnerabilities in the software \cite{houLargeLanguageModels2024}.
+Generating content or code with LLMs based on training data raises questions about ownership, reposinisbily and intellectual property rights.
+When it comes to security geneerating code using prompts is vunerable to prompt injection, where unintended instructions are injected at some point and can lead to production of harmful code \cite{}
+
+\cite{bhargavmallampatiRoleGenerativeAI2025, houLargeLanguageModels2024}.
+When generating code based on training data interlecutal property issues arise  \cite{sauvolaFutureSoftwareDevelopment2024}
 
 
-Problems with llms when genrating code are: Information leakage, hallucinations, and security issues
+recently research and companies is looking into developing solutions which integration LLMs into exisitng software development practices and workflows  \cite{puvvadiCodingAgentsComprehensive2025, dohmkeGitHubCopilotMeet2025, ntroducingCodex, sauvolaFutureSoftwareDevelopment2024}.
 
-now research is looking into developing and improving specialized workflows leveraging LLMs \cite{puvvadiCodingAgentsComprehensive2025}.
-
-recently mroe attention is given to itnergration of AI/ML into CICD
-\cite{mohammedAIDrivenContinuousIntegration2024} and integrating into exising workflows \cite{sauvolaFutureSoftwareDevelopment2024}
+recently more attention is given to itnergration of AI/ML into CICD
+\cite{mohammedAIDrivenContinuousIntegration2024}
 
 \section{Automated Programm Repair}
 
 Automated Program Repair (APR) is software that helps detect and repair bugs in code with minimal human intervention. This field has also benefited of the rapid advancements in AI.
 
-APR system are supposed to take over the process of fixing bugs therefore making more time for developers to focus on more relevant work. 
-localization, repair, and validation
+APR system are supposed to take over the process of fixing bugs therefore making more time for developers to focus on more relevant work. \cite{houLargeLanguageModels2024}
 
+Specific bugs can be fixed using a resulting patch from an APR system. For creating working patches APR takes a 3 stage approach: First localizing the bug. Then repairing the bug, in the end validation decides where the bug will be passed on.\cite{}
+
+In this section we will provide an overview of the evolution of APR, related work, and the current state of APR systems.
 
 \subsection{Evolution of Automated Program Repair}
-APR was first introduced in xxx and has come a long way since then.
-% TODO cite 
-Earliest APR techniques were based on version control history, using the history to roll back to a previous version of the code part, where no issues were present. This approach, while effective in some cases, often lacked the ability to perserve new features. (more like instant rollback)
-history based
+We have seen multiple transformations in the field of Automated Program Repair (APR) over the years. This evolution of APR can be categorized into key stages, each marked by significant advancements in techniques and methodologies.
 
---- search based repair,
+\textbf{Tradtional Approaches:}\\
+Prior APR approaches were based on version control history, using the history to roll back to a previous version of the code part, where no issues were present. This approach, while effective in some cases, often lacked the ability to perserve new features. (more like instant rollback)
 
----semantic based repair,
+Tempalte based systems relied on predefined template for transformations of commonly known bugs. Tempaltes applied predefined transformtions to the code based on fixed rules. This Apporach had limited the flexibility and adaptability in a quickly transforming software landscape. \cite{puvvadiCodingAgentsComprehensive2025}
 
----tempalte based repair,
-apply predefined transformtions to the code based on rules
+%TODO
+Search based repair,
 
----The emerge of llm based techniques
-LLM based APR techniques have demonstrated siognificant uimrpovemetns over all other state of the art technqiues, benfitintting from theor coding knowledge \cite{hossainDeepDiveLarge2024}
+%TODO
+Semantic based repair,
 
-Agent Based
-agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions  \cite{yangSWEagentAgentComputerInterfaces2024}.
+One of the most outstanding system is Getafix develop and deployed at Meta \cite{baderGetafixLearningFix2019}
 
-llms lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}
-
-complex agent arcitectures produce good results espically paired with containerized environments. Emphasis on quality insureance and Devops practices \cite{puvvadiCodingAgentsComprehensive2025}
+Nevertheless tradional systems face significant limitations in scalability and adaptability, struggling to generalize to new scenarios or unseen bugs, or to adapt to evolving codebases. They often required extensive computational resources or manual effort. \cite{puvvadiCodingAgentsComprehensive2025}
 
 
-modern aprs usally consist of multiple stages, including localization, repair, and validation. These stages are often implemented as separate modules, allowing for flexibility and modularity in the repair process \cite{yangSWEagentAgentComputerInterfaces2024}.
+\textbf{The emerge of llm based APR:}
+LLM based APR techniques have demonstrated siognificant improvments over all other state of the art technqiues, benfitintting from theor coding knowledge \cite{hossainDeepDiveLarge2024}For that reason LLMs lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}.
+Common LLMS used for APR include GPT-4, ChatGPT, Codex, CodeLlama, DeepSeek-Coder, and CodeT5 \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024,anandComprehensiveSurveyAIDriven2024}.
 
-recently a push towards more lightweight approaches has emerged, focusing on simplicity and efficiency. These approaches aim to reduce the complexity of APR systems while maintaining effectiveness in bug fixing \cite{xiaAgentlessDemystifyingLLMbased2024}.
+Using LLMs diffrent Paradigms have emerged and are being actively researched. These paradigms include:
 
-\subsection{Related Work - Existing Systems}
+Retrieval-Augmented Approaches repair bugs with the help of retrieving relevant context during the repair process. This approach allows adding external knowledge to the repair process, enhancing the LLM's ability to understand and fix bugs \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024}.
 
+Agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions. These frameworks recosncturct the cognitve processes using multiple Agents that can generate code with the help of multi-step reasoning, usage of tools for  with Envrioments and Tools \cite{}. Examples for that are SWE-Agent \cite{ \cite{yangSWEagentAgentComputerInterfaces2024}}, FixAgent \cite{leeUnifiedDebuggingApproach2024}, MarsCodeAgent \cite{liuMarsCodeAgentAInative2024}, GitHub Copilot.
 
-end to end without llms Sapfix from Facebook. Fixing bugs in production envrioments lowerring incidents mean time of recovery significantly \cite{margineanSapFixAutomatedEndtoEnd2019}
+complex agent arcitectures produce good results espically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
-FixAgent \cite{leeUnifiedDebuggingApproach2024}
+Interactive apporaches make use of LLMs dialogue capabilities to equip patch validation with instant feedback. This feedback is used to refine the generated patches trying to archieve better results. This process takes a more dynmaic and iterative approach. \cite{xiaAutomatedProgramRepair2024}
 
-swe agent \cite{yangSWEagentAgentComputerInterfaces2024}
-
-Agentless minimal system \cite{xiaAgentlessDemystifyingLLMbased2024}
-claims exsiting systems are too complex and compute/costs intensive.
-lacks the ability to control the decision planning.
-they use a minimalist approach using localization, repair and validation.
-
-
-this appraoch inspried the thesis to test how a simple approach will perform in a real world scendario on a code hosting platform.
+Agentless systems are recent a push towards more lightweight solution, focusing on simplicity and efficiency. These approaches aim to reduce the complexity of APR systems while maintaining effectiveness in bug fixing \cite{xiaAgentlessDemystifyingLLMbased2024}. Furthermore this approach provides clear rails to the LLMS improving the transparency of the bug fixing approach taken.
+These Systems have archieved promising results  with low costs \cite{xiaAgentlessDemystifyingLLMbased2024}
 
 
---point out areas where current systems see limitation
+% TODO mention codex and copilot??
 
--- during the research for this thesis, full integrations where published by companies like OpenAI Codex and Github Copilot - but these are not open source
+Common problems currently faced by state of the art APR system are:
+Exsiting system are overly complex with limited transparency and control over the bug fixing process.\cite{xiaAgentlessDemystifyingLLMbased2024,puvvadiCodingAgentsComprehensive202, houLargeLanguageModels2024}
+Repairing bugs takes a lot of compoutational resources and is time intensive therefore producing significant costs  \cite{sobaniaAnalysisAutomaticBug2023,puvvadiCodingAgentsComprehensive2025}
+Repairing bugs is done on benchmarks or in controlled set up envrionments and not integrated into real world software development workflows \cite{meemExploringExperiencesAutomated2024,puvvadiCodingAgentsComprehensive2025}
+
+\subsection{APR benchmarks}
+Popualr are Quixbugs small bugs in python , Defects4J for java programs and the hardest: SWE Bench based on real world github issues in python repositories
 
 
 \subsection{APR in CI Context}
