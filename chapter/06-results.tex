@@ -1,14 +1,41 @@
 
-[Beschreibung der Ergebnisse aus allen voran gegangenen Kapiteln sowie der zuvor generierten Ergebnisartefakte mit Bewertung, wie diese einzuordnen sind]
-
+In the following section we will showcase the resulting workflow of our prototype and the evaluation results for the Quixbugs benchmark.
 \section{Showcase of workflow}
+To integrate the APR system into a repository living on GitHub we need to move the pipeline with its filter script to the dedicated github action workflow directory.
+---IMAGE OF WORKFLOW IN PLACE
 
+When the workflow is in place the APR system is ready to go. Optionally its default behavior can be altered by adding a configuration file (called: bugfix.yml) to the root of the repository.
+---EXAMPLE OF CONFIG
+
+Now when an issue is created and labeled with the default label "bug" (or a custom label defined in the configuration file) the APR system will be triggered and start the bug fixing process. Manual triggering is also possible by using the "Run workflow" button in the GitHub actions tab of the repository.
+---IMAGE OF ISSUE BEING CREATED OR MANUALLY TRIGGERED
+
+After the workflow is triggered and relevant issues are found the APR system start as a run of the GitHub action workflow.
+---IMAGE OF RUN BEING STARTED
+
+
+When the automatic bug fixing process has completed there are two possible outcomes:
+Pull Request with patch for bug and link to the issue.
+---IMAGE OF PULL REQUEST
+
+or a comment on the issue that bug fixing failed after all attempts.
+---IMAGE OF COMMENT ON ISSUE
+
+After the Workflow finishes metrics and logs are available for download in the action.
+(during a run logs are live streamed in the Workflow run)
+---IMAGE OF LOGS
 
 \section{Evaluation Results}
+comparing different LLMS Models:
+google
+OpenAI
 
+Single Issue Processing:
+CI overhead
 
-- descibe and showcase execution times and repair success rates
-- show a log?
+Multi Issue Processing:
+CI overhead
 
+Also include attempt loop
 
 with small models and attempt loop makes small models pass the whole benchmark?
