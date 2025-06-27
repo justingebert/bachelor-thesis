@@ -1,8 +1,8 @@
-- for this prototype we constructed Requirements which the system shall statisfy
-- we split into functional requirements: t.3.1 (EXPLAINATION), nonfucntional Requirements combined with security requriemnts
+- for this prototype we constructed Requirements which the system shall satisfy
+- we split into functional requirements: t.3.1 (EXPLAINATION), nonfunctional Requirements combined with security requirements
 
-- these requiremtns allow for better planning and priotisation during development.
-- the satisfaction of all the requriemtns will allow for evaluation of the integration into the software development lifecycle
+- these requirements allow for better planning and prioritization during development.
+- the satisfaction of all the requirements will allow for evaluation of the integration into the software development lifecycle
 
 \section{Functional Requirements}
 
@@ -14,10 +14,10 @@
         \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
         \midrule
         F0 & Multi Trigger
-        & The Pipeline can be triggered: manually, scheudled via cron, or by GitHub issue creation/labeling.
+        & The Pipeline can be triggered: manually, scheduled via cron, or by GitHub issue creation/labeling.
         & Runs can be found for these triggers \\[4pt]
         F1 & Issue Gathering
-        & Retrieve GitHub repository issues and filter them for correct state and configured labeles \texttt{BUG}.
+        & Retrieve GitHub repository issues and filter them for correct state and configured labels \texttt{BUG}.
         & \texttt{gate} logs list of fetched issues.  \\[4pt]
         F2 & Code Checkout
         & Fetch the repository code into a fresh workspace and branch (via Docker mount).
@@ -41,7 +41,7 @@
         & Open a PR or post a comment on GitHub with the diff and summary metrics.
         & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
         F9 & Logs and Metrics Collection
-        & Provide log files and Metrics with fix-rate, attempt history, timings, token ussage.
+        & Provide log files and Metrics with fix-rate, attempt history, timings, token usage.
         & A metrics file contains fields: issue, success, timings, stages. \\[4pt]
 
         % F1 & Per Issue Workflow

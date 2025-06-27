@@ -1,44 +1,44 @@
 The primary objective of this thesis is to assess the potentials and limitations of our APR pipeline when integrated into a real-world software development lifecycle. We aim to answer the following research question to evaluate the system's capabilities and impact on the software development process: \\
 \textbf{What are the potentials and limitations of integrating an LLM-based automated bug-fixing pipeline into a CI/CD workflow, as measured by repair success rate, end-to-end execution time, and API cost, and how does this integration impact the overall software development lifecycle?}
 
-For awnsering this question we streamlines this process into three phases Preparation, Implementation / Application and Evaluation.
+For answering this question we streamlines this process into three phases Preparation, Implementation / Application and Evaluation.
 
 % \includegraphics{images/}
 
 
 \section{Preparation}
 \subsection{Dataset Selection}
-For the evaluation of the APR integration into the software development lifecycle, we selected the Quixbugs dataset \cite{linQuixBugsMultilingualProgram2017} as our primary benchmark for testing APR integration. This dataset is well-suited for our purposes due to its focus on small-scale software bugs in Python. It consists of 40 algortithmic bugs each in one file consisting of a single erroinums line , each with a correspoding tests for repair validation. Because these bugs where developed as challending problems for developers \cite{linQuixBugsMultilingualProgram2017}, we can evaluate if our system can take over the complex fixing of small bugs without developer intervention to prevent context switching for developers.
+For the evaluation of the APR integration into the software development lifecycle, we selected the Quixbugs dataset \cite{linQuixBugsMultilingualProgram2017} as our primary benchmark for testing APR integration. This dataset is well-suited for our purposes due to its focus on small-scale software bugs in Python. It consists of 40 algorithmic bugs each in one file consisting of a single erroneous line , each with a corresponding tests for repair validation. Because these bugs where developed as challenging problems for developers \cite{linQuixBugsMultilingualProgram2017}, we can evaluate if our system can take over the complex fixing of small bugs without developer intervention to prevent context switching for developers.
 
-Compared to other APR benchmarks like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} Quixbugs is relaivly small which accelerates setup and development.
+Compared to other APR benchmarks like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} Quixbugs is relatively small which accelerates setup and development.
 
-if archieved I will ad swe bench lite later \cite{jimenezSWEbenchCanLanguage2024}
+if achieved I will ad swe bench lite later \cite{jimenezSWEbenchCanLanguage2024}
 
 \subsection{Environment Setup}
-To mirrow realistic software development environment, we prepared the Quixbugs dataset by creating a GitHub repository. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
+To mirror realistic software development environment, we prepared the Quixbugs dataset by creating a GitHub repository. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
 
 We automatically generated a GitHub issue for each bug, using a consistent template that captures just the Title of the Problem. These issues serve as the entry points to our APR pipeline.
 
 \subsection{Requirements Specification}
 
 \section{Pipeline Implementation}
-The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and modularity. Starting with constrcuting the functional and non functional requirements \ref{Requirements} we build the follwing System: 
+The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and modularity. Starting with constructing the functional and non functional requirements \ref{Requirements} we build the following System:
 
 ---IMAGE of HIGH LEVEL System Architecture here
 
-When the system is in place in a target repository. An issue with the default or configured bug label can be created. This trigger trigger will spin up a github action runner which executes the APR pipeline. This Pipeline talkes to the configured LLM Api (google and openai) to localize and fix the bugy files. With the supplied file edits the code is validated and tested. When validation passes the a pull request with the fiels changes is autoamtically opend on the repository, linking the issue and providing details about the repair process. In case of a unsucessfull repair the failure is reported to the issue.
+When the system is in place in a target repository. An issue with the default or configured bug label can be created. This trigger trigger will spin up a github action runner which executes the APR pipeline. This Pipeline takes to the configured LLM Api (google and openai) to localize and fix the bugy files. With the supplied file edits the code is validated and tested. When validation passes the a pull request with the file changes is automatically opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair the failure is reported to the issue.
 
 
 \section{Evaluation}
 
 In this section, we describe how we measure the effectiveness and performance of our APR pipeline when integrated into a real-world CI process, using our QuixBugs repository as a bases.
 
-For Evaluation we will focus on several key metrics to assess the system's performance and abilites in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle. The following metrics are automatically collected and calculated for each run of the APR pipeline:
+For Evaluation we will focus on several key metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle. The following metrics are automatically collected and calculated for each run of the APR pipeline:
 
 % TODO averages for all bugs on each model and compare single issue runs with multiple issue runs - also for with and without multi attempt and feedback
 
 \textbf{Repair Success Rate:} Calculate the percentage of successfully repaired bugs out of the total number of bugs attempted by using test results.
-A sucessfull repair is defined as a bug passesing all tests associated with it.
+A successful repair is defined as a bug passing all tests associated with it.
 
 
 \textbf{Number of Attempts:} Track the number of attempts made by the system to repair each bug with a maximum of 3 attempts.
@@ -47,8 +47,8 @@ A sucessfull repair is defined as a bug passesing all tests associated with it.
 \textbf{Overall Execution Time in CI/CD:} Evaluate the time taken for the system to execute within a CI/CD pipeline, providing insights into its performance in real-world development environments.
 
 
-TODO should I split overall execution and stages into seperate metrics?
-\textbf{Execution Times of Dockerized Agent:} Measure the time taken by the Containerized agent and its stages to execute the repair process and the  execution times of individual stages. 
+TODO should I split overall execution and stages into separate metrics?
+\textbf{Execution Times of Dockerized Agent:} Measure the time taken by the Containerized agent and its stages to execute the repair process and the  execution times of individual stages.
 
 With this CICD overhead can be calculated and bottlenecks can be identified
 
@@ -61,20 +61,20 @@ With this CICD overhead can be calculated and bottlenecks can be identified
 
 % TODO
 explain how these metrics are collected and calculated, including any tools or scripts used to automate the process.
-explain how reapir sucess rate is determined
+explain how repair success rate is determined
 
 % TODO
-ask zhang wether i need to include the evaluation of swe bench lite from the paper or if a ref is enought
+ask zhang wether i need to include the evaluation of swe bench lite from the paper or if a ref is enough
 
 % TODO
 explain statistical methods used to analyze the collected data, such as averages, medians, and standard deviations. This will help in understanding the variability and reliability of the results.
 
 % TODO 
-explain how resuLTS are calcuated for model comparisson
+explain how resuLTS are calculated for model comparison
 
 what I evaluate:
 script execution time + CICD overhead
-one issue vs mutliple issue times
+one issue vs multiple issue times
 model vs model metrics
 costs
-attemps vs no attemps in all these categories
+attempts vs no attempts in all these categories

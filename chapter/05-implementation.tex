@@ -1,6 +1,6 @@
 Here we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous sections. The full code is attached in the \ref{Appendix} appendix.
 
-the goal was to create a system which not only fixes bugs but is also portable /deployable across diffrent repositories and configurable to some extend.
+the goal was to create a system which not only fixes bugs but is also portable /deployable across different repositories and configurable to some extend.
 
 
 System Overview:
@@ -11,43 +11,43 @@ The APR core which hold the core logic for the repair process
 The CI/CD Pipeline which put everything together and integrates the github entrypoint of the target repository with the core logic of the agent.
 
 Configuration Layer
-the porgrams behavour can be altered by adjusting a configuration.
+the programs behavior can be altered by adjusting a configuration.
 A default YAML configuration is in place which allows for controlling:
 - labels
 - workdir
 - branches
 - Attempts
 - LLM models
-addiotnally these is the possiblity to overwrite these values for a single repositiory using a dedicated 'bugfix.yml' configratuon which needs to be placed at the root of the repository.
+Additionally these is the possibility to overwrite these values for a single repository using a dedicated 'bugfix.yml' configuration which needs to be placed at the root of the repository.
 
 \section{System Components}
 \textbf{Agent Core:}\\
 The agent core is written in python and dockerized so its slim and portable.
-the agent core contains the main bugfixing logic.
-To start fixing bugs it needs the following envrioment:
-The repo where to fix files on - provided using docker volumne mount
-the follwing Envrionment Variables:
+the agent core contains the main bug fixing logic.
+To start fixing bugs it needs the following environment:
+The repo where to fix files on - provided using docker volume mount
+the following Environment Variables:
 - Github Token
 - Github Repo
 - LLM API key
 - ISSUE TO PROCESS
 - Github repository
 
-With this envriomnment set the system loops over all issues which are fethced from the envrionment varaibles.
+With this environment set the system loops over all issues which are fetched from the environment variables.
 
 For each issue the main APR logic is executed. This main logic consists of tools and stages:
 ---IMAGE here
-First the worksapce (a new branch based on configraution naming) and a repair context is set up. the context is hing of the program its needed at every step and works as the main data structure for the APR system like memory.
+First the workspace (a new branch based on configuration naming) and a repair context is set up. the context is hing of the program its needed at every step and works as the main data structure for the APR system like memory.
 --- JSON of Context init here:
 A stage uses the context to perform a specific task in the bug fixing process and returns the context with its added context. The stages are: Localize, Fix, Build, Test
 
 
-With a repared workspace the repairprocess start with the localization stage. This stage construct a prompt for the LLM to localize the bug in the codebase. This prompt makes use of a contrsucted hierachy of the repositories fielstrcutre and the issue description. The LLM is expected to return a list of files and lines where the bug is located.
+With a prepared workspace the repair process start with the localization stage. This stage construct a prompt for the LLM to localize the bug in the codebase. This prompt makes use of a constructed hierarchy of the repositories file structure and the issue description. The LLM is expected to return a list of files and lines where the bug is located.
 --- PROMPT
 
 The results are stored in the context.
 
-With the the loclilzed files in the context the fix stages constructs a prompt with the file content and the issue description. the llm can return code or no changes needed.
+With the the localized files in the context the fix stages constructs a prompt with the file content and the issue description. the llm can return code or no changes needed.
 --- Prompt
 these edits are then applied to the files in the workspace. The context is updated with the new file content.
 
@@ -55,15 +55,15 @@ To ensure the changes are properly formatted the the build stages formats the co
 
 Next up the test stage runs tests for the fixes files and attaches these results to the context.
 
-if tests do not pass the system will record a new attempt and start over from the state of the fix stage. Addtionally a feedback is generated using the previous attemps code and results from the context which gets added to the fix prompt.
+if tests do not pass the system will record a new attempt and start over from the state of the fix stage. Additionally a feedback is generated using the previous attempts code and results from the context which gets added to the fix prompt.
 
-if the validation passes or  the maximum number of attemppts is reached the system will either report and unsucessfull repair to the issue or continue to the application steps
+if the validation passes or  the maximum number of attempts is reached the system will either report and unsuccessful repair to the issue or continue to the application steps
 
-on sucessfull repair the follwing steps are executed:
-the fileschanges are commited and a diff file is generated.
-the changes are pushed to the remote repo usign the github token
+on successful repair the following steps are executed:
+the file changes are committed and a diff file is generated.
+the changes are pushed to the remote repo using the github token
 
-a pull requrest is opened with a description of the changes and a link to the issue and more details about tests and some metrics like the number of attempts and the tokens used for the repair process.
+a pull request is opened with a description of the changes and a link to the issue and more details about tests and some metrics like the number of attempts and the tokens used for the repair process.
 
 During execution the core logs its actions, which can be used for debugging and analysis. Furthermore it collects metrics such as the number of attempts, execution time, and token usage, which are essential for evaluating the performance of the APR system. Logs and metrics are saved as .log and json files at the end
 
@@ -73,23 +73,23 @@ The agent core is designed to be modular and extensible, allowing for future enh
 
 \textbf{CI/CD Pipeline:}\\
 The Pipeline is written in YAML acoording to the Github CICD standard. \ref{}
-We will use runners hosted by Github which takes awayt the overhead of managing our own runners but comes at the cost of unknown performance and avaiablity
+We will use runners hosted by Github which takes away the overhead of managing our own runners but comes at the cost of unknown performance and availability
 It is made up of the Triggers and 3 Jobs: 'gate', 'skipped' and 'bugfix'.
 The triggers are set up first and will allow the execution of the APR process.
-Triggers can resutls in two types of runs:
-processing of all bug issues in correct state on manual execution requrest of the workflow (``workflow\_dispatch'') or scheudled execution (``cron'').
-processing a single issue: when an issue is openend and label with the configured labels (``issue\_opened and issue\_labeled '') or when extra information is added or edited on an issue in form of a comment.
+Triggers can results in two types of runs:
+processing of all bug issues in correct state on manual execution request of the workflow (``workflow\_dispatch'') or scheduled execution (``cron'').
+processing a single issue: when an issue is opened and label with the configured labels (``issue\_opened and issue\_labeled '') or when extra information is added or edited on an issue in form of a comment.
 
-The trigger  event information gets passed as envrionment varaibles to the next job
+The trigger  event information gets passed as environment variables to the next job
 ``gate'' which is responsible for evaluating if the issue should be processed or skipped. This job checks the labels and resolves the issue state to determine if the issue is relevant for the APR process.
 If no issues pass this gate the job ``skipped'' is executed, which simply logs that no issues were found to process and exits the workflow.
 
 When the gate outputs issues that should be processed the job ``bugfix'' is executed. This job checks out the current repositiory and mounts it as a volume to the agent core container. Addionally it sets the necessary environment variables mentioned at \ref{}. For the agent to work perimmsions are set on the job level to allow the agent to edit repository content, create pull requests and write issues.
 
-For giving acess to the agent cores logs and metrics the job provides the logs directory as an artifact which is aviaible after the workflow run is completed.
+For giving access to the agent cores logs and metrics the job provides the logs directory as an artifact which is available after the workflow run is completed.
 
 
-for all of this to run the following envrioment secrets need to be deifned in the repo:
+for all of this to run the following environment secrets need to be defined in the repo:
 
 
 \section{System Architecture}
@@ -105,7 +105,7 @@ IMAGE of Figma diagram
 
 secrets that need to be added:
 LLM provider API key, GITHUB TOKEN
-need to anable gituhb actions permission to create pull requests in repo settings
+need to enable GitHub actions permission to create pull requests in repo settings
 
 explain fields:
 
