@@ -1,78 +1,83 @@
-In this section we will provide and overview of the relevant background and context for this thesis. First introducing the software development lifecycle and the rising role of GenAi/LLMs in it. The Second part showcases the evolution and state of APR and explores existing approaches.
+In this section we present the essential theoretical background and context for this thesis. First introducing fundamental concepts in software engineering, the software development lifecycle (SDLC), continuous integration (CI), and the software project hosting platforms. The second part explores the rising role of GenAi/LLMs in software development practices.The third part showcases the evolution and state of APR and explores existing approaches.
 
 \section{Software Engineering}
-The following section introduces the software engineering lifecycle, the role of code hosting platforms, and the importance of Continuous Integration and Continuous Deployment (CI/CD) in modern software development.
+The following section introduces core concepts starting with the software development lifecycle,the importance of Continuous Integration (CI) in modern software development and the role of code hosting platforms.
 \subsection{Software Development Lifecycle}
-Engineering Software is complex and including multiple stages. For structuring this work different software development Lifecycle Models have been introduced. Software Development Lifecycle Models evolve constantly to adapt to the changing needs of creating software. The most promising and widely used model is the Agile Software Development Lifecycle \cite{rupareliaSoftwareDevelopmentLifecycle2010}.
+Engineering and developing software is complex process, consisting of multiple different tasks. For structuring this process software development lifecycle models have been introduced. These models evolve constantly to adapt to the changing needs of creating software. The most promising and widely used model today is the Agile Software Development Lifecycle \cite{rupareliaSoftwareDevelopmentLifecycle2010}.
 
-The Agile lifecycle brings an iterative approach to development, focusing on collaboration, feedback and adaptivity. The Goal frequent delivery of small functional features of software, allowing for continuous improvement and adaptation to changing requirements. Agile can be used with multiple frameworks like Scrum or Kanban but follows a similar approach. \cite{rupareliaSoftwareDevelopmentLifecycle2010}.
+The Agile lifecycle brings an iterative approach to development, focusing on collaboration, feedback and adaptivity. The Goal is frequent delivery of small functional features of software, allowing for continuous improvement and adaptation to changing requirements. Using frameworks like Scrum or Kanban, an Agile iteration can be applied in a development environment\cite{rupareliaSoftwareDevelopmentLifecycle2010}.
 
+\FloatBarrier
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/agile-cycle.png}
+    \includegraphics[width=1\textwidth]{images/agile-cycle.png}
     \caption{Agile Software Development Lifecycle}
     \label{fig:agile-cycle}
 \end{figure}
+\FloatBarrier
 
-A Agile Software Development Lifecycle iteration consists of several key stages like in Figure starting with planning phase where requirements for the iteration are gathered and prioritized.
+An Agile Software Development Lifecycle iteration consists of 6 key stages like in Figure \ref{fig:agile-cycle} starting with planning phase where requirements for the iteration are gathered and prioritized. Secondly the design phase where the architecture and design of the feature is created. The third stage is where the actual development of the prioritized requirements takes place. After that the testing phase follows, where the software is tested for bugs and issues. The fifth stage is deployment, where the software is released to users. Finally, the changes are reviewed in a collaborative way.
 
-Since agile focuses adaptivity arising bugs can alter iterations if prioritized and therefore slow down delivery of features. APR is supposed to help with this problem by accelerating the process of fixing bugs.
----explain how bugs are handled
+When bugs arise during an iteration requirements can be reprioritized and the iteration can be adapted to fix these issues. This adaptivity is a key feature of Agile software development, allowing teams to respond quickly to changing requirements and issues but also slowing down delivery of planed features \cite{rupareliaSoftwareDevelopmentLifecycle2010}.
 
-Software development is moving towards lightly coupled microservices which results in more repositories which are smaller in scale tailored towards a specialized domain. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies.
+Modern software systems are moving towards lightly coupled microservice architectures, which results in more repositories which are smaller in scale tailored towards a specialized domain. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies.
 With this trend developers work on multiple projects at the same time, which can lead to more interruptions and context switching when problems arise and priorities shift.
 
 
 \subsection{Continuous Integration}
+For accelerating the delivery of software in an iteration continuous integration has become a standard in agile software development. The main objective of continuous integration is to accelerate phases 3 and 4 \cite{ugwuezeContinuousIntegrationDeployment2024}. CI allows for frequent code integration into a code repository. Automating steps like building and testing into the development resulting in rapid feedback right where the changes are committed in a shared repository. This supports critical aspects of agile software development, like fast delivery, fast feedback and enhanced collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}.
 
-For accelerating the delivery of software in an iteration continuous integration has become a standard in agile software development.
-
+\FloatBarrier
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/ci-cycle.png}
+    \includegraphics[width=1\textwidth]{images/ci-cycle.png}
     \caption{Continuous Integration Cycle}
     \label{fig:ci-cycle}
 \end{figure}
+\FloatBarrier
 
-Continuous Integration (CI) allows for frequent code integration into a code repository. Ci can integrate steps like automated building and testing into the development resulting in rapid feedback right where the changes committed to the shared repository.
-
-Although CI bring a lot of potential to development it can also have problems which can be long build durations and high maintenance
-
-CI supports aspects like fast delivery, fast feedback, enhanced collaboration which are critical for agile software development. \cite{ugwuezeContinuousIntegrationDeployment2024}
+Although CI bring a lot of potential to agile development it can also has drawbacks. Long build durations and high maintenance. %\cite{}
 
 \subsection{Software Project Hosting Platforms}
-Software projects are hosted on platforms like Github or gitlab. With Github being the most popular and most used %\cite{} 
-These platforms provides tools and feature for the complete software development lifecycle. Project hosting, version control, bug and issue tracking, project management, backups, collaboration, and documentation. \cite{abrahamssonAgileSoftwareDevelopment2017}
+Software projects live on platforms like Github or GitLab. With Github being the most popular and most used for open source %\cite{} 
+These platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities. \cite{abrahamssonAgileSoftwareDevelopment2017}
 
-GitHub has features like Issue tracking for requirements and planning with issues looking like this: %\cite{} githubdoc
----image of issue
-has title, description, comments, labels and more associated information
-
-also provides a manged solution for integrating CI into repositories by writing workflows in YAML files called Github Actions. The pipelines can run on github hosted runners or self hosted runner. A workflow can be triggered by one or more event. One or more jobs can be executed on a provided runner maschiene. A job can consist of multiple steps. \cite{Workflows}
+Github issues are a key feature of Github allowing for project scoped tracking of features, bugs, and tasks. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project.
+\FloatBarrier
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/overview-actions-simple.png}
-    \caption{Simple Action}
-    \label{fig:simple action}
+    \includegraphics[width=1\textwidth]{images/github/GitHub Issue.png}
+    \caption{Example of a GitHub Issue}
+    \label{fig:gh-issue}
 \end{figure}
+\FloatBarrier
 
-Since constant feedback and reviews of code play an important role in agile workflows github also provides a pull request feature. Pull Requests allow for proposal of changes to the codebase, with an integrated review process which allows for collaboration and review before changes are integrated into the production codebase.
-Code changes are displayed in a diff format allowing reviews to see and dig into the changes made.
-This process is essential for maintaining code quality and ensuring that changes are validated before being merged. %\cite{githubdoc}
+For integrating and reviewing code into production GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, providing an integrated review process to validate changes before they are integrated into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format} allowing reviewers to see and dig into the changes made.This process is essential for maintaining code quality and ensuring that changes are validated before being merged. %\cite{githubdoc}
+Pull requests can be linked to Issues, allowing for easy tracking of changes related to specific tasks or bugs. %\cite{githubdoc}
 
-\section{Generative Ai in Software Development}
+GitHub also provides a manged solution (Github Actions) for integrating CI into a repositories by writing CI workflows in YAML files. Workflows can run as CI pipelines on runners hosted by GitHub or self hosted runners. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{Workflows} An example is shown in Figure \ref{fig:gh-workflow}.
+\FloatBarrier
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/overview-actions-simple.png}
+    \caption{Simple Action}
+    \label{fig:gh-workflow}
+\end{figure}
+\FloatBarrier
 
+\section{Generative AI in Software Development}
+This section will cover the role of Generative AI in software development. First we will define Generative AI and Large Language Models (LLMs). The second part will focus on the impact of Generative AI on software development practices.
 \subsection{Generative AI and Large Language Models}
-Gen ai is subfield of Ai
+Generative Artificial Intelligence (Gen AI) is subfield of artificial intelligence and refers to systems that can generate new content based on patterns learned from massive amounts of training data. Advanced machine learning techniques, particularly deep learning, enables these systems to create content such as text, images, or code, that resembles human-generated output.
 
-LLms work using human langague data
+Large Language Models are Generative AI models that are specified for generating text, including natural language and programming code.
 
 relatively new advancement are AI Agents which let LLMs interact with the environment and plan their actions
 
 \subsection{Generative AI in Software Development}
 %TODO Table of models? also mention open source?
-Generative AI is reshaping software development by automating various tasks. Modern large language models have billions of parameters, are pre-trained on massive codebases which results in extraordinary capabilities in this area  \cite{chenUnveilingPitfallsUnderstanding2025}.
-Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions for dirrent tasks \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,bhargavmallampatiRoleGenerativeAI2025}. LLms can generate code in diffrent programmming languages. With python being the to supoorted \cite{}
+Generative AI is reshaping software development by automating various tasks. Modern large language models have billions of parameters, are pre-trained on massive codebases which results in extraordinary capabilities in this area \cite{chenUnveilingPitfallsUnderstanding2025}.
+Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions for dirrent tasks \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,bhargavmallampatiRoleGenerativeAI2025}. LLms can generate code in different programming languages. With python being the to supported %\cite{}
 By using LLMs to enhance these tasks development cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025,kalliamvakouResearchQuantifyingGitHub2022}. Furthermore these tools have positive impacts like improving developer satisfaction and reducing cognitive load \cite{kalliamvakouResearchQuantifyingGitHub2022}.
 
 Although Generative Ai get adopted really quickly in many areas of software development this transition still faces challenges and limitations.
@@ -117,11 +122,11 @@ Semantic based repair,
 
 One of the most outstanding system is Getafix develop and deployed at Meta \cite{baderGetafixLearningFix2019}
 
-Nevertheless tradional systems face significant limitations in scalability and adaptability, struggling to generalize to new scenarios or unseen bugs, or to adapt to evolving codebases. They often required extensive computational resources or manual effort. \cite{puvvadiCodingAgentsComprehensive2025}
+Nevertheless traditional systems face significant limitations in scalability and adaptability, struggling to generalize to new scenarios or unseen bugs, or to adapt to evolving codebases. They often required extensive computational resources or manual effort. \cite{puvvadiCodingAgentsComprehensive2025}
 
 
 \textbf{The emerge of llm based APR:}
-LLM based APR techniques have demonstrated siognificant improvments over all other state of the art technqiues, benfitintting from theor coding knowledge \cite{hossainDeepDiveLarge2024}For that reason LLMs lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}.
+LLM based APR techniques have demonstrated significant improvements over all other state of the art techniques, benefitting from the coding knowledge \cite{hossainDeepDiveLarge2024}For that reason LLMs lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}.
 Common LLMS used for APR include GPT-4, ChatGPT, Codex, CodeLlama, DeepSeek-Coder, and CodeT5 \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024,anandComprehensiveSurveyAIDriven2024}.
 
 Using LLMs diffrent Paradigms have emerged and are being actively researched. These paradigms include:
@@ -148,8 +153,4 @@ Repairing bugs is done on benchmarks or in controlled set up environments and no
 \subsection{APR benchmarks}
 Popular are Quixbugs small bugs in python , Defects4J for java programs and the hardest: SWE Bench based on real world github issues in python repositories
 
-
-\subsection{APR in CI Context}
-
-CI allows seamless integration...
-this way there is no harmful code executed on own machine, its encapsulated multiple times container in Ci runner
+---TABLE of benchmarks, num of issues, languages, size, complexity, etc.
