@@ -1,4 +1,3 @@
-
 In the following section we will showcase the resulting workflow of our prototype and the evaluation results for the Quixbugs benchmark.
 \section{Showcase of workflow}
 To integrate the APR system into a repository living on GitHub we need to move the pipeline with its filter script to the dedicated github action workflow directory.
@@ -26,9 +25,22 @@ After the Workflow finishes metrics and logs are available for download in the a
 ---IMAGE OF LOGS
 
 \section{Evaluation Results}
-comparing different LLMS Models:
-google
-OpenAI
+Our evaluation is based on the data collected during the execution of the prototype. This information is stored in the artifacts of the Github Actions run. Using the \textbf{get\_run\_data.py} script we collected the APR artifacts and the GitHub Pipeline information using the GitHub API. The script then processes the data and generates a report with the results of the evaluation. With the fetched data we calculate the metrics defined in %\ref{Evaluation}.
+
+\begin{table}[ht]
+    \centering
+    \small
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{2cm} p{2cm} p{7cm} p{4cm} @{}}
+        \toprule
+        \textbf{Model} & \textbf{Languages} & \textbf{Description} & \textbf{Difficulty} \\
+        \midrule
+        Quixbugs & Python, Java & 40 small single line bugs in Python code  & Easy \\[6pt]
+        Defects4J & Java & real-world Java bugs & Medium \\[6pt]
+        SWE Bench & Python, JavaScript & Real GitHub defects in software engineering repositories & Hard \\[6pt]
+        \bottomrule
+    \end{tabular*}
+    \caption{Functional requirements (F0--F8)}
+\end{table}
 
 Single Issue Processing:
 CI overhead

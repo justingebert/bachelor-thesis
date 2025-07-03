@@ -7,14 +7,12 @@ Engineering and developing software is complex process, consisting of multiple d
 
 The Agile lifecycle brings an iterative approach to development, focusing on collaboration, feedback and adaptivity. The Goal is frequent delivery of small functional features of software, allowing for continuous improvement and adaptation to changing requirements. Using frameworks like Scrum or Kanban, an Agile iteration can be applied in a development environment\cite{rupareliaSoftwareDevelopmentLifecycle2010}.
 
-\FloatBarrier
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/agile-cycle.png}
     \caption{Agile Software Development Lifecycle}
     \label{fig:agile-cycle}
 \end{figure}
-\FloatBarrier
 
 An Agile Software Development Lifecycle iteration consists of 6 key stages like in Figure \ref{fig:agile-cycle} starting with planning phase where requirements for the iteration are gathered and prioritized. Secondly the design phase where the architecture and design of the feature is created. The third stage is where the actual development of the prioritized requirements takes place. After that the testing phase follows, where the software is tested for bugs and issues. The fifth stage is deployment, where the software is released to users. Finally, the changes are reviewed in a collaborative way.
 
@@ -27,35 +25,33 @@ With this trend developers work on multiple projects at the same time, which can
 \subsection{Continuous Integration}
 For accelerating the delivery of software in an iteration continuous integration has become a standard in agile software development. The main objective of continuous integration is to accelerate phases 3 and 4 \cite{ugwuezeContinuousIntegrationDeployment2024}. CI allows for frequent code integration into a code repository. Automating steps like building and testing into the development resulting in rapid feedback right where the changes are committed in a shared repository. This supports critical aspects of agile software development, like fast delivery, fast feedback and enhanced collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}.
 
-\FloatBarrier
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/ci-cycle.png}
     \caption{Continuous Integration Cycle}
     \label{fig:ci-cycle}
 \end{figure}
-\FloatBarrier
 
 Although CI bring a lot of potential to agile development it can also has drawbacks. Long build durations and high maintenance. %\cite{}
 
-\subsection{Software Project Hosting Platforms}
-Software projects live on platforms like Github or GitLab. With Github being the most popular and most used for open source %\cite{} 
+\subsection{Software Project Hosting Platforms} \label{subsection:Software Project Hosting Platforms}
+Software projects live on platforms like Github or GitLab. With GitHub being the most popular and most used for open source %\cite{} 
 These platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities. \cite{abrahamssonAgileSoftwareDevelopment2017}
 
 Github issues are a key feature of Github allowing for project scoped tracking of features, bugs, and tasks. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project.
-\FloatBarrier
-\begin{figure}[htbp]
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/GitHub Issue.png}
     \caption{Example of a GitHub Issue}
     \label{fig:gh-issue}
 \end{figure}
-\FloatBarrier
 
 For integrating and reviewing code into production GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, providing an integrated review process to validate changes before they are integrated into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format} allowing reviewers to see and dig into the changes made.This process is essential for maintaining code quality and ensuring that changes are validated before being merged. %\cite{githubdoc}
 Pull requests can be linked to Issues, allowing for easy tracking of changes related to specific tasks or bugs. %\cite{githubdoc}
 
-GitHub also provides a manged solution (Github Actions) for integrating CI into a repositories by writing CI workflows in YAML files. Workflows can run as CI pipelines on runners hosted by GitHub or self hosted runners. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{Workflows} An example is shown in Figure \ref{fig:gh-workflow}.
+GitHub also provides a manged solution (Github Actions) for integrating CI into a repositories by writing CI workflows in YAML files. Workflows can run as CI pipelines on runners hosted by GitHub or self hosted runners. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{Workflows} An example is shown in Figure \ref{fig:gh-workflow}. Workflow results and logs can be viewed from multiple points in the GitHub web UI , including the Actions tab, the Pull Request page, and the repository's main page. This integration provides a seamless experience for developers to monitor and manage their CI processes directly within their repositories.
+
 \FloatBarrier
 \begin{figure}[htbp]
     \centering
@@ -68,37 +64,41 @@ GitHub also provides a manged solution (Github Actions) for integrating CI into 
 \section{Generative AI in Software Development}
 This section will cover the role of Generative AI in software development. First we will define Generative AI and Large Language Models (LLMs). The second part will focus on the impact of Generative AI on software development practices.
 \subsection{Generative AI and Large Language Models}
-Generative Artificial Intelligence (Gen AI) is subfield of artificial intelligence and refers to systems that can generate new content based on patterns learned from massive amounts of training data. Advanced machine learning techniques, particularly deep learning, enables these systems to create content such as text, images, or code, that resembles human-generated output.
+Generative Artificial Intelligence (Gen AI) is subfield of artificial intelligence and refers to systems that can generate new content based on patterns learned from massive amounts of training data. Advanced machine learning techniques, particularly deep learning, enable these systems to generate text, images, or code, that resembles human-generated output.
+In the field of natural language processing (NLP) was revolutionized by the Transformer architecture \cite{changSurveyEvaluationLarge2024}. It lays the ground work for Large Language Models which are specialized in text generation. Extensive training data results in Models billions of parameters, allows them to understand and generate human-like text in multiple natural languages and diverse programming languages. However this requires enormous computational resources during training and operation \cite{LLMsWhatsLarge}. A models parameter count has a direct impact on the model's performance, with larger models generally achieving better results in various NLP tasks but also demanding more computational resources %\cite{}. 
+Despite modern LLMs showing promising results, they can still hallucinate incorrect or biased content. \cite{LLMsWhatsLarge}.
 
-Large Language Models are Generative AI models that are specified for generating text, including natural language and programming code.
+To archive a specific task using LLMs designing and providing specific input to the model to guide its output is called prompt engineering. This process is crucial for achieving desired results from LLMs, as the quality and specificity of the prompt directly influences the model's output. The input is constrained by a models context window, which is the maximum amount of text the model can process at once.
 
-relatively new advancement are AI Agents which let LLMs interact with the environment and plan their actions
-
-\subsection{Generative AI in Software Development}
-%TODO Table of models? also mention open source?
-Generative AI is reshaping software development by automating various tasks. Modern large language models have billions of parameters, are pre-trained on massive codebases which results in extraordinary capabilities in this area \cite{chenUnveilingPitfallsUnderstanding2025}.
-Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions for dirrent tasks \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,bhargavmallampatiRoleGenerativeAI2025}. LLms can generate code in different programming languages. With python being the to supported %\cite{}
-By using LLMs to enhance these tasks development cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025,kalliamvakouResearchQuantifyingGitHub2022}. Furthermore these tools have positive impacts like improving developer satisfaction and reducing cognitive load \cite{kalliamvakouResearchQuantifyingGitHub2022}.
-
-Although Generative Ai get adopted really quickly in many areas of software development this transition still faces challenges and limitations.
-LLMs have issues working on tasks that are outside their scope of training or require specific domain knowledge \cite{houLargeLanguageModels2024}.
-Additionally LLMs have limited context windows, which can lead to challenges when working with large codebases or complex projects where context windows are too small ofr true contextual or requirements understanding \cite{bhargavmallampatiRoleGenerativeAI2025}.
-When generating code LLMs can produce incorrect or insecure code, which can lead to further bugs and vulnerabilities in the software \cite{houLargeLanguageModels2024}.
-Generating content or code with LLMs based on training data raises questions about ownership, responsibility and intellectual property rights.
-When it comes to security geneerating code using prompts is vunerable to prompt injection, where unintended instructions are injected at some point and can lead to production of harmful code \cite{}
-
-\cite{bhargavmallampatiRoleGenerativeAI2025, houLargeLanguageModels2024}.
-When generating code based on training data intellectual property issues arise  \cite{sauvolaFutureSoftwareDevelopment2024}
+Popular Large Language Models are offered via APIs but providers like OpenAi, Anthropic and Google, or open source alternatives like X. Table \ref{table:llms} shows a selection of popular LLMs with their characteristics and performance on NLP benchmark X which evaluates X.
+\begin{table}[ht]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} @{}}
+        \toprule
+        \textbf{Model Name} & \textbf{Publisher} & \textbf{Parameters} & \textbf{Context Windows Size} \\
+        \midrule
+        chatgpt & OpenAI & 175B & 1M \\ \hline
+        \bottomrule
+    \end{tabular*}
+    \caption{Large Language Model Examples}
+    \label{table:llms}
+\end{table}
 
 
-recently research and companies is looking into developing solutions which integration LLMs into exisitng software development practices and workflows  \cite{puvvadiCodingAgentsComprehensive2025, dohmkeGitHubCopilotMeet2025, ntroducingCodex, sauvolaFutureSoftwareDevelopment2024}.
+\subsection{Large Language Models in Software Development}
+Large Language Models are reshaping software development by automating various tasks. They have billions of parameters and are pre-trained on massive codebases which results in extraordinary capabilities in this area \cite{chenUnveilingPitfallsUnderstanding2025}. Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,bhargavmallampatiRoleGenerativeAI2025}. By using LLMs to enhance the named tasks development cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025,kalliamvakouResearchQuantifyingGitHub2022}. Furthermore these tools have positive impacts like improving developer satisfaction and reducing cognitive load \cite{kalliamvakouResearchQuantifyingGitHub2022}.
 
-recently more attention is given to integration of AI/ML into CI/CD
-\cite{mohammedAIDrivenContinuousIntegration2024}
+Although Generative AI gets adopted really quickly in many areas of software development this technology still faces limitations. LLMs have challenges working on tasks that are outside their scope of training or require specific domain knowledge \cite{houLargeLanguageModels2024}. Additionally LLMs have limited context windows, which can lead to challenges when working with large codebases or complex projects where context windows are too small for true contextual or requirements understanding \cite{bhargavmallampatiRoleGenerativeAI2025}. When generating code LLMs can produce incorrect or insecure code, which can lead to further bugs and vulnerabilities in the software \cite{houLargeLanguageModels2024, bhargavmallampatiRoleGenerativeAI2025}. Additionally when integrating LLMs into tools can be vulnerable to prompt injection, where unintended instructions are injected at some point and can also lead to production of harmful code \cite{liuPromptInjectionAttack2024}. Code generated by LLMs based on training data also raises questions about ownership, responsibility and intellectual property rights. \cite{sauvolaFutureSoftwareDevelopment2024, houLargeLanguageModels2024}.
+
+Facing these challenges, different approaches have been developed. AI Agents, RAG or interactive approaches are prominent examples. These approaches aim to enhance the capabilities of LLMs by providing additional context, enabling multi-step reasoning, or allowing for interactive feedback loops during code generation and debugging \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025}. Section \ref{subsection:evolution-apr} will go into more detail on these approaches.
+
+Recently research is exploring solutions which integration LLMs into existing software development practices and workflows. \cite{puvvadiCodingAgentsComprehensive2025, dohmkeGitHubCopilotMeet2025, IntroducingCodex, sauvolaFutureSoftwareDevelopment2024}. This happens in tools and on platform where development happens and focuses on for example integrating AI/ML into CI/CD \cite{mohammedAIDrivenContinuousIntegration2024} or into code hosting platforms like GitHub \ref{subsection:Software Project Hosting Platforms}.
 
 \section{Automated Program Repair}
 
-Automated Program Repair (APR) is software that helps detect and repair bugs in code with minimal human intervention. This field has also benefited of the rapid advancements in AI.
+Automated Program Repair (APR) is done by software that helps to detect and repair bugs in code with minimal human intervention.  This field has also benefited of the rapid advancements in AI.
 
 APR system are supposed to take over the process of fixing bugs therefore making more time for developers to focus on more relevant work. \cite{houLargeLanguageModels2024}
 
@@ -106,7 +106,7 @@ Specific bugs can be fixed using a resulting patch from an APR system. For creat
 
 In this section we will provide an overview of the evolution of APR, related work, and the current state of APR systems.
 
-\subsection{Evolution of Automated Program Repair}
+\subsection{Evolution of Automated Program Repair} \label{subsection:evolution-apr}
 We have seen multiple transformations in the field of Automated Program Repair (APR) over the years. This evolution of APR can be categorized into key stages, each marked by significant advancements in techniques and methodologies.
 
 \textbf{Traditional Approaches:}\\
@@ -133,7 +133,8 @@ Using LLMs diffrent Paradigms have emerged and are being actively researched. Th
 
 Retrieval-Augmented Approaches repair bugs with the help of retrieving relevant context during the repair process. This approach allows adding external knowledge to the repair process, enhancing the LLM's ability to understand and fix bugs \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024}.
 
-Agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions. These frameworks recosncturct the cognitve processes using multiple Agents that can generate code with the help of multi-step reasoning, usage of tools for  with Envrioments and Tools \cite{}. Examples for that are SWE-Agent \cite{ \cite{yangSWEagentAgentComputerInterfaces2024}}, FixAgent \cite{leeUnifiedDebuggingApproach2024}, MarsCodeAgent \cite{liuMarsCodeAgentAInative2024}, GitHub Copilot.
+Agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions. These frameworks recosncturct the cognitve processes using multiple Agents that can generate code with the help of multi-step reasoning, usage of tools for  with Envrioments and Tools %\cite{}.
+Examples for that are SWE-Agent \cite{yangSWEagentAgentComputerInterfaces2024}, FixAgent \cite{leeUnifiedDebuggingApproach2024}, MarsCodeAgent \cite{liuMarsCodeAgentAInative2024}, GitHub Copilot.
 
 complex agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
@@ -141,7 +142,6 @@ Interactive approaches make use of LLMs dialogue capabilities to equip patch val
 
 Agentless systems are recent a push towards more lightweight solution, focusing on simplicity and efficiency. These approaches aim to reduce the complexity of APR systems while maintaining effectiveness in bug fixing \cite{xiaAgentlessDemystifyingLLMbased2024}. Furthermore this approach provides clear rails to the LLMS improving the transparency of the bug fixing approach taken.
 These Systems have achieved promising results  with low costs \cite{xiaAgentlessDemystifyingLLMbased2024}
-
 
 % TODO mention codex and copilot??
 
@@ -151,6 +151,24 @@ Repairing bugs takes a lot of computational resources and is time intensive ther
 Repairing bugs is done on benchmarks or in controlled set up environments and not integrated into real world software development workflows \cite{meemExploringExperiencesAutomated2024,puvvadiCodingAgentsComprehensive2025}
 
 \subsection{APR benchmarks}
-Popular are Quixbugs small bugs in python , Defects4J for java programs and the hardest: SWE Bench based on real world github issues in python repositories
+For standardizing evaluation in research of new APR approaches benchmarks have been developed. These benchmarks consist of a set of software bugs and issues, along with their corresponding fixes, which can be used to evaluate the effectiveness of different APR techniques. They are essential for comparing the performance of different APR systems and understanding their strengths and weaknesses.
+Widely used benchmarks are QuixBugs, Defects4J and SWE Bench. %\cite{}
+---
+Table
+\begin{table}[ht]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{2cm} | p{2cm} | p{2cm} | p{5cm} | p{4cm} @{}}
+        \toprule
+        \textbf{Model} & \textbf{Languages} & \textbf{Num of Bugs} & \textbf{Description} & \textbf{Difficulty} \\
+        \midrule
+        Quixbugs & Python, Java & 40 & small single line bugs in Python code  & Easy \\ \hline
+        Defects4J & Java & 854 & real-world Java bugs & Medium \\ \hline
+        SWE Bench & Python, JavaScript & 2294 & Real GitHub defects in software engineering repositories & Hard \\ \hline
+        \bottomrule
+    \end{tabular*}
+    \caption{Functional requirements (F0--F8)}
+\end{table}
 
 ---TABLE of benchmarks, num of issues, languages, size, complexity, etc.
