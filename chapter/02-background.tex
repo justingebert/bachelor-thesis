@@ -1,8 +1,10 @@
 In this section we present the essential theoretical background and context for this thesis. First introducing fundamental concepts in software engineering, the software development lifecycle (SDLC), continuous integration (CI), and the software project hosting platforms. The second part explores the rising role of GenAi/LLMs in software development practices.The third part showcases the evolution and state of APR and explores existing approaches.
 
 \section{Software Engineering}
+
 The following section introduces core concepts starting with the software development lifecycle,the importance of Continuous Integration (CI) in modern software development and the role of code hosting platforms.
 \subsection{Software Development Lifecycle}
+
 Engineering and developing software is complex process, consisting of multiple different tasks. For structuring this process software development lifecycle models have been introduced. These models evolve constantly to adapt to the changing needs of creating software. The most promising and widely used model today is the Agile Software Development Lifecycle \cite{rupareliaSoftwareDevelopmentLifecycle2010}.
 
 The Agile lifecycle brings an iterative approach to development, focusing on collaboration, feedback and adaptivity. The Goal is frequent delivery of small functional features of software, allowing for continuous improvement and adaptation to changing requirements. Using frameworks like Scrum or Kanban, an Agile iteration can be applied in a development environment\cite{rupareliaSoftwareDevelopmentLifecycle2010}.
@@ -21,8 +23,8 @@ When bugs arise during an iteration requirements can be reprioritized and the it
 Modern software systems are moving towards lightly coupled microservice architectures, which results in more repositories which are smaller in scale tailored towards a specialized domain. This trend is driven by the need for flexibility, scalability, and faster development cycles. Smaller code repositories allow teams to work on specific components or services independently, reducing dependencies and enabling quicker iterations. This approach aligns with modern software development practices, such as microservices architecture and agile methodologies.
 With this trend developers work on multiple projects at the same time, which can lead to more interruptions and context switching when problems arise and priorities shift.
 
-
 \subsection{Continuous Integration}
+
 For accelerating the delivery of software in an iteration continuous integration has become a standard in agile software development. The main objective of continuous integration is to accelerate phases 3 and 4 \cite{ugwuezeContinuousIntegrationDeployment2024}. CI allows for frequent code integration into a code repository. Automating steps like building and testing into the development resulting in rapid feedback right where the changes are committed in a shared repository. This supports critical aspects of agile software development, like fast delivery, fast feedback and enhanced collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}.
 
 \begin{figure}[H]
@@ -35,6 +37,7 @@ For accelerating the delivery of software in an iteration continuous integration
 Although CI bring a lot of potential to agile development it can also has drawbacks. Long build durations and high maintenance. %\cite{}
 
 \subsection{Software Project Hosting Platforms} \label{subsection:Software Project Hosting Platforms}
+
 Software projects live on platforms like Github or GitLab. With GitHub being the most popular and most used for open source %\cite{} 
 These platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities. \cite{abrahamssonAgileSoftwareDevelopment2017}
 
@@ -50,20 +53,20 @@ Github issues are a key feature of Github allowing for project scoped tracking o
 For integrating and reviewing code into production GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, providing an integrated review process to validate changes before they are integrated into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format} allowing reviewers to see and dig into the changes made.This process is essential for maintaining code quality and ensuring that changes are validated before being merged. %\cite{githubdoc}
 Pull requests can be linked to Issues, allowing for easy tracking of changes related to specific tasks or bugs. %\cite{githubdoc}
 
-GitHub also provides a manged solution (Github Actions) for integrating CI into a repositories by writing CI workflows in YAML files. Workflows can run as CI pipelines on runners hosted by GitHub or self hosted runners. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{Workflows} An example is shown in Figure \ref{fig:gh-workflow}. Workflow results and logs can be viewed from multiple points in the GitHub web UI , including the Actions tab, the Pull Request page, and the repository's main page. This integration provides a seamless experience for developers to monitor and manage their CI processes directly within their repositories.
+GitHub also provides a manged solution (Github Actions) for integrating CI into a repositories by writing CI workflows in YAML files. Workflows can run as CI pipelines on runners hosted by GitHub or self hosted runners. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{Workflows} An example is shown in Figure \ref{fig:gh-workflow}. Workflow results and logs can be viewed from multiple points in the GitHub web UI, including the Actions tab, the Pull Request page, and the repository's main page. This integration provides a seamless experience for developers to monitor and manage their CI processes directly within their repositories.
 
-\FloatBarrier
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/overview-actions-simple.png}
     \caption{Simple Action}
     \label{fig:gh-workflow}
 \end{figure}
-\FloatBarrier
 
 \section{Generative AI in Software Development}
+
 This section will cover the role of Generative AI in software development. First we will define Generative AI and Large Language Models (LLMs). The second part will focus on the impact of Generative AI on software development practices.
 \subsection{Generative AI and Large Language Models}
+
 Generative Artificial Intelligence (Gen AI) is subfield of artificial intelligence and refers to systems that can generate new content based on patterns learned from massive amounts of training data. Advanced machine learning techniques, particularly deep learning, enable these systems to generate text, images, or code, that resembles human-generated output.
 In the field of natural language processing (NLP) was revolutionized by the Transformer architecture \cite{changSurveyEvaluationLarge2024}. It lays the ground work for Large Language Models which are specialized in text generation. Extensive training data results in Models billions of parameters, allows them to understand and generate human-like text in multiple natural languages and diverse programming languages. However this requires enormous computational resources during training and operation \cite{LLMsWhatsLarge}. A models parameter count has a direct impact on the model's performance, with larger models generally achieving better results in various NLP tasks but also demanding more computational resources %\cite{}. 
 Despite modern LLMs showing promising results, they can still hallucinate incorrect or biased content. \cite{LLMsWhatsLarge}.
@@ -75,11 +78,11 @@ Popular Large Language Models are offered via APIs but providers like OpenAi, An
     \centering
     \small
     \renewcommand{\arraystretch}{1.5}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} | p{2cm} @{}}
         \toprule
-        \textbf{Model Name} & \textbf{Publisher} & \textbf{Parameters} & \textbf{Context Windows Size} \\
+        \textbf{Model Name} & \textbf{Publisher} & \textbf{Parameters} & \textbf{Context Window Size} & \textbf{Cost per 1M} \\
         \midrule
-        chatgpt & OpenAI & 175B & 1M \\ \hline
+        chatgpt & OpenAI & 175B & 1M & 1\$ \\ \hline
         \bottomrule
     \end{tabular*}
     \caption{Large Language Model Examples}
@@ -88,6 +91,7 @@ Popular Large Language Models are offered via APIs but providers like OpenAi, An
 
 
 \subsection{Large Language Models in Software Development}
+
 Large Language Models are reshaping software development by automating various tasks. They have billions of parameters and are pre-trained on massive codebases which results in extraordinary capabilities in this area \cite{chenUnveilingPitfallsUnderstanding2025}. Tools like Github Copilot, OpenAI Codex, and ChatGPT have become popular in the software development community, providing developers with AI-powered code suggestions and completions \cite{bhargavmallampatiRoleGenerativeAI2025}. These tools get applied in various stages of the software development lifecycle, including requirement engineering, code generation, debugging, refactoring, and testing \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025,bhargavmallampatiRoleGenerativeAI2025}. By using LLMs to enhance the named tasks development cycle times can be reduced by up to 30 percent \cite{bhargavmallampatiRoleGenerativeAI2025,kalliamvakouResearchQuantifyingGitHub2022}. Furthermore these tools have positive impacts like improving developer satisfaction and reducing cognitive load \cite{kalliamvakouResearchQuantifyingGitHub2022}.
 
 Although Generative AI gets adopted really quickly in many areas of software development this technology still faces limitations. LLMs have challenges working on tasks that are outside their scope of training or require specific domain knowledge \cite{houLargeLanguageModels2024}. Additionally LLMs have limited context windows, which can lead to challenges when working with large codebases or complex projects where context windows are too small for true contextual or requirements understanding \cite{bhargavmallampatiRoleGenerativeAI2025}. When generating code LLMs can produce incorrect or insecure code, which can lead to further bugs and vulnerabilities in the software \cite{houLargeLanguageModels2024, bhargavmallampatiRoleGenerativeAI2025}. Additionally when integrating LLMs into tools can be vulnerable to prompt injection, where unintended instructions are injected at some point and can also lead to production of harmful code \cite{liuPromptInjectionAttack2024}. Code generated by LLMs based on training data also raises questions about ownership, responsibility and intellectual property rights. \cite{sauvolaFutureSoftwareDevelopment2024, houLargeLanguageModels2024}.
@@ -98,77 +102,72 @@ Recently research is exploring solutions which integration LLMs into existing so
 
 \section{Automated Program Repair}
 
-Automated Program Repair (APR) is done by software that helps to detect and repair bugs in code with minimal human intervention.  This field has also benefited of the rapid advancements in AI.
+Automated Program Repair (APR) is used to detect and repair bugs in code with minimal human intervention. \cite{zhangSurveyLearningbasedAutomated2024} APR systems are supposed to take over the process of fixing bugs, reducing load for developers and making time to focus on more relevant work. \cite{houLargeLanguageModels2024}
 
-APR system are supposed to take over the process of fixing bugs therefore making more time for developers to focus on more relevant work. \cite{houLargeLanguageModels2024}
+Using APR systems specific bugs can be fixed using a generated patch. Working patches are usually generated using a 3 stage approach: First localizing the bug. Then repairing the bug, in the end validation decides where the bug will be passed on \cite{zhangSurveyLearningbasedAutomated2024, baderGetafixLearningFix2019}. This approach is similar to the bug fixing process of a developer, where the bug is first identified, then fixed, and finally tested and reviewed to ensure the fix works as intended. An example of an APR system being applied at scale is Getafix, which is used at Meta to automatically fix common bugs in their production codebase \cite{baderGetafixLearningFix2019}.
 
-Specific bugs can be fixed using a resulting patch from an APR system. For creating working patches APR takes a 3 stage approach: First localizing the bug. Then repairing the bug, in the end validation decides where the bug will be passed on.\cite{}
+The field of Automated program repair also greatly benefited of the rapid advancements in AI. With new research and benchmarks setting new standards in the field.\cite{puvvadiCodingAgentsComprehensive2025,houLargeLanguageModels2024}
 
-In this section we will provide an overview of the evolution of APR, related work, and the current state of APR systems.
+In this section we will provide an overview of the evolution of APR, related work, and the current state of APR systems. Followed by a display of the most common APR benchmarks used in research.
 
 \subsection{Evolution of Automated Program Repair} \label{subsection:evolution-apr}
-We have seen multiple transformations in the field of Automated Program Repair (APR) over the years. This evolution of APR can be categorized into key stages, each marked by significant advancements in techniques and methodologies.
 
-\textbf{Traditional Approaches:}\\
-Prior APR approaches were based on version control history, using the history to roll back to a previous version of the code part, where no issues were present. This approach, while effective in some cases, often lacked the ability to preserve new features. (more like instant rollback)
+We have seen multiple paradigm shifts in the field of Automated Program Repair (APR) over the years. This evolution of APR can be categorized into key stages, each marked by significant advancements in techniques and methodologies.
 
-Template based systems relied on predefined template for transformations of commonly known bugs. Templates applied predefined transformations to the code based on fixed rules. This approach had limited the flexibility and adaptability in a quickly transforming software landscape. \cite{puvvadiCodingAgentsComprehensive2025}
+\textbf{Traditional Approaches:}
 
-%TODO
-Search based repair,
+Traditional APR approaches typically rely on manual crafted rules and predefined pattern. \cite{liuMarsCodeAgentAInative2024, xiaAutomatedProgramRepair2023,yinThinkRepairSelfDirectedAutomated2024}. These methods are generally classified into three main categories: search based, constraint/semantic based, and template-based repair techniques.
 
-%TODO
-Semantic based repair,
+\textbf{Search based repair} searches for the correct predefined patch in a large search space. \cite{liuMarsCodeAgentAInative2024, huCanGPTO1Kill2024,zhangPATCHEmpoweringLarge2025} A popular example is GenProg, which uses genetic algorithms to evolve patches by mutating existing code and selecting based on fitness determined by test cases \cite{legouesGenProgGenericMethod2012}.
 
-One of the most outstanding system is Getafix develop and deployed at Meta \cite{baderGetafixLearningFix2019}
+\textbf{Semantics / constraint based repair} synthesizes patches using constraint solvers to based on semantic information of the program and tests. \cite{liuMarsCodeAgentAInative2024, mechtaevAngelixScalableMultiline2016} Angelix being a prominent example. \cite{mechtaevAngelixScalableMultiline2016}.
 
-Nevertheless traditional systems face significant limitations in scalability and adaptability, struggling to generalize to new scenarios or unseen bugs, or to adapt to evolving codebases. They often required extensive computational resources or manual effort. \cite{puvvadiCodingAgentsComprehensive2025}
+\textbf{Template based repair} relies on mined templates for transformations of known bugs. \cite{xiaAutomatedProgramRepair2023} Templates are mined from previous human produced bug fixes.\cite{xiaAutomatedProgramRepair2023, yinThinkRepairSelfDirectedAutomated2024}. Getafix being an example of an industrially deployed tool learning recurring fix pattern form past fixes \cite{baderGetafixLearningFix2019}
+
+Traditional systems face significant limitations in scalability and adaptability. They struggle to generalize to new and unseen bugs, or to adapt to evolving codebases. Often requiring extensive computational resources and manual effort. \cite{puvvadiCodingAgentsComprehensive2025, xiaAutomatedProgramRepair2024}
 
 
-\textbf{The emerge of llm based APR:}
-LLM based APR techniques have demonstrated significant improvements over all other state of the art techniques, benefitting from the coding knowledge \cite{hossainDeepDiveLarge2024}For that reason LLMs lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025}.
-Common LLMS used for APR include GPT-4, ChatGPT, Codex, CodeLlama, DeepSeek-Coder, and CodeT5 \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024,anandComprehensiveSurveyAIDriven2024}.
+\textbf{Learning based Approaches:}
 
-Using LLMs diffrent Paradigms have emerged and are being actively researched. These paradigms include:
+Learning based APR introduced machine learning techniques to the field, improving the number and variety of bugs that can be fixed. Deep neural networks using bug fixing patterns from historical fixes as training data, learn how to generate patches to "translate" buggy code into correct code \cite{xiaAutomatedProgramRepair2023, tangLargeLanguageModels2024}. A prominent of a learning based APR system is CoCoNut \cite{lutellierCoCoNuTCombiningContextaware2020}, Recoder \cite{zhuSyntaxguidedEditDecoder2021}. Despite significant advancements these methods are limited by training data and struggle with unseen bugs. \cite{xiaLessTrainingMore2022}
 
-Retrieval-Augmented Approaches repair bugs with the help of retrieving relevant context during the repair process. This approach allows adding external knowledge to the repair process, enhancing the LLM's ability to understand and fix bugs \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024}.
+\textbf{The emerge of LLM based APR:}
 
-Agent based system improve fixing abilites by probiding llms the ability to interact with the code base and the environment, allowing them to plan their actions. These frameworks recosncturct the cognitve processes using multiple Agents that can generate code with the help of multi-step reasoning, usage of tools for  with Envrioments and Tools %\cite{}.
-Examples for that are SWE-Agent \cite{yangSWEagentAgentComputerInterfaces2024}, FixAgent \cite{leeUnifiedDebuggingApproach2024}, MarsCodeAgent \cite{liuMarsCodeAgentAInative2024}, GitHub Copilot.
+The explosive growth of LLMs has transformed the APR space. LLM based APR techniques have demonstrated significant improvements over all other state of the art techniques, benefitting from the coding knowledge \cite{hossainDeepDiveLarge2024}. For that reason LLMs lay the groundwork of a new APR paradigm \cite{chenUnveilingPitfallsUnderstanding2025, anandComprehensiveSurveyAIDriven2024}.
 
-complex agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
+Different approaches leveraging LLMs have emerged and are being actively researched. These include:
 
-Interactive approaches make use of LLMs dialogue capabilities to equip patch validation with instant feedback. This feedback is used to refine the generated patches trying to archive better results. This process takes a more dynamic and iterative approach. \cite{xiaAutomatedProgramRepair2024}
+\textbf{Retrieval-Augmented approaches} repair bugs with the help of retrieving relevant context during the repair process. For example code documentation stored in a vector database \cite{puvvadiCodingAgentsComprehensive2025}. This approach allows access to  external knowledge in the repair process, enhancing the LLM's ability to understand and fix bugs \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024}.
 
-Agentless systems are recent a push towards more lightweight solution, focusing on simplicity and efficiency. These approaches aim to reduce the complexity of APR systems while maintaining effectiveness in bug fixing \cite{xiaAgentlessDemystifyingLLMbased2024}. Furthermore this approach provides clear rails to the LLMS improving the transparency of the bug fixing approach taken.
-These Systems have achieved promising results  with low costs \cite{xiaAgentlessDemystifyingLLMbased2024}
+\textbf{Interactive/Conversational approaches} make use of LLMs dialogue capabilities to provide patch validation with instant feedback. \cite{xiaAutomatedProgramRepair2024, huCanGPTO1Kill2024} This feedback is used to iterate and refine generated patches with the goal of archive better results. \cite{xiaAutomatedProgramRepair2024}
 
-% TODO mention codex and copilot??
+\textbf{Agent based system} improve bug localization and fixing by equipping LLMs with the ability to access external environments, operate tools (like file editors, terminals, web search engines), and make autonomous decisions. \cite{anandComprehensiveSurveyAIDriven2024, puvvadiCodingAgentsComprehensive2025, mengEmpiricalStudyLLMbased2024} Using multi-step reasoning these frameworks reconstruct the cognitive processes of developers using multiple specialized agents. \cite{rondonEvaluatingAgentbasedProgram2025,zhangPATCHEmpoweringLarge2025, leeUnifiedDebuggingApproach2024}. Examples include SWE-Agent \cite{yangSWEagentAgentComputerInterfaces2024}, FixAgent \cite{leeUnifiedDebuggingApproach2024}, MarsCodeAgent \cite{liuMarsCodeAgentAInative2024}, GitHub Copilot.
 
-Common problems currently faced by state of the art APR system are:
-Exsiting system are overly complex with limited transparency and control over the bug fixing process.\cite{xiaAgentlessDemystifyingLLMbased2024,puvvadiCodingAgentsComprehensive202, houLargeLanguageModels2024}
-Repairing bugs takes a lot of computational resources and is time intensive therefore producing significant costs  \cite{sobaniaAnalysisAutomaticBug2023,puvvadiCodingAgentsComprehensive2025}
-Repairing bugs is done on benchmarks or in controlled set up environments and not integrated into real world software development workflows \cite{meemExploringExperiencesAutomated2024,puvvadiCodingAgentsComprehensive2025}
+\textbf{Agentless systems} are a recent push towards more lightweight solutions, focusing on simplicity and efficiency. These approaches aim to reduce the complexity of APR systems by cutting complex multi-agent coordination and decision making, while maintaining effectiveness in bug fixing \cite{xiaAgentlessDemystifyingLLMbased2024,puvvadiCodingAgentsComprehensive2025}. This approach provides clear rails to the LLMs improving transparency of the bug fixing approach. Using 3 steps localization, repair, validation promising results with low costs have been achieved using this paradigm \cite{xiaAgentlessDemystifyingLLMbased2024, mengEmpiricalStudyLLMbased2024}.
+
+Commonly used LLMs for the mentioned APR techniques include ChatGPT, Codex, CodeLlama, DeepSeek-Coder, and CodeT5 \cite{houLargeLanguageModels2024, yinThinkRepairSelfDirectedAutomated2024,anandComprehensiveSurveyAIDriven2024}.
+
+Despite significant advancement state of the art APR system still face challenges and limitations. Existing system suffer from complexity with limited transparency and control over the bug fixing process.\cite{xiaAgentlessDemystifyingLLMbased2024,puvvadiCodingAgentsComprehensive2025, houLargeLanguageModels2024} The bug fixing process bugs takes a lot of computational resources and is time intensive making the program repair expensive \cite{sobaniaAnalysisAutomaticBug2023, puvvadiCodingAgentsComprehensive2025}. APR system are build and applied in controlled environments making APR unreachable for developers  since they cant be integrated into real world software development workflow and projects\cite{meemExploringExperiencesAutomated2024,puvvadiCodingAgentsComprehensive2025}
 
 \subsection{APR benchmarks}
-For standardizing evaluation in research of new APR approaches benchmarks have been developed. These benchmarks consist of a set of software bugs and issues, along with their corresponding fixes, which can be used to evaluate the effectiveness of different APR techniques. They are essential for comparing the performance of different APR systems and understanding their strengths and weaknesses.
-Widely used benchmarks are QuixBugs, Defects4J and SWE Bench. %\cite{}
----
-Table
+For standardizing evaluation in research of new APR approaches benchmarks have been developed. These benchmarks consist of a set of software bugs and issues, along with their corresponding fixes or tests, which can be used to evaluate the effectiveness of different APR techniques. \cite{anandComprehensiveSurveyAIDriven2024} They are essential for comparing the performance of different APR systems and understanding their strengths and weaknesses. \cite{puvvadiCodingAgentsComprehensive2025} APR benchmarks are available for different programming languages with popular ones being QuixBugs \cite{linQuixBugsMultilingualProgram2017}, Defects4J \cite{justDefects4JDatabaseExisting2014}, ManyBugs \cite{legouesManyBugsIntroClassBenchmarks2015} and SWE Bench \cite{jimenezSWEbenchCanLanguage2024}. \cite{wangSoftwareDevelopmentLife2025}
+
 \begin{table}[ht]
     \centering
     \small
     \renewcommand{\arraystretch}{1.5}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{2cm} | p{2cm} | p{2cm} | p{5cm} | p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{2.5cm} | p{2cm} | p{1.5cm} | p{5cm} | p{4cm} @{}}
         \toprule
-        \textbf{Model} & \textbf{Languages} & \textbf{Num of Bugs} & \textbf{Description} & \textbf{Difficulty} \\
+        \textbf{Model} & \textbf{Languages} & \textbf{Number of Bugs} & \textbf{Description} & \textbf{Difficulty} \\
         \midrule
-        Quixbugs & Python, Java & 40 & small single line bugs in Python code  & Easy \\ \hline
+        QuixBugs & Python, Java & 40 & small single line bugs  & Easy \\ \hline
         Defects4J & Java & 854 & real-world Java bugs & Medium \\ \hline
-        SWE Bench & Python, JavaScript & 2294 & Real GitHub defects in software engineering repositories & Hard \\ \hline
+        ManyBugs & C & 185 & real-world C bugs & Medium \\ \hline
+        SWE Bench & Python & 2294 & Real GitHub repository defects & Hard \\
+        \hline
+        SWE Bench Lite & Python & 300 & selected real GitHub defects & Hard \\
         \bottomrule
     \end{tabular*}
-    \caption{Functional requirements (F0--F8)}
+    \caption{Overview of APR Benchmarks}
+    \label{table:benchmarks}
 \end{table}
-
----TABLE of benchmarks, num of issues, languages, size, complexity, etc.
