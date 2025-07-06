@@ -1,15 +1,19 @@
 \section{Validity}
+
 - Quixbugs a small dataset, not representative of real world software development
 - only python, not representative of real world software development
 - but shows the potential of applying llm based agents in a real world CD/CD environment
+External QuixBugs only, internal non-deterministic LLM, construct tests is not complete oracle
 
 \section{Potentials}
 - can take over small tasks in encapsulated environment without intervention
 - small models can solve more problems with retrying with feedback
 - this concept is applicable to other python repositories
 - configuration makes it adjustable to different repositories and environments
+- similar results to other approaches -> is feasible
 
-complex agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
+
+agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
 \ref{houLargeLanguageModels2024}
 - accelerate bug fixing
@@ -19,12 +23,12 @@ complex agent architectures produce good results epically paired with containeri
 \section{Limitations}
 - github actions from github have a lot of computational noise
 - workflow runs on every issue and therefor has some ci minute overhead this could be solved by using a github app which replies on webhook events
-
 -- SECURITY ISSUE: Prompt injection in issue: CI/CD makes this a bit safer?
 
-- its limit to small issues
+- its limited to small issues
 
 \section{Summary of Findings}
+
 \section{Lessons Learned}
 - ai is a fast moving field with a lot of noise
 
@@ -33,3 +37,4 @@ complex agent architectures produce good results epically paired with containeri
 - Service Accounts for better and more transparent integration
 - try out complex agent architectures and compare metrics and results
 - try out more complex bug fixing tasks - SWE bench
+- concurrency and parallelization of tasks

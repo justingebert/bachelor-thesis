@@ -1,24 +1,26 @@
-Here we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous sections. The full code is attached in the \ref{Appendix} appendix.
+In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous sections. The full code is attached in the \ref{Appendix} appendix.
 
-the goal was to create a system which not only fixes bugs but is also portable /deployable across different repositories and configurable to some extend.
+The goal was to create a system which not only fixes bugs but is also portable /deployable across different repositories and configurable to some extend.
+
+The resulting system consists of two main components. The \textbf{APR core} which hold the core logic for the repair process and lives inside a docker image, making it portable and easy to deploy. The second component is the \textbf{CI/CD Pipeline} which integrates the core logic with the GitHub repository. It serves as the entry point and orchestrates the execution of the APR core based on issues and configured triggers in the repository.
+
+To fulfill requirement X some of the systems behavior can be controlled by adjusting a configuration. A configuration is optional when no configuration is in place the system will use default configuration which is defined in the code. The configuration is written in YAML and can be placed at the root of the repository. This allows for easy customization of the system without changing the code itself. The configuration file is named 'bugfix.yml' and is read by the APR core and CI Pipeline during execution. The configuration allows for controlling labels, workdir, branches, attempts and LLM models used for the repair process. 
+\begin{table}[ht]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{5cm} | p{4cm} @{}}
+        \toprule
+        \textbf{Configuration Field} & \textbf{Description} \\
+        
+        \midrule
+        \bottomrule
+    \end{tabular*}
+    \caption{Overview of APR Benchmarks}
+    \label{table:configuration}
+\end{table}
 
 
-System Overview:
-
-The system Consists of two main components:
-The APR core which hold the core logic for the repair process
-
-The CI/CD Pipeline which put everything together and integrates the github entrypoint of the target repository with the core logic of the agent.
-
-Configuration Layer
-the programs behavior can be altered by adjusting a configuration.
-A default YAML configuration is in place which allows for controlling:
-- labels
-- workdir
-- branches
-- Attempts
-- LLM models
-Additionally these is the possibility to overwrite these values for a single repository using a dedicated 'bugfix.yml' configuration which needs to be placed at the root of the repository.
 
 \section{System Components}
 \textbf{Agent Core:}\\

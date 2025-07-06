@@ -1,87 +1,86 @@
-- for this prototype we constructed Requirements which the system shall satisfy
-- we split into functional requirements: t.3.1 (EXPLAINATION), nonfunctional Requirements combined with security requirements
+For development we developed the following requirements which guide the implementation and design of the prototype.
+Following the INVEST model \cite{10.5555/984017} we constructed functional \ref{tab:functional-requirements} and nonfunctional \ref{tab:non-functional-requirements} requirements.
 
-- these requirements allow for better planning and prioritization during development.
-- the satisfaction of all the requirements will allow for evaluation of the integration into the software development lifecycle
-
--- add on what bases these requirements where constructed
+These requirements allow for better planning and prioritization during implementation and tracked progress.
 
 \section{Functional Requirements}
 
-\begin{table}[ht]
-    \centering
-    \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{0.2cm} p{2cm} p{7cm} p{4cm} @{}}
-        \toprule
-        \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
-        \midrule
+\renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
+\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
+    \caption{Functional requirements (F0--F8)} \label{tab:functional-requirements} \\
+
+    \toprule
+    \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
+    \midrule
+    \endfirsthead
+
+    \bottomrule
+    \endfoot
         F0 & Multi Trigger
-        & The Pipeline can be triggered: manually, scheduled via cron, or by GitHub issue creation/labeling.
-        & Runs can be found for these triggers \\[4pt]
+        & The Pipeline can be triggered: manually, scheduled via cron or by issue creation/labeling.
+        & Runs can be found for these triggers \\ \hline
         F1 & Issue Gathering
         & Retrieve GitHub repository issues and filter them for correct state and configured labels \texttt{BUG}.
-        & \texttt{gate} logs list of fetched issues.  \\[4pt]
+        & \texttt{gate} logs list of fetched issues.  \\ \hline
         F2 & Code Checkout
         & Fetch the repository code into a fresh workspace and branch (via Docker mount).
-        & After F1, workspace/ contains the correct source files. \\[4pt]
+        & After F2, workspace/ contains the correct source files. \\\hline
         F3 & Issue Localization
         & Use LLM to analyze the issue description and identify relevant files.
-        & LLM output contains file paths with files that shall be edited. \\[4pt]
+        & LLM output contains file paths with files that shall be edited. \\\hline
         F4 & Fix Generation
         & Use LLM to edit the identified files.
-        & LLM output contains adjusted content for the identified files. \\[4pt]
+        & LLM output contains adjusted content for the identified files. \\\hline
         F5 & Change Validation
         & Run format, lint and relevant tests and capture pass/fail status.
-        & Logs show build and test results. \\[4pt]
+        & Logs/Context shows build and test results. \\\hline
         F6 & Iterative Patch Generation (retry logic)
-        & If F4 reports failures, retry F4--F5 up to X times.
-        & After retries, either F4 passes or fails with no further retries. \\[4pt]
-        F7 & Apply Patch
-        & Commit LLM-generated edits and generate patch.
-        & Git history shows a new commit which is referencing the Github issue \\[4pt]
+        & If F5 reports failures, retry F4-F5 up to \texttt{max\_attempts} times.
+        & After retries, either F4 passes or fails with no further retries. \\\hline
+        F7 & Patch Application
+        & Commit LLM-generated edits to the issue branch.
+        & Git shows a new branch with a commit referencing the Github issue \\\hline
         F8 & Result Reporting
-        & Open a PR or post a comment on GitHub with the diff and summary metrics.
-        & A PR or comment appears for each issue, showing diff and summary. \\[4pt]
+        & Open a PR or post a comment on GitHub with the diff.
+        & A PR or appears for each issue, showing diff and summary. \\\hline
         F9 & Logs and Metrics Collection
         & Provide log files and Metrics with fix-rate, attempt history, timings, token usage.
-        & A metrics file contains fields: issue, success, timings, stages. \\[4pt]
+        & A metrics file contains fields: issue, success, timings, stages. \\
 
         % F1 & Per Issue Workflow
         % & Execute F1--F4 for each fetched issue in sequence and aggregate results.
-        % & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\[4pt]
+        % & For N issues, produce N PRs (or "no-fix" comments) and N metric entries. \\\hline
         % F12 & GitHub Integration
         % & Use the GitHub API (with \texttt{GITHUB\_TOKEN}) to list issues, create branches, open PRs, and post comments.
-        % & All GitHub API calls succeed without manual intervention. \\ [4pt]
-        \bottomrule
-    \end{tabular*}
-    \caption{Functional requirements (F0--F8)}
-\end{table}
+        % & All GitHub API calls succeed without manual intervention. \\ \hline
+\end{longtable}
 
 \section{Non-Functional Requirements}
 
-\begin{table}[ht]
-    \centering
-    \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{0.2cm} p{2cm} p{7cm} p{4cm} @{}}
-        \toprule
-        \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
-        \midrule
+\renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
+\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
+    \caption{Non-Functional (N1--N5) requirements} \label{tab:non-functional-requirements} \\
+
+    \toprule
+    \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
+    \midrule
+    \endfirsthead
+
+    \bottomrule
+    \endfoot
         N1 & Containerized Execution
-        & All agent code runs in CI runner in a Docker container to isloate it.
-        & Workflow shows Docker container usage \\[4pt]
+        & All APR code runs in CI runner in a Docker container.
+        & Workflow shows Docker container usage \\\hline
         N2 & Configurability
         & User can specify issue labels, branches, attempts, LLM models via YAML.
-        & Changing the config file alters agent behavior accordingly. \\[4pt]
+        & Changing the config file alters agent behavior accordingly. \\\hline
         N3 & Portability
-        & The system can be deployed on any repository on GitHub.
-        & ??? \\[4pt]
+        & The system can be deployable on any repository on GitHub.
+        & ??? \\\hline
         N4 & Reproducibility
         & Runs are deterministic given identical repo state and config.
-        & Multiple runs on the same issue report similar metrics. \\[4pt]
-        N5 & Oberability
-        & The system provides logs and metrics for each run, including execution times, token usage and success rate.
-        & Logs and metrics files are generated after each run, containing all relevant data. \\[4pt]
-        \bottomrule
-    \end{tabular*}
-    \caption{Non-Functional (N1--N5) requirements}
-\end{table}
+        & Multiple runs on the same issue report similar metrics. \\\hline
+        N5 & Observability
+        & The system provides logs and metrics.
+        & Logs and metrics files are generated after each run. \\
+\end{longtable}
