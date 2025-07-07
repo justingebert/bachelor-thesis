@@ -1,6 +1,6 @@
 In the following section we will showcase the resulting workflow of our prototype and the evaluation results for our repository containing the QuixBugs benchmark problems.
 \section{Showcase of workflow}
-%TODO reference to requirements
+
 To integrate the APR system into a repository living on GitHub we need to move the pipeline with its filter script to the dedicated github action workflow directory.
 ---IMAGE OF WORKFLOW IN PLACE
 % \begin{figure}[H]
@@ -67,6 +67,15 @@ After the Workflow finishes metrics and logs are available for download in the a
 %     \caption{Example of a GitHub Issue}
 %     \label{fig:gh-issue}
 % \end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/flowcharts/flow.png}
+    \caption{flow}
+    \label{fig:flow}
+\end{figure}
+
 
 \section{Evaluation Results}
 Our evaluation is based on the data collected during the execution of the prototype. This information is stored in the artifacts of the Github Actions run. Using the \textbf{get\_run\_data.py} script we collected the APR artifacts and the GitHub Pipeline information using the GitHub API. The script then processes the data and generates a report with the results of the evaluation. With the fetched data we calculate the metrics defined in %\ref{Evaluation}.
