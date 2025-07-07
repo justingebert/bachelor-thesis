@@ -83,15 +83,30 @@ Our evaluation is based on the data collected during the execution of the protot
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{4cm} | p{2cm} | p{3cm} | p{4cm} | p{4cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{3cm} | p{3cm} | p{3cm} @{}}
         \toprule
-        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost} & \textbf{Average Number of Attempts} & Average Execution Time \\
+        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost} & \textbf{Average Number of Attempts} & \textbf{Average Execution Time} \\
         \midrule
         \textbf{gemini-2.0-flash} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gemini-2.5-flash} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gemini-2.5-flash-lite} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gemini-2.5-pro} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gpt-4o} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gpt-4.1-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{claude-3-7-sonnet} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{claude-3-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{claude-sonnet-4-0} & 0.00\% & 0.00 & 0.00 & 0.00s \\
         \bottomrule
     \end{tabular*}
     \caption{Results of evaluation}
 \end{table}
 
+"gpt-4o": {"input": 2.50, "output": 10.00},
+"gpt-4.1-mini": {"input": 0.40, "output": 1.60},
+"claude-3-7-sonnet": {"input": 3.00, "output": 15.00},
+"claude-3-haiku": {"input": 0.25, "output": 1.25},
+"claude-sonnet-4-0": {"input": 3, "output": 15.00},
+
+full artifacts are available in the repository in the Appendix \ref{Appendix}.
 
 with small models and attempt loop makes small models pass the whole benchmark?

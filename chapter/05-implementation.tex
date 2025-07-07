@@ -2,7 +2,7 @@ In this section we break down the implementation of the system into its core com
 
 The goal was to create a system which not only fixes bugs but is also portable /deployable across different repositories and configurable to some extend.
 
-The resulting system consists of two main components. The \textbf{APR core} which hold the core logic for the repair process and lives inside a docker image, making it portable and easy to deploy. The second component is the \textbf{CI/CD Pipeline} which integrates the core logic within a GitHub repository. It serves as the entry point and orchestrates the execution of the APR core based on issues and configured triggers in the repository.
+The resulting system consists of two main components. The \textbf{APR core} which hold the core logic for the repair process and lives inside a docker image, making it portable and easy to deploy. The second component is the \textbf{Continuous Integration Pipeline} which integrates the core logic within a GitHub repository. It serves as the entry point and orchestrates the execution of the APR core based on issues and configured triggers in the repository.
 
 \section{System Components}
 
@@ -124,9 +124,14 @@ During execution the APR core logs its actions, which can be used for debugging 
 
 The agent core is designed to be modular and extensible, allowing for future enhancements and additional stages or tools to be integrated as needed. It is also designed to be lightweight, ensuring that it can run efficiently within a CI/CD environment.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/flowcharts/apr-core.png}
+    \caption{APR Core Logic}
+    \label{fig:apr-core}
+\end{figure}
 
-
-\textbf{CI/CD Pipeline:}
+\textbf{Continuous Integration Pipeline:}
 
 The Github Action Workflow integrates the APR core into the desired GitHub repository. It is written in YAML\footnote{todo} according to the Github Action standard. %\ref{} 
 We will use runners provided and hosted by Github which takes away the overhead of managing our own runners but comes at the cost of unknown performance and availability. %\cite{}
@@ -140,6 +145,13 @@ The Workflow is made up of multiple triggers and jobs. Triggers work by using ev
 The trigger event information gets passed as environment variables to the first job. ``gate'' uses this data to evaluating if the issue should be processed or skipped using a python script (filter\_issues.py). This script checks the labels and resolves the issue state to determine if the issue is relevant for the APR process. If no issues pass this ``gate'' the job ``skipped'' is executed, which simply logs that no issues were found to process and exits the workflow. When issues pass the ``gate'' the ``bugfix'' job is started.  This job is responsible for executing the APR core logic. It provides necessary prerequisites for the APR core Docker container to run \ref{tab:container-inputs} and perform the repair. This includes checking out and mounting the repository, setting up environment variables, and providing the necessary permissions for the core to edit repository content, create pull requests, and write issues.
 
 For giving access to the agent cores logs and metrics the job provides the logs directory as an artifact which is available after the workflow run is completed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/flowcharts/ci.png}
+    \caption{APR Core Logic}
+    \label{fig:ci}
+\end{figure}
 
 To use this workflow in a repository, it needs to be placed in the `.github/workflows` directory of the repository along with the `filter\_issues.py` in `.github/scripts`.
 The following adjustments need to be made to the repository:
