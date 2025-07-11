@@ -27,7 +27,34 @@ For the evaluation of our APR integration, we selected the QuixBugs benchmark \c
 
 Compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} QuixBugs is relatively small which allows for accelerated setup and development.
 
-\subsection{Environment Setup}
+\subsection{LLM Selection} \label{subsection:llm-selection}
+For the evaluation of our APR system we will test several LLM models. multiple smaller models for this benchmark to. these models are to have fast response times and low costs. For that we will compare a wide selection of recent (point 11.07.2025) models from different providers. The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The selected models are:
+\begin{table}[ht]
+    \centering
+    \small
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} | p{2cm}  @{}}
+        \hline
+        \textbf{Model Name} & \textbf{Publisher} & \textbf{Context Window Size} & \textbf{Cost per 1M} \\
+        \hline
+        \textbf{gemini-2.0-flash} & Google & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gemini-2.5-flash-lite} & Google & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gemini-2.5-flash} & Google & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gemini-2.5-pro} & Google & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gpt-4.1-nano} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gpt-4.1-mini} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gpt-4o} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{o4-mini} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{claude-3-haiku} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{claude-3-5-haiku} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{claude-3-7-sonnet} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{claude-sonnet-4-0} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
+        \hline
+    \end{tabular*}
+    \caption{Selection of Large Language Models}
+    \label{table:llms}
+\end{table}
+
+\subsection{Environment Setup} \label{subsection:environment-setup}
 To mirror realistic software development environment, we prepared a GitHub repository containing the QuixBugs datasets python files. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
 
 Using the relevant files we generate a GitHub issue for each bug, using a consistent template that captures only the title of the Problem. These issues serve as the entry points and communication medium to our APR pipeline.
@@ -65,17 +92,17 @@ When the system is in place in a target repository the pipeline can automaticall
 
 \section{Evaluation} \label{section:evaluation}
 
-In this section, we describe how we measure the effectiveness and performance of our APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with our QuixBugs repository as a bases.
+In this section, we describe how we measure the effectiveness, performance and cost of our APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with our QuixBugs repository as a bases.  For this evaluation we selected a set of LLM models to be used for the APR process.
 
 We focus on several key data metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle.
 
-For evaluating the effectiveness of the LLM model used and approach the determine the repair success rate. A success of an issue is determined by validation and the complete test suite provided by QuixBugs. If both pass the issue is considered repaired.
+For evaluating the effectiveness of the LLM model used and approach the determine the repair success rate. A success of an issue is determined by validation and the complete test suite provided by QuixBugs. An issues is considered successfully repaired when the validation passes with correct syntax and the test suite passes all tests.
 
 Furthermore we will evaluate wether multiple attempts to repair an issue improve the repair success rate and how the number of attempts relates to the cost of repairing an issue.
 
 For evaluating feasibility and performance evaluation we will analyze collected aggregated and fine grained timings and costs of a repair attempt.
 
-The following data is automatically collected by each run of the APR pipeline. Using self developed scripts we collect the data from different sources for each run. Using this data to calculate the metrics defined in \ref{table:calculations}
+The following data is automatically collected by each run of the APR pipeline. Using self developed scripts we collect the data from different sources for each run. Using this data to calculate the results defined in \ref{table:calculations}
 
 \begin{table}[ht]
     \centering
@@ -112,7 +139,7 @@ Data collected for each issue processed by the APR core:
         Repair Successful & Boolean indicating whether the repair was successful. Tr & APR Core \\ \hline
         Number of Attempts & Total attempts made & APR Core \\ \hline
         Execution Time & Total time taken to process the issue, including all stages & APR Core \\ \hline
-        Tokens Used & Number of tokens consumed by the LLM during the repair process & APR Core \\ \hline
+        Tokens Used & Number of tokens consumed by the LLM during the repair process & LLM API \\ \hline
         Cost & Cost associated with the repair process, calculated based on tokens and execution time & APR Core \\ \hline
         Stage Information & Details about each stage of the repair process, including execution time and outcome & APR Core \\
         \bottomrule

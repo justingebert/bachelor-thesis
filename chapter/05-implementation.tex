@@ -133,6 +133,7 @@ The agent core is designed to be modular and extensible, allowing for future enh
 
 \textbf{Continuous Integration Pipeline:}
 
+%TODO add the runner operating system linux x64 
 The Github Action Workflow integrates the APR core into the desired GitHub repository. It is written in YAML\footnote{todo} according to the Github Action standard. %\ref{} 
 We will use runners provided and hosted by Github which takes away the overhead of managing our own runners but comes at the cost of unknown performance and availability. %\cite{}
 The Workflow is made up of multiple triggers and jobs. Triggers work by using events happening in the GitHub repository and serve as the entry point for executing the jobs. Given the triggers the workflow can is executed two different ways:

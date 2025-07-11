@@ -1,25 +1,38 @@
-Using the results of the evaluation and 
+In this section, we will discuss the results of the evaluation of our prototype and put it into context to answer the research questions. First evaluating the validity of our findings, the potential of our approach, its limitations, and summarize the lessons learned. Finally, we will outline a roadmap for future extensions of our work.
 
-\section{Validity}
+\section{Validity} \label{section:validity}
+The results from the evaluation are very promising but still face some limitations to the validity of the results.
 
-- Quixbugs a small dataset, not representative of real world software development
-- only python, not representative of real world software development
-- but shows the potential of applying llm based agents in a real world CD/CD environment
-External QuixBugs only, internal non-deterministic LLM, construct tests is not complete oracle
+%TODO cite
+Because the repair process is based on LLMs, which are non-deterministic by design, executions can vary in their results. Furthermore speed and availability of the tested LLMs is highly dependant on the providers APIs which can account for varying execution times during high traffic times. In addition, the system was executed on GitHub provided GitHub Actions runners included in the GitHub free Limits. Therefore the performance metrics reflect GitHubs cloud-hosted CI environments. While allowing quick iterations and setup this limits the feasibility of absolute, execution times and costs.
+
+The bases of evaluation is the QuixBugs benchmark which consists of 40 single line issues each in a separate file. This dataset is not fully representative of real-world software development, as it only covers a small niche from the complexity and variety of bugs that can arise in larger codebases.
+In addition we assume that the tests show reliable correctness of a tested program. Although QuixBugs provides extensive tests for the size of the programs, these do not guarantee full behavioral equivalence with the ground truth. Consequently, a generated patch may pass the tests while being semantically incorrect.
+
+We partially offset these limitations by evaluating against twelve diverse LLMs that are likely to translate to larger datasets and other CI platforms. But testing on larger benchmarks like Defects4J and SWE-Bench are required before drawing conclusions about real-world effectiveness.
+
+The results demonstrate that an LLM based automated bug fixing pipeline can be integrated into a CI workflow and achieve non-trivial repair rates at with minimal time effort and low cost.
+Nevertheless, the threats outlined above delimit the scope of that claim. More benchmarks and programming languages are necessary to fully validate the approach in production scale settings.
 
 \section{Potentials}
+
 - can take over small tasks in encapsulated environment without intervention
+- the workflow shows that bugs can be fixed by just adding a label to an issue
 - small models can solve more problems with retrying with feedback
 - no description is needed to solve small issues
 - this concept is applicable to other python repositories
 - configuration makes it adjustable to different repositories and environments
 - similar results to other approaches -> is feasible
 
+the results show promising reapir effectiveness of X\% up the cheapest model X
+
 - combines agentless and a bit of interactive but interactivity is limited due to timings but can resemble real world remote environment
 
 -with small models and attempt loop makes small models pass the whole benchmark?
 
 agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
+
+- the framework is model agnostic and as LLMs get better the
 
 \ref{houLargeLanguageModels2024}
 - accelerate bug fixing
@@ -28,7 +41,7 @@ agent architectures produce good results epically paired with containerized envi
 
 \section{Limitations}
 - github actions from github have a lot of computational noise
-- workflow runs on every issue and therefor has some ci minute overhead this could be solved by using a github app which replies on webhook events
+- workflow runs on every issue and therefor has some ci minute overhead this could be solved by using a github
 -- SECURITY ISSUE: Prompt injection in issue: CI/CD makes this a bit safer?
 - its limited to small issues
 
@@ -43,3 +56,4 @@ agent architectures produce good results epically paired with containerized envi
 - try out complex agent architectures and compare metrics and results
 - try out more complex bug fixing tasks - SWE bench
 - concurrency and parallelization of tasks
+- app which replies on webhook events

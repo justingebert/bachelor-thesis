@@ -69,26 +69,11 @@ This section will cover the role of Generative AI in software development. First
 
 Generative Artificial Intelligence (Gen AI) is subfield of artificial intelligence and refers to systems that can generate new content based on patterns learned from massive amounts of training data. Advanced machine learning techniques, particularly deep learning, enable these systems to generate text, images, or code, that resembles human-generated output.
 In the field of natural language processing (NLP) was revolutionized by the Transformer architecture \cite{changSurveyEvaluationLarge2024}. It lays the ground work for Large Language Models which are specialized in text generation. Extensive training data results in Models billions of parameters, allows them to understand and generate human-like text in multiple natural languages and diverse programming languages. However this requires enormous computational resources during training and operation \cite{LLMsWhatsLarge}. A models parameter count has a direct impact on the model's performance, with larger models generally achieving better results in various NLP tasks but also demanding more computational resources %\cite{}. 
-Despite modern LLMs showing promising results, they can still hallucinate incorrect or biased content. \cite{LLMsWhatsLarge}.
+Despite modern LLMs showing promising results in text generation, they can still hallucinate incorrect or biased content. \cite{LLMsWhatsLarge}.
 
 To archive a specific task using LLMs designing and providing specific input to the model to guide its output is called prompt engineering. This process is crucial for achieving desired results from LLMs, as the quality and specificity of the prompt directly influences the model's output. The input is constrained by a models context window, which is the maximum amount of text the model can process at once.
 
-Popular Large Language Models are offered via APIs but providers like OpenAi, Anthropic and Google, or open source alternatives like X. Table \ref{table:llms} shows a selection of popular LLMs with their characteristics and performance on NLP benchmark X which evaluates X.
-\begin{table}[ht]
-    \centering
-    \small
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} | p{2cm} @{}}
-        \toprule
-        \textbf{Model Name} & \textbf{Publisher} & \textbf{Parameters} & \textbf{Context Window Size} & \textbf{Cost per 1M} \\
-        \midrule
-        chatgpt & OpenAI & 175B & 1M & 1\$ \\ \hline
-        \bottomrule
-    \end{tabular*}
-    \caption{Large Language Model Examples}
-    \label{table:llms}
-\end{table}
-
+Popular Large Language Models are offered via APIs but providers like OpenAi, Anthropic and Google, or open source alternatives like X. A comparison of popular LLMs is shown in Table \ref{table:llms}.
 
 \subsection{Large Language Models in Software Development}
 

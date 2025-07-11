@@ -16,34 +16,34 @@ These requirements allow for better planning and prioritization during implement
 
     \bottomrule
     \endfoot
-        F0 & Multi Trigger
+        F0 \label{f0} & Multi Trigger
         & The Pipeline can be triggered: manually, scheduled via cron or by issue creation/labeling.
         & Runs can be found for these triggers \\ \hline
-        F1 & Issue Gathering
+        F1 \label{f1} & Issue Gathering
         & Retrieve GitHub repository issues and filter them for correct state and configured labels \texttt{BUG}.
         & \texttt{gate} logs list of fetched issues.  \\ \hline
-        F2 & Code Checkout
+        F2 \label{f2} & Code Checkout
         & Fetch the repository code into a fresh workspace and branch (via Docker mount).
         & After F2, workspace/ contains the correct source files. \\\hline
-        F3 & Issue Localization
+        F3 \label{f3} & Issue Localization
         & Use LLM to analyze the issue description and identify relevant files.
         & LLM output contains file paths with files that shall be edited. \\\hline
-        F4 & Fix Generation
+        F4 \label{f4} & Fix Generation
         & Use LLM to edit the identified files.
         & LLM output contains adjusted content for the identified files. \\\hline
-        F5 & Change Validation
+        F5 \label{f5} & Change Validation
         & Run format, lint and relevant tests and capture pass/fail status.
         & Logs/Context shows build and test results. \\\hline
-        F6 & Iterative Patch Generation (retry logic)
+        F6 \label{f6} & Iterative Patch Generation (retry logic)
         & If F5 reports failures, retry F4-F5 up to \texttt{max\_attempts} times.
         & After retries, either F4 passes or fails with no further retries. \\\hline
-        F7 & Patch Application
+        F7 \label{f7} & Patch Application
         & Commit LLM-generated edits to the issue branch.
         & Git shows a new branch with a commit referencing the Github issue \\\hline
-        F8 & Result Reporting
+        F8 \label{f8} & Result Reporting
         & Open a PR or post a comment on GitHub with the diff.
         & A PR or appears for each issue, showing diff and summary. \\\hline
-        F9 & Logs and Metrics Collection
+        F9 \label{f9} & Logs and Metrics Collection
         & Provide log files and Metrics with fix-rate, attempt history, timings, token usage.
         & A metrics file contains fields: issue, success, timings, stages. \\
 
@@ -68,19 +68,19 @@ These requirements allow for better planning and prioritization during implement
 
     \bottomrule
     \endfoot
-        N1 & Containerized Execution
+        N1 \label{n0} & Containerized Execution
         & All APR code runs in CI runner in a Docker container.
         & Workflow shows Docker container usage \\\hline
-        N2 & Configurability
+        N2 \label{n1} & Configurability
         & User can specify issue labels, branches, attempts, LLM models via YAML.
         & Changing the config file alters agent behavior accordingly. \\\hline
-        N3 & Portability
+        N3 \label{n2} & Portability
         & The system can be deployable on any repository on GitHub.
         & ??? \\\hline
-        N4 & Reproducibility
+        N4 \label{n3} & Reproducibility
         & Runs are deterministic given identical repo state and config.
         & Multiple runs on the same issue report similar metrics. \\\hline
-        N5 & Observability
+        N5 \label{n4} & Observability
         & The system provides logs and metrics.
         & Logs and metrics files are generated after each run. \\
 \end{longtable}
