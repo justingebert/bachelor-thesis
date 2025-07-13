@@ -12,7 +12,7 @@ The Agile lifecycle brings an iterative approach to development, focusing on col
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/agile-cycle.png}
-    \caption{Agile Software Development Lifecycle}
+    \caption{Agile software development lifecycle}
     \label{fig:agile-cycle}
 \end{figure}
 
@@ -30,7 +30,7 @@ For accelerating the delivery of software in an iteration continuous integration
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/ci-cycle.png}
-    \caption{Continuous Integration Cycle}
+    \caption{Continuous Integration cycle}
     \label{fig:ci-cycle}
 \end{figure}
 
@@ -58,7 +58,7 @@ GitHub also provides a manged solution (Github Actions) for integrating CI into 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/overview-actions-simple.png}
-    \caption{Simple Action}
+    \caption{Building blocks of a Github Action}
     \label{fig:gh-workflow}
 \end{figure}
 
@@ -145,17 +145,16 @@ For standardizing evaluation in research of new APR approaches benchmarks have b
     \small
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{2.5cm} | p{2cm} | p{1.5cm} | p{5cm} | p{4cm} @{}}
-        \toprule
+        \hline
         \textbf{Model} & \textbf{Languages} & \textbf{Number of Bugs} & \textbf{Description} & \textbf{Difficulty} \\
         \midrule
         QuixBugs & Python, Java & 40 & small single line bugs  & Easy \\ \hline
         Defects4J & Java & 854 & real-world Java bugs & Medium \\ \hline
         ManyBugs & C & 185 & real-world C bugs & Medium \\ \hline
-        SWE Bench & Python & 2294 & Real GitHub repository defects & Hard \\
-        \hline
+        SWE Bench & Python & 2294 & Real GitHub repository defects & Hard \\\hline
         SWE Bench Lite & Python & 300 & selected real GitHub defects & Hard \\
-        \bottomrule
+        \hline
     \end{tabular*}
-    \caption{Overview of APR Benchmarks}
+    \caption{Overview of APR benchmarks}
     \label{table:benchmarks}
 \end{table}

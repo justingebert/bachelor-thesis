@@ -157,8 +157,8 @@ For giving access to the agent cores logs and metrics the job provides the logs 
 To use this workflow in a repository, it needs to be placed in the `.github/workflows` directory of the repository along with the `filter\_issues.py` in `.github/scripts`.
 The following adjustments need to be made to the repository:
 \begin{itemize}
-    \item Add Secrets: LLM provider API key, GITHUB TOKEN
-    \item enable GitHub actions permission to create pull requests in repo settings
+    \item Add Secret: LLM provider API key
+    \item enable GitHub actions permission to create pull requests in repo settings -> actions -> General -> Workflow permissions (12.07.2025)
 \end{itemize}
 
 
@@ -192,3 +192,7 @@ To fulfill requirement X some of the systems behavior can be controlled by adjus
 
 
 The full implementation is listed in Appendix~\ref{Appendix}
+
+\section{Requirement Validation}
+
+The following sections outline how each requirement was satisfied.

@@ -7,14 +7,14 @@ These requirements allow for better planning and prioritization during implement
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
 \begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
-    \caption{Functional requirements (F0--F8)} \label{tab:functional-requirements} \\
+    \caption{Functional requirements} \label{tab:functional-requirements} \\
 
-    \toprule
+    \hline
     \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
-    \midrule
+    \hline
     \endfirsthead
 
-    \bottomrule
+    \hline
     \endfoot
         F0 \label{f0} & Multi Trigger
         & The Pipeline can be triggered: manually, scheduled via cron or by issue creation/labeling.
@@ -59,14 +59,14 @@ These requirements allow for better planning and prioritization during implement
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
 \begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
-    \caption{Non-Functional (N1--N5) requirements} \label{tab:non-functional-requirements} \\
+    \caption{Non-Functional requirements} \label{tab:non-functional-requirements} \\
 
-    \toprule
+    \hline
     \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
-    \midrule
+    \hline
     \endfirsthead
 
-    \bottomrule
+    \hline
     \endfoot
         N1 \label{n0} & Containerized Execution
         & All APR code runs in CI runner in a Docker container.

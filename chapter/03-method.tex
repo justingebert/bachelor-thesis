@@ -11,7 +11,7 @@ For answering these questions we streamlined this process into three phases Prep
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/flowcharts/method.png}
-    \caption{Thesis Method Overview}
+    \caption{Thesis methodology approach}
     \label{fig:method-overview}
 \end{figure}
 
@@ -32,27 +32,29 @@ For the evaluation of our APR system we will test several LLM models. multiple s
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3cm} | p{2cm} | p{2cm} | p{4cm} | p{2cm}  @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{4cm} | p{3cm}  @{}}
         \hline
-        \textbf{Model Name} & \textbf{Publisher} & \textbf{Context Window Size} & \textbf{Cost per 1M} \\
+        \textbf{Model Name} & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens} & \textbf{Benchmark performance}\\
         \hline
-        \textbf{gemini-2.0-flash} & Google & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gemini-2.5-flash-lite} & Google & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gemini-2.5-flash} & Google & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gemini-2.5-pro} & Google & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gpt-4.1-nano} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gpt-4.1-mini} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{gpt-4o} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{o4-mini} & OpenAI & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{claude-3-haiku} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{claude-3-5-haiku} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{claude-3-7-sonnet} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
-        \textbf{claude-sonnet-4-0} & Anthropic & 128k & input: \$0.10 output: \$0.40 \\
+        \textbf{gemini-2.0-flash-lite} & Google & 1,048,576 & input: \$0.075 output: \$0.30 & X \\ \hline
+        \textbf{gemini-2.0-flash} & Google & 1,048,576 & input: \$0.15 output: \$0.60 & X \\ \hline
+        \textbf{gemini-2.5-flash-preview} & Google & 1,000,000 & input: \$0.10 output: \$0.40 & X \\ \hline
+        \textbf{gemini-2.5-flash} & Google & 1,048,576 & input: \$0.30 output: \$2.50 & X\\ \hline
+        \textbf{gemini-2.5-pro} & Google & 1,048,576 & input: \$1.25 output: \$10.00 & X\\ \hline
+        \textbf{gpt-4.1-nano} & OpenAI & 1,047,576 & input: \$0.10 output: \$0.40 & X \\ \hline
+        \textbf{gpt-4.1-mini} & OpenAI & 1,047,576 & input: \$0.40 output: \$1.60 & X \\ \hline
+        \textbf{gpt-4.1} & OpenAI & 1,047,576 & input: \$2.00 output: \$8.00 & X \\ \hline
+        \textbf{o4-mini} & OpenAI & 200,000 & input: \$1.10 output: \$4.40 & X \\ \hline
+        \textbf{claude-3-haiku} & Anthropic & 200,000 & input: \$0.25 output: \$1.25 & X \\ \hline
+        \textbf{claude-3-5-haiku} & Anthropic & 200,000 & input: \$0.80 output: \$4.00  & X\\ \hline
+        \textbf{claude-3-7-sonnet} & Anthropic & 200,000 & input: \$3.00 output: \$15.00 & X \\ \hline
+        \textbf{claude-sonnet-4-0} & Anthropic & 200,000 & input: \$3.00 output: \$15.00 & X\\
         \hline
     \end{tabular*}
-    \caption{Selection of Large Language Models}
+    \caption{Characteristics of selected Large Language Models}
     \label{table:llms}
 \end{table}
+
 
 \subsection{Environment Setup} \label{subsection:environment-setup}
 To mirror realistic software development environment, we prepared a GitHub repository containing the QuixBugs datasets python files. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
@@ -77,14 +79,14 @@ The Automated Bug Fixing Pipeline was developed using iterative prototyping and 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/high-level.png}
-    \caption{High-Level Overview of the APR Pipeline}
+    \caption{High-Level overview of the APR Pipeline}
     \label{fig:high-level}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/agent-core-high-level.png}
-    \caption{High-Level Overview of the APR Core}
+    \caption{High-Level overview of the APR Core}
     \label{fig:apr-core-high-level}
 \end{figure}
 
@@ -109,9 +111,9 @@ The following data is automatically collected by each run of the APR pipeline. U
     \small
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{4cm} | p{6cm} | p{4cm} @{}}
-        \toprule
+        \hline
         \textbf{Metric} & \textbf{Description} & \textbf{Source} \\
-        \midrule
+        \hline
         Run ID & Unique identifier for each run of a Workflow & Github Action Env \\ \hline
         Model Used & LLM model used for the repair process & Configuration File \\ \hline
         Configuration & Configuration details, including LLM Model and settings & Target Github repository  \\ \hline
@@ -119,9 +121,9 @@ The following data is automatically collected by each run of the APR pipeline. U
         Execution Time & Total time taken for the run & APR Core \\ \hline
         Job Execution Times & Time taken for each job in the pipeline & Github API \\ \hline
         Issues Processed & Information of Issues processed in the run \ref{table:issue-metrics} & APR Core \\
-        \bottomrule
+        \hline
     \end{tabular*}
-    \caption{Run Metrics Collected for each execution}
+    \caption{Run metrics collected for each execution}
     \label{table:run-metrics}
 \end{table}
 
@@ -132,9 +134,9 @@ Data collected for each issue processed by the APR core:
     \small
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{4cm} | p{6cm} | p{4cm} @{}}
-        \toprule
+        \hline
         \textbf{Metric} & \textbf{Description} & \textbf{Source} \\
-        \midrule
+        \hline
         Issue ID & Unique identifier of the issue processed & Github Issue ID \\ \hline
         Repair Successful & Boolean indicating whether the repair was successful. Tr & APR Core \\ \hline
         Number of Attempts & Total attempts made & APR Core \\ \hline
@@ -142,9 +144,9 @@ Data collected for each issue processed by the APR core:
         Tokens Used & Number of tokens consumed by the LLM during the repair process & LLM API \\ \hline
         Cost & Cost associated with the repair process, calculated based on tokens and execution time & APR Core \\ \hline
         Stage Information & Details about each stage of the repair process, including execution time and outcome & APR Core \\
-        \bottomrule
+        \hline
     \end{tabular*}
-    \caption{Run Metrics Collected for each issue}
+    \caption{Metrics collected for each processed issue}
     \label{table:issue-metrics}
 \end{table}
 
@@ -155,21 +157,20 @@ An attempt to repair an issue consists of multiple stages during the repair proc
     \small
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{4cm} | p{6cm} | p{4cm} @{}}
-        \toprule
+        \hline
         \textbf{Metrics} & \textbf{Description} & \textbf{Source} \\
-        \midrule
+        \hline
         Stage ID & Unique identifier for each stage in the repair process & APR Core \\ \hline
         Stage Execution Time & Time taken for each stage of the repair process & APR Core \\ \hline
         Stage Outcome & Outcome of each stage, indicating success, warning or failure & APR Core \\ \hline
         Stage Details & Additional details, such as error or warnings messages & APR Core \\
-        \bottomrule
+        \hline
     \end{tabular*}
-    \caption{Run Metrics Collected for each stage}
+    \caption{Metrics collected for each stage of an issue repair attempt}
     \label{table:stage-metrics}
 \end{table}
 
-Using this data we calculate the following metrics for each LLM model:
-%TODO add models
+Using this data we calculate the following metrics for each run of the system. This data will be calculated for each run using a different LLM model from the set of selected models \ref{subsection:llm-selection}. The metrics will be used to answer the research questions and evaluate the performance of the APR system. The following table summarizes the metrics and their calculations:
 
 %TODO add calculations and check if all metrics are needed or evaluation
 
@@ -178,9 +179,9 @@ Using this data we calculate the following metrics for each LLM model:
     \small
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{5cm} | p{10cm} @{}}
-        \toprule
+        \hline
         \textbf{Metrics} &  \textbf{Calculation} \\
-        \midrule
+        \hline
         Repair Success Rate & Number of Successful Repairs / Total Issues Processed \\ \hline
         Average Number of Attempts & Total Attempts / Total Issues Processed \\ \hline
         Average Execution Time & Total Execution Time / Total Issues Processed \\ \hline
@@ -188,8 +189,8 @@ Using this data we calculate the following metrics for each LLM model:
         Average Cost & Total Cost / Total Issues Processed \\ \hline
         Average Stage Execution Time & Total Stage Execution Time / Total Stages Processed \\ \hline
         Average Stage Outcome Success Rate & Number of Successful Stages / Total Stages Processed \\
-        \bottomrule
+        \hline
     \end{tabular*}
-    \caption{Metrics Calculated from the collected data}
+    \caption{Evaluation metrics calculated from the collected data for a run}
     \label{table:calculations}
 \end{table}
