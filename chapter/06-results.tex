@@ -2,7 +2,7 @@ In the following section we will present our results from the implementation and
 
 The application of the prototype on a real Github repository \ref{section:evaluation} is demonstrated in the first part of this chapter by showcasing the resulting workflow on GitHub. In the second part of this section we  present the results of the quantitative evaluation the prototype being used on the prepared mentioned repository containing the QuixBugs benchmark.
 
-\section{Showcase of workflow}
+\section{Showcase of workflow} \label{section:showcase}
 %TODO add borders to figures
 Setting up the APR system in a repository is archived by adding 2 required files and one optional configuration file to the repository. As seen in \ref{fig:setup} the required files are the \textbf{.github/workflows/auto-fix.yml} file and the \textbf{.github/scripts/filter\_issues.py} file. The optional configuration file is the \textbf{.bugfix.yml} file.
 
@@ -95,22 +95,23 @@ The table shows the repair success rate, average cost and average execution time
 \begin{table}[ht]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{2cm} @{}}
         \hline
-        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost} & \textbf{Average Number of Attempts} & \textbf{Average Execution Time} \\
+        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost Per Issue} & \textbf{Average Execution Time in seconds} \\
         \hline
-        \textbf{gemini-2.0-flash} & 92.5\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-flash-lite} & 95\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-flash} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-pro} & 100\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4.1-nano} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4.1-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4o} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{o4-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-5-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-7-sonnet} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-sonnet-4-0} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gemini-2.0-flash-lite} & 85\% & \$0.0001 & 6.65s \\
+        \textbf{gemini-2.0-flash} & 90\% & \$0.0002 & 7.63s \\
+        \textbf{gemini-2.5-flash-lite-preview} & 67.5\% & \$0.0002 & 15.46s \\
+        \textbf{gemini-2.5-flash} & 87.5\% & \$0.00096318 & 19.82s \\
+        \textbf{gemini-2.5-pro} & 100\% & \$0.00 & 0.00s \\
+        \textbf{gpt-4.1-nano} & 0.00\% & \$0.00  & 0.00s \\
+        \textbf{gpt-4.1-mini} & 0.00\% & \$0.00 & 0.00s \\
+        \textbf{gpt-4.1} & 0.00\% & 0.00 & \$0.00  \\
+        \textbf{o4-mini} & 0.00\% & 0.00 & \$0.00  \\
+        \textbf{claude-3-haiku} & 0.00\% & \$0.00  \\
+        \textbf{claude-3-5-haiku} & 0.00\% & \$0.00 & 0.00 \\
+        \textbf{claude-3-7-sonnet} & 0.00\% & \$0.00 & 0.00 \\
+        \textbf{claude-sonnet-4-0} & 0.00\% & \$0.00 & 0.00 \\
         \hline
     \end{tabular*}
     \caption{Results of evaluation}
@@ -133,7 +134,7 @@ The table shows the repair success rate, average cost, average number of attempt
         \textbf{gemini-2.5-pro} & 100\% & 0.00 & 0.00 & 0.00s \\
         \textbf{gpt-4.1-nano} & 0.00\% & 0.00 & 0.00 & 0.00s \\
         \textbf{gpt-4.1-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4o} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gpt-4.1} & 0.00\% & 0.00 & 0.00 & 0.00s \\
         \textbf{o4-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
         \textbf{claude-3-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
         \textbf{claude-3-5-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\

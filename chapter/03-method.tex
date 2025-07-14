@@ -1,100 +1,106 @@
-The primary objective of this thesis is to assess the potentials and limitations of a self developed APR pipeline prototype. We aim to answer the following research questions to evaluate the system's capabilities and impact on the software development process:
+The primary objective of this thesis is to implement and assess the potentials and limitations of integrating LLM based Automated Bug Fixing into Continuous Integration. We aim to answer the following research questions to evaluate the system's capabilities and impact on the software development process:
 
 \begin{itemize}
     \item \textbf{RQ1:} How can LLM-based automated bug fixing be effectively and efficiently integrated into a CI pipeline?
-    \item \textbf{RQ2:} What are the key potentials of this integrated approach in terms of repair success rate, cost-effectiveness and developer workflow enhancement?
-    \item \textbf{RQ3:} What are the primary limitations and challenges, such as performance overhead, accuracy, and security, of using LLM-based APR within a CI context?
+    \item \textbf{RQ2:} What are the potentials and limitations of this integrated approach in terms of repair success rate, cost-effectiveness and developer workflow enhancement?
 \end{itemize}
 
-For answering these questions we streamlined this process into three phases Preparation, Implementation and Evaluation, shown in Figure \ref{fig:method-overview}.
+For answering these questions we streamlined this process into three phases preparation, implementation/usage and evaluation. The process is visualized below in Figure \ref{fig:method-overview}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/flowcharts/method.png}
+    \includegraphics[width=1\textwidth]{images/flowcharts/method.png}
     \caption{Thesis methodology approach}
     \label{fig:method-overview}
 \end{figure}
 
-In the preparation we select a suitable APR benchmark. With this benchmark we set up a realistic development environment. By specifying requirements we lay the groundwork for the implementation of the APR system.
+In the preparation we select a suitable APR benchmark and a pool of LLMs. With the benchmark we set up a realistic development environment. By specifying requirements we lay the groundwork for the implementation of the APR system.
 In the second part we implement the APR system as a GitHub Action workflow based on the requirements.
-Lastly evaluation of the self developed prototype is done by using the defined evaluation metrics \ref{section:evaluation} collected during the execution of the APR system. Furthermore we will showcase the resulting workflow of using the system in a repository.
+Lastly we evaluated the self developed prototype by using the defined evaluation metrics \ref{section:evaluation} collected during and after the execution of the APR system. Furthermore we will showcase the resulting workflow of using the system in the prepared repository.
 The following sections will go into detail of each of these phases.
 
 \section{Preparation}
-For implementing and evaluating our system we first need to prepare an environment where the system can be integrated and used. This includes selecting a suitable dataset, setting up the environment, and specifying the requirements for the system.
-\subsection{Dataset Selection}
-For the evaluation of our APR integration, we selected the QuixBugs benchmark \cite{linQuixBugsMultilingualProgram2017}. This dataset is well-suited for our purposes due to its focus on small-scale software bugs in Python. It consists of 40 individual files containing an algorithmic bug each. The bug is always caused by single erroneous line. QuixBugs brings corresponding tests and a corrected version for every file which allows for repair validation. The bugs where developed as challenging problems for developers \cite{linQuixBugsMultilingualProgram2017}, it enables us to evaluate if our system can take over the cognitive demanding task of fixing small bugs without developer intervention.
 
-Compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} QuixBugs is relatively small which allows for accelerated setup and development.
+For implementing and evaluating our system we first need to prepare an environment where the system can be integrated, used and evaluated. This includes selecting a suitable dataset and Large Language Models, setting up the environment, and specifying the requirements for the system.
+
+\subsection{Dataset Selection}
+
+For the evaluating the effectiveness of our APR integration, we selected the QuixBugs benchmark \cite{linQuixBugsMultilingualProgram2017}. This dataset is well-suited for our purposes due to its focus on small-scale bugs in Python\footnote{The QuixBugs benchmark contains the same bugs translated to Java as well. We will exclude this for evaluation research}. It consists of 40 individual files, each containing an algorithmic bug. Each bug is caused by single erroneous line. Corresponding tests and a corrected version for every file are also included in the benchmark which allows for seamless repair validation. QuixBugs was developed as challenging problems for developers \cite{linQuixBugsMultilingualProgram2017}, this means it enables us to evaluate if our system can take over the cognitive demanding task of fixing small bugs without developer intervention.
+
+Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} QuixBugs is relatively small which allows for accelerated setup and development.
 
 \subsection{LLM Selection} \label{subsection:llm-selection}
-For the evaluation of our APR system we will test several LLM models. multiple smaller models for this benchmark to. these models are to have fast response times and low costs. For that we will compare a wide selection of recent (point 11.07.2025) models from different providers. The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The selected models are:
-\begin{table}[ht]
-    \centering
-    \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{4cm} | p{3cm}  @{}}
-        \hline
-        \textbf{Model Name} & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens} & \textbf{Benchmark performance}\\
-        \hline
-        \textbf{gemini-2.0-flash-lite} & Google & 1,048,576 & input: \$0.075 output: \$0.30 & X \\ \hline
-        \textbf{gemini-2.0-flash} & Google & 1,048,576 & input: \$0.15 output: \$0.60 & X \\ \hline
-        \textbf{gemini-2.5-flash-preview} & Google & 1,000,000 & input: \$0.10 output: \$0.40 & X \\ \hline
-        \textbf{gemini-2.5-flash} & Google & 1,048,576 & input: \$0.30 output: \$2.50 & X\\ \hline
-        \textbf{gemini-2.5-pro} & Google & 1,048,576 & input: \$1.25 output: \$10.00 & X\\ \hline
-        \textbf{gpt-4.1-nano} & OpenAI & 1,047,576 & input: \$0.10 output: \$0.40 & X \\ \hline
-        \textbf{gpt-4.1-mini} & OpenAI & 1,047,576 & input: \$0.40 output: \$1.60 & X \\ \hline
-        \textbf{gpt-4.1} & OpenAI & 1,047,576 & input: \$2.00 output: \$8.00 & X \\ \hline
-        \textbf{o4-mini} & OpenAI & 200,000 & input: \$1.10 output: \$4.40 & X \\ \hline
-        \textbf{claude-3-haiku} & Anthropic & 200,000 & input: \$0.25 output: \$1.25 & X \\ \hline
-        \textbf{claude-3-5-haiku} & Anthropic & 200,000 & input: \$0.80 output: \$4.00  & X\\ \hline
-        \textbf{claude-3-7-sonnet} & Anthropic & 200,000 & input: \$3.00 output: \$15.00 & X \\ \hline
-        \textbf{claude-sonnet-4-0} & Anthropic & 200,000 & input: \$3.00 output: \$15.00 & X\\
-        \hline
-    \end{tabular*}
-    \caption{Characteristics of selected Large Language Models}
-    \label{table:llms}
-\end{table}
+
+For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on  smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
+
+\begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{4.5cm} | p{2.5cm} @{}}
+    \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                   \\
+
+    \hline
+    \textbf{Model Name}               & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens}   & \textbf{Benchmark performance} \\
+    \hline
+    \endfirsthead
+
+    \hline
+    \endfoot
+    \textbf{gemini-2.0-flash-lite}    & Google             & 1,048,576                              & input: \$0.075 output: \$0.30 & X                              \\ \hline
+    \textbf{gemini-2.0-flash}         & Google             & 1,048,576                              & input: \$0.15 output: \$0.60  & X                              \\ \hline
+    \textbf{gemini-2.5-flash-preview} & Google             & 1,000,000                              & input: \$0.10 output: \$0.40  & X                              \\ \hline
+    \textbf{gemini-2.5-flash}         & Google             & 1,048,576                              & input: \$0.30 output: \$2.50  & X                              \\ \hline
+    \textbf{gemini-2.5-pro}           & Google             & 1,048,576                              & input: \$1.25 output: \$10.00 & X                              \\ \hline
+    \textbf{gpt-4.1-nano}             & OpenAI             & 1,047,576                              & input: \$0.10 output: \$0.40  & X                              \\ \hline
+    \textbf{gpt-4.1-mini}             & OpenAI             & 1,047,576                              & input: \$0.40 output: \$1.60  & X                              \\ \hline
+    \textbf{gpt-4.1}                  & OpenAI             & 1,047,576                              & input: \$2.00 output: \$8.00  & X                              \\ \hline
+    \textbf{o4-mini}                  & OpenAI             & 200,000                                & input: \$1.10 output: \$4.40  & X                              \\ \hline
+    \textbf{claude-3-haiku}           & Anthropic          & 200,000                                & input: \$0.25 output: \$1.25  & X                              \\ \hline
+    \textbf{claude-3-5-haiku}         & Anthropic          & 200,000                                & input: \$0.80 output: \$4.00  & X                              \\ \hline
+    \textbf{claude-3-7-sonnet}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\ \hline
+    \textbf{claude-sonnet-4-0}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\
+    \hline
+\end{longtable}
 
 
 \subsection{Environment Setup} \label{subsection:environment-setup}
-To mirror realistic software development environment, we prepared a GitHub repository containing the QuixBugs datasets python files. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. The repository contains only relevant files and folders required for the bug fixing process, ensuring a clean environment for the system to operate in.
+To mirror a realistic software development environment, we prepared a GitHub repository containing the QuixBugs python dataset. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. %Only relevant files and folders required for the bug fixing process were kept, ensuring a clean environment for the system to operate in.
 
-Using the relevant files we generate a GitHub issue for each bug, using a consistent template that captures only the title of the Problem. These issues serve as the entry points and communication medium to our APR pipeline.
+Using the relevant 40 files we generate a GitHub issue for each bug. A consistent issue template that captures only the title of the Problem with a minimal description. The generated issues serve as the entry point and communication medium to the APR system. Figure \ref{fig:gh-issue} shows an example of a generated GitHub issue.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/github/GitHub Issue.png}
-    \caption{Example of a GitHub Issue}
+    \includegraphics[width=1\textwidth]{images/github/github_issue.png}
+    \caption{Example of a generated GitHub Issue}
     \label{fig:gh-issue2}
 \end{figure}
 
 \subsection{Requirements Specification}
 
-Before implementation we constructed the requirements for the prototype following the INVEST model, a widely-adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. This model ensured that both functional and non-functional requirements were precisely defined, clearly verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in \ref{chapter:requirements}.
-\section{Pipeline Implementation}
-In this section we will give a high-level overview of the implemented Automated Bug Fixing Pipeline. More detailed information about the implementation can be found in \ref{chapter:implementation}.
+Before the implementation phase we constructed requirements for the prototype, applying the INVEST model, a widely-adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. With this framework we constructed both functional and non-functional requirements. The requirements are precisely defined, verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in \ref{chapter:requirements}.
+
+\section{System Implementation}
+
+In this section we will give a high level overview of the implemented Automated Bug Fixing Pipeline. More detailed information about the implementation can be found in \ref{chapter:implementation}.
 
 The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the following System:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/flowcharts/high-level.png}
-    \caption{High-Level overview of the APR Pipeline}
+    \includegraphics[width=1\textwidth]{images/flowcharts/overview.png}
+    \caption{Overview of the APR Pipeline}
     \label{fig:high-level}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/flowcharts/agent-core-high-level.png}
-    \caption{High-Level overview of the APR Core}
-    \label{fig:apr-core-high-level}
+    \includegraphics[width=1\textwidth]{images/flowcharts/apr_core_overview.png}
+    \caption{Overview of the APR Core}
+    \label{fig:apr-core-overview}
 \end{figure}
 
-When the system is in place in a target repository the pipeline can automatically be triggered by the configured triggers. On successful trigger a github action runner executes the pipeline. After entrypoint the relevant issues are selected and filtered for processing. The issues are the passed to the Dockerized APR system which talks to the configured LLM via API to localize and fix the issue. With the generated file edits the changes is validated and tested. When validation passes changes get applied and a pull request is automatically opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the configured maximum attempts the failure is reported to the issue.
+When the system is in place in a repository the pipeline can automatically be triggered by the configured triggers. This will execute the pipeline on a GitHub Action runner. In the first pipeline job relevant issues are fetched and filtered for further processing. Filtered issues are then passed to the Dockerized APR Core which contains the main bug fixing logic. The APR core talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes changes get applied and a pull request is automatically opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
 
 \section{Evaluation} \label{section:evaluation}
 
-In this section, we describe how we measure the effectiveness, performance and cost of our APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with our QuixBugs repository as a bases.  For this evaluation we selected a set of LLM models to be used for the APR process.
+In this section, we describe how we measure the effectiveness, performance and cost of the APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with the prepared QuixBugs repository as a base. We evaluate all the selected LLM models \ref{subsection:llm-selection} in the context of the APR system. The evaluation is based on the data collected during and after the execution of the APR pipeline.
 
 We focus on several key data metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle.
 
