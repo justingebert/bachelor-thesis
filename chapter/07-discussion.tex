@@ -4,7 +4,7 @@ In this section, we will discuss the results of the evaluation of our prototype 
 \section{Validity} \label{section:validity}
 The results from the evaluation are very promising but still face some limitations to the validity of the results.
 
-%TODO cite
+%TODO cite + add that tokens and costs are estiamted and not 100% exact
 Because the repair process is based on LLMs, which are non-deterministic by design, executions can vary in their results. Furthermore speed and availability of the tested LLMs is highly dependant on the providers APIs which can account for varying execution times during high traffic times. In addition, the system was executed on GitHub provided GitHub Actions runners included in the GitHub free Limits. Therefore the performance metrics reflect GitHubs cloud-hosted CI environments. While allowing quick iterations and setup this limits the feasibility of absolute, execution times and costs.
 
 The bases of evaluation is the QuixBugs benchmark which consists of 40 single line issues each in a separate file. This dataset is not fully representative of real-world software development, as it only covers a small niche from the complexity and variety of bugs that can arise in larger codebases.
