@@ -5,6 +5,7 @@ In this section, we will discuss the results of the evaluation of our prototype 
 The results from the evaluation are very promising but still face some limitations to the validity of the results.
 
 %TODO cite + add that tokens and costs are estiamted and not 100% exact + only deafult valeus are used, it cost time and repair sucess coudl be optimzied 
+%TODO add that prompts might not be optimal and could be improved
 Because the repair process is based on LLMs, which are non-deterministic by design, executions can vary in their results. Furthermore speed and availability of the tested LLMs is highly dependant on the providers APIs which can account for varying execution times during high traffic times. In addition, the system was executed on GitHub provided GitHub Actions runners included in the GitHub free Limits. Therefore the performance metrics reflect GitHubs cloud-hosted CI environments. While allowing quick iterations and setup this limits the feasibility of absolute, execution times and costs.
 
 The bases of evaluation is the QuixBugs benchmark which consists of 40 single line issues each in a separate file. This dataset is not fully representative of real-world software development, as it only covers a small niche from the complexity and variety of bugs that can arise in larger codebases.
@@ -19,11 +20,14 @@ Nevertheless, the threats outlined above delimit the scope of that claim. More b
 
 \section{Potentials}
 
-\ref{section:showcase} 
+agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
-shows how the self developed approach allows for LLM based automated bug fixing in a CI workflow. 
+Section \ref{chapter:implementation} and \ref{section:showcase} demonstrated how LLM based Automated bug fixing can be integrated into a CI workflow using GitHub Actions, awnsering RQ1.
 
-hand of fixing small bugs:
+
+shows how the self developed approach allows for LLM based automated bug fixing in a CI workflow.
+
+---RESULTS SHOW
 - can take over small tasks in encapsulated environment without intervention
 - the workflow shows that bugs can be fixed by just adding a label to an issue
 
@@ -34,7 +38,7 @@ hand of fixing small bugs:
 - configuration makes it adjustable to different repositories and environments
 - similar results to other approaches -> is feasible
 
-does not take significant time and furthermore it can be run concurrently 
+does not take significant time and furthermore it can be run concurrently
 
 the results show promising reapir effectiveness of X\% up the cheapest model X
 
@@ -42,7 +46,6 @@ the results show promising reapir effectiveness of X\% up the cheapest model X
 
 -with small models and attempt loop makes small models pass the whole benchmark?
 
-agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
 - the framework is model agnostic and as LLMs get better the
 
@@ -54,6 +57,9 @@ agent architectures produce good results epically paired with containerized envi
 
 
 this setup is portable, modular and extendable so it can be adaped and further tests can be made more in \ref{section:roadmap}
+
+
+Provides a framework for Strategic opportunities \ref{section:roadmap}
 
 \section{Limitations}
 Ultimately, there are also limitations faced by the prototype and the approach in general.
@@ -81,3 +87,6 @@ The development and evaluation of the prototype was an interesting and insightfu
 - concurrency and parallelization of tasks
 - app which replies on webhook events
 - measure developer trust and satisfaction
+- dig further into collected data, see where it went wrong in the patches or localization
+- small model with fallback to larger model
+- more complex prompts and prompt engineering

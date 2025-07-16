@@ -1,46 +1,46 @@
-In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous sections. The full code is attached in the \ref{Appendix} appendix.
+In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous sections. The full implementation can be found in the \ref{Appendix} appendix.
 
-The goal was to create a system which not only fixes bugs but is also portable /deployable across different repositories and configurable to some extend.
-
-The resulting system consists of two main components. The \textbf{APR core} which hold the core logic for the repair process and lives inside a docker image, making it portable and easy to deploy. The second component is the \textbf{Continuous Integration Pipeline} which integrates the core logic within a GitHub repository. It serves as the entry point and orchestrates the execution of the APR core based on issues and configured triggers in the repository.
+The resulting system consists of two main components. The \textbf{APR core} which holds the core logic for the repair process. The second component is the \textbf{Continuous Integration Pipeline} which integrates the core logic within a GitHub repository. It serves as the entry point and orchestrates the execution of the APR core based on configured triggers events of the repository.
 
 \section{System Components}
+%TODO ask ZHANG -> is this necessary and if components should be subsections
+The implementation of the main components will be described in detail in the following section.
 
 \textbf{APR Core:}
 
-The APR core contains the main bug fixing logic, its written in python. Embedding it into a Docker Image \footnote{link to docker} it remains easily portable and small in memory footprint. In order to use the APR core the following environment needs to passed to the container:
+The APR core contains the main bug fixing logic written in Python\footnote{todo ask ZHANG do i need this}. Embedding it into a Docker Image \footnote{link to docker} makes it easy to deploy, portable and small in memory. In order to use the APR core the following data needs to passed to the container:
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
-\begin{longtable}{@{\extracolsep{\fill}} p{4cm} | p{6cm} | p{4cm}  @{}}
-    \caption{Container Inputs} \label{tab:container-inputs}                                                     \\
+\begin{longtable}{@{\extracolsep{\fill}} p{3.5cm} | p{7cm} | p{4cm}  @{}}
+    \caption{Container Inputs} \label{tab:container-inputs}                                     \\
 
     \toprule
-    \textbf{Name}      & \textbf{Description}                                            & \textbf{Type}        \\
+    \textbf{Name}      & \textbf{Description}                            & \textbf{Type}        \\
     \midrule
     \endfirsthead
 
     \bottomrule
     \endfoot
-    git repository     & files where APR should look for fixes                           & docker volume mount
+    Source Code        & Git repository where APR fix bugs               & Docker volume mount
     \\ \hline
-    GITHUB\_TOKEN      & GitHub token for authentication and API access                  & environment variable \\
+    GITHUB\_TOKEN      & Token for GitHub API authentication             & Environment variable \\
     \hline
-    LLM\_API\_KEY      & API key for the LLM provider to generate fixes                  & environment variable \\
+    LLM\_API\_KEY      & API key for the LLM provider                    & Environment variable \\
     \hline
-    ISSUE\_TO\_PROCESS & The issue to process, can be a single issue or a list of issues & environment variable \\
+    ISSUE\_TO\_PROCESS & The issue to process in JSON format             & Environment variable \\
     \hline
-    GITHUB\_REPO       & The GitHub repository where the issues are located              & environment variable \\
+    GITHUB\_REPO       & GitHub repository for fetching and writing data & Environment variable \\
     \hline
 \end{longtable}
 
-With this environment set the APR core iterates over all issues which are fetched from the (ISSUE TO PROCESS) environment variable. For each issue the main APR logic is executed. This main logic is a predefined flow which is made up of the implemented stages and tools.
+With this environment set the APR core iterates over all issues which are fetched from the (ISSUE\_TO\_PROCESS) environment variable. For each issue the main APR logic is executed. This logic is a predefined flow which is makes use of multiple stages and tools.
 
-At first the workspace (branch checkout) and the issue repair context is set up. The context is the main data structure for the issue repair and is processed at every step.
+At first a clean workspace and the issue repair context is set up. The context acts as the main data structure for the issue repair process and is used at every step. \ref{lst:context-json} shows what the context looks like when initialized.
 
-\begin{lstlisting}[caption={Context JSON}]
-context = {
+\begin{lstlisting}[caption={Context JSON}, label={lst:context-json}]  
+    context = {
         "bug": issue,
-        "cfg": cfg,
+        "config": config,
         "state": {
             "current_stage": None,
             "current_attempt": 0,
@@ -57,19 +57,18 @@ context = {
         "attempts": [],
         "metrics": {
             "github_run_id": os.getenv("GITHUB_RUN_ID"),
-            "issue_number": issue["number"],
-            "issue_title": issue["title"],
-            "execution_repair_stages": {},
-            "repair_successful": False,
-            "attempts": 1,
+            "script_execution_time": 0.0,
+            "execution_repair_stages" : {},
+            "tokens": {}
         },
     }
 \end{lstlisting}
 
-%TODO add system instruction
-A stage uses the context to perform a specific task in the bug fixing process and returns the context with its added context. The implemented stages are Localize, Fix, Build and Test. The repair process starts with the localization stage. This stage localizes the files needed to fix the bug in the codebase using the configured LLM Model via the providers SDK/API. The prompt is build using the issue and a constructed hierarchy of the repositories file structure. The response is expected to return a list of files where the bug might be located.
+The context is used by a stage to perform a specific task in the bug fixing process and gets returns with the added context. The cores' stages are Localize, Fix, Build and Test.
 
-\begin{lstlisting}[caption={Localization Prompt}]
+The repair process starts with the localization stage. This stage tries to find the files needed from the codebase to fix the bug, using the configured LLM Model via the providers SDK\footnote{explain}. The localization prompt is build using the issue and a constructed hierarchy of the repositories file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
+
+\begin{lstlisting}[caption={Localization Prompt}, label={lst:localization-prompt}]
 system_instruction = "You are a bug localization system. Look at the issue description and return ONLY the exact file paths that need to be modified."
 
 prompt = f"""
@@ -86,10 +85,9 @@ prompt = f"""
     """
 \end{lstlisting}
 
-%TODO add system instruction
-With the localized files in the context the Fix stages comes next. Again this stage makes use of the configured LLM API to fix the localized files. A prompt contains the issue and file names with file content. The response is expected to contain a list of edits for each file while also allowing the LLM to specify that no changes need to be made in a file. The generated edits are then applied to the files in the workspace. The context is updated with the new file content.
+With the localized files in the context the Fix stages comes next. Again this stage makes use of the configured LLM Model API to generate a fix for the issue in the localized files. The prompt for requesting the fix contains the issue details and file names with file content. The response is expected to contain a list of edits for each file. The LLM can also specify that no changes need to be made in a file. The generated response is then parsed and applied to the files in the workspace. Finally the context is updated with the new file content. Below is the system instruction and base prompt used for the Fix stage \ref{lst:repair-prompt}.
 
-\begin{lstlisting}[caption={Repair Prompt}]
+\begin{lstlisting}[caption={Repair Prompt}, label={lst:repair-prompt}]
 system_instruction = "You are part of an automated bug-fixing system. Please return the complete, corrected raw source files for each file that needs changes, never use any markdown formatting. Follow the exact format requested."
 
 base_prompt = f"""
@@ -110,19 +108,17 @@ base_prompt = f"""
     
 \end{lstlisting}
 
-For validation 2 stages are available Build and Test. The Build stage is responsible for validating syntactics of the changes made in the Fix stage. It checks if the code can be built successfully. For python this means checking if the syntax is correct and follows standardized code quality rules \footnote{todo}. This is archived by first formatting the code using the Python formatter Black\footnote{todo} followed by linting using flake8\footnote{todo}.
+For validating the generated edits 2 stages are available; Build and Test. The Build stage is responsible for validating the syntax of the changes made in the Fix stage. It checks if the code can be built. For Python code this means checking if all syntax is valid and follows standardized code quality/maintenance rules \footnote{todo}. To archive this the code is first formatted using the Python formatter Black\footnote{todo} and secondly linted using flake8\footnote{todo}. This ensures properly formatted code and appends any warnings or errors to the context.
 
-If a test command is configured the Test stage is executed next. This stage runs the tests defined in the repository using the configured test command.
+After validation the generated code is tested, if a test command is configured. The test stage runs the tests defined in the repository using the configured test command for each fixed file. In case tests fail, the context is updated with the error messages and the repair will jump back to the fix stage with a new attempt.
 
-In case Build or Test fail, the context is updated with the error messages, and the system will retry the Fix stage with a new attempt. For attempts additional feedback is generated using the previous code and stage results with details.
+For a new attempt additional feedback is generated using the previous code and stage results with and attached to the prompt. When the maximum number of attempts is reached and the code does not pass testing an unsuccessful repair is reported to the issue by creating a comment using the Github API.
 
-When maximum number of attempts is reached and the code does not pass validation  unsuccessful repair is reported to the issue by creating a comment using the Github API.
+With successful validation and tests the issue is marked as a successfully repaired. The file changes are committed and pushed to the remote repository. A Pull Request is created to merge the issue branch in to the main branch. This Pull Request holds detailed file diffs and links the issue.
 
-On successful Build and Test the issue is marked as a successfully repaired. The file changes are committed and a diff file is generated. The branch is pushed to the remote repository, and a pull request is created. The pull request contains the changes made in the Fix stage, and the issue is linked to the pull request.
+During execution the APR Core logs every action, which can be used for debugging makes the repair process more transparent. Furthermore it collects metrics such as the number of attempts, execution times, and token usage, which are essential for analyzing the effectiveness and performance of the APR system. A summary of the metrics is mentioned in \ref{section:evaluation}
 
-During execution the APR core logs its actions, which can be used for debugging and provides transparency about the repair process. Furthermore it collects metrics such as the number of attempts, execution times, and token usage, which are essential for analyzing the effectiveness and performance of the APR system.
-
-The agent core is designed to be modular and extensible, allowing for future enhancements and additional stages or tools to be integrated as needed. It is also designed to be lightweight, ensuring that it can run efficiently within a CI/CD environment.
+The agent core is designed to be modular and extensible, allowing for future enhancements and additional stages or tools to be integrated as needed. It is also designed to be lightweight, ensuring that it can run efficiently within a CI/CD environment. Figure \ref{fig:apr-core} illustrates the functionalities and tools used in the APR Core.
 
 \begin{figure}[H]
     \centering
