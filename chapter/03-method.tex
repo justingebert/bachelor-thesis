@@ -32,7 +32,7 @@ Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Be
 \subsection{LLM Selection} \label{subsection:llm-selection}
 
 %TODO add taht these providers are a go to in code generation tools like github copilot, cursor, etc
-For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on  smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
+For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
 
 \begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{4.5cm} | p{2.5cm} @{}}
     \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                   \\
@@ -100,19 +100,20 @@ The Automated Bug Fixing Pipeline was developed using iterative prototyping and 
 When the system is in place in a repository the pipeline can automatically be triggered by the configured triggers. This will execute the pipeline on a GitHub Action runner. In the first pipeline job relevant issues are fetched and filtered for further processing. Filtered issues are then passed to the Dockerized APR Core which contains the main bug fixing logic. The APR core talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes changes get applied and a pull request is automatically opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
 
 \section{Evaluation} \label{section:evaluation}
-
+%TODO should I mention showcase of results here?
 In this section, we describe how we measure the effectiveness, performance and cost of the APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with the prepared QuixBugs repository as a base. We evaluate all the selected LLM models \ref{subsection:llm-selection} in the context of the APR system. The evaluation is based on the data collected during and after the execution of the APR pipeline.
 
-We focus on several key data metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's efficiency, reliability, and overall impact on the software development lifecycle.
+We focus on several key data metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's effectiveness, performance, reliability, cost and overall impact on the software development lifecycle.
 
-For evaluating the effectiveness of the LLM model used and approach the determine the repair success rate. A success of an issue is determined by validation and the complete test suite provided by QuixBugs. An issues is considered successfully repaired when the validation passes with correct syntax and the test suite passes all tests.
+For evaluating the effectiveness of the LLM models used and approach, we determine a repair success rate. A successful repair of an issue is determined by validation and the complete test suite provided by QuixBugs. An issues is considered successfully repaired when the validation passes with correct syntax and the related test suite passes all tests.
 
-Furthermore we will evaluate wether multiple attempts to repair an issue improve the repair success rate and how the number of attempts relates to the cost of repairing an issue.
+Furthermore we evaluate wether multiple attempts can help improve the repair success rate and how this relates to the cost of repairing process.
 
-For evaluating feasibility and performance evaluation we will analyze collected aggregated and fine grained timings and costs of a repair attempt.
+For evaluating performance, we will analyze collected and fine grained timings of an issue repair attempt. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action run minutes are not included in the cost estimation, since 2000 minutes are included in the free tier of GitHub for public repositories.
 
-The following data is automatically collected by each run of the APR pipeline. Using self developed scripts we collect the data from different sources for each run. Using this data to calculate the results defined in \ref{table:calculations}
+The following data is automatically collected by each run of the APR system. Using self developed scripts we collect the data from different sources for each run. Below we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics} and each stage of and issue repair process \ref{table:stage-metrics}. Using this data we calculate per model run results listed in table \ref{table:calculations} which will help in answering the RQ2.
 
+%TODO add calculations and check if all metrics are needed or evaluation
 \begin{table}[ht]
     \centering
     \small
@@ -121,20 +122,16 @@ The following data is automatically collected by each run of the APR pipeline. U
         \hline
         \textbf{Metric} & \textbf{Description} & \textbf{Source} \\
         \hline
-        Run ID & Unique identifier for each run of a Workflow & Github Action Env \\ \hline
-        Model Used & LLM model used for the repair process & Configuration File \\ \hline
-        Configuration & Configuration details, including LLM Model and settings & Target Github repository  \\ \hline
-        Successful Repairs & Count of issues successfully repaired & APR Core \\ \hline
-        Execution Time & Total time taken for the run & APR Core \\ \hline
+        Run ID & Unique identifier for the workflow run & Github Action Runner \\ \hline
+        Configuration & Configuration details, including LLM Model used and max attempts & Github repository / APR Core  \\ \hline
+        Execution Time & Total time taken for the run & GitHub API / APR Core \\ \hline
         Job Execution Times & Time taken for each job in the pipeline & Github API \\ \hline
-        Issues Processed & Information of Issues processed in the run \ref{table:issue-metrics} & APR Core \\
+        Issues Processed & Data of issues processed shown in table \ref{table:issue-metrics} & APR Core \\
         \hline
     \end{tabular*}
-    \caption{Run metrics collected for each execution}
+    \caption{Summary of metrics collected for each run}
     \label{table:run-metrics}
 \end{table}
-
-Data collected for each issue processed by the APR core:
 
 \begin{table}[H]
     \centering
@@ -144,16 +141,16 @@ Data collected for each issue processed by the APR core:
         \hline
         \textbf{Metric} & \textbf{Description} & \textbf{Source} \\
         \hline
-        Issue ID & Unique identifier of the issue processed & Github Issue ID \\ \hline
-        Repair Successful & Boolean indicating whether the repair was successful. Tr & APR Core \\ \hline
+        Issue ID & Unique identifier of the issue & Github Issue ID \\ \hline
+        Repair Successful & Boolean indicating whether the repair was successful & APR Core \\ \hline
         Number of Attempts & Total attempts made & APR Core \\ \hline
-        Execution Time & Total time taken to process the issue, including all stages & APR Core \\ \hline
-        Tokens Used & Number of tokens consumed by the LLM during the repair process & LLM API \\ \hline
-        Cost & Cost associated with the repair process, calculated based on tokens and execution time & APR Core \\ \hline
-        Stage Information & Details about each stage of the repair process, including execution time and outcome & APR Core \\
+        Execution Time & Time taken to process the issue, including all stages & APR Core \\ \hline
+        Tokens Used & Number of tokens processed by the LLM during the repair process & LLM API \\ \hline
+        Cost & Cost associated with the repair process, calculated based on tokens * cost per token & APR Core \\ \hline
+        Stage Information & Details about each stage of the repair process shown in table \ref{table:stage-metrics} & APR Core \\
         \hline
     \end{tabular*}
-    \caption{Metrics collected for each processed issue}
+    \caption{Summary of metrics collected for each processed issue}
     \label{table:issue-metrics}
 \end{table}
 
@@ -167,19 +164,17 @@ An attempt to repair an issue consists of multiple stages during the repair proc
         \hline
         \textbf{Metrics} & \textbf{Description} & \textbf{Source} \\
         \hline
-        Stage ID & Unique identifier for each stage in the repair process & APR Core \\ \hline
-        Stage Execution Time & Time taken for each stage of the repair process & APR Core \\ \hline
+        Stage ID & Unique identifier of the stage & APR Core \\ \hline
+        Stage Execution Time & Time taken for stage to complete & APR Core \\ \hline
         Stage Outcome & Outcome of each stage, indicating success, warning or failure & APR Core \\ \hline
         Stage Details & Additional details, such as error or warnings messages & APR Core \\
         \hline
     \end{tabular*}
-    \caption{Metrics collected for each stage of an issue repair attempt}
+    \caption{Summary of metrics collected for each stage}
     \label{table:stage-metrics}
 \end{table}
 
-Using this data we calculate the following metrics for each run of the system. This data will be calculated for each run using a different LLM model from the set of selected models \ref{subsection:llm-selection}. The metrics will be used to answer the research questions and evaluate the performance of the APR system. The following table summarizes the metrics and their calculations:
-
-%TODO add calculations and check if all metrics are needed or evaluation
+% Using this data we calculate the following metrics for each run of the system. This data will be calculated for each run using a different LLM model from the set of selected models \ref{subsection:llm-selection}. 
 
 \begin{table}[H]
     \centering
@@ -189,13 +184,13 @@ Using this data we calculate the following metrics for each run of the system. T
         \hline
         \textbf{Metrics} &  \textbf{Calculation} \\
         \hline
-        Repair Success Rate & Number of Successful Repairs / Total Issues Processed \\ \hline
-        Average Number of Attempts & Total Attempts / Total Issues Processed \\ \hline
-        Average Execution Time & Total Execution Time / Total Issues Processed \\ \hline
-        Average Tokens Used & Total Tokens Used / Total Issues Processed \\ \hline
-        Average Cost & Total Cost / Total Issues Processed \\ \hline
-        Average Stage Execution Time & Total Stage Execution Time / Total Stages Processed \\ \hline
-        Average Stage Outcome Success Rate & Number of Successful Stages / Total Stages Processed \\
+        Repair Success Rate & \[\frac{Number of Successful Repairs}{Total Issues Processed}\] \\ \hline
+        Average Number of Attempts & \[\frac{Total Attempts}{Total Issues Processed}\] \\ \hline
+        Average Execution Time & \[\frac{Total Execution Time}{Total Issues Processed}\] \\ \hline
+        Average Tokens Used & \[\frac{Total Tokens Used}{Total Issues Processed}\] \\ \hline
+        Average Cost & \[\frac{Total Cost}{Total Issues Processed}\] \\ \hline
+        Average Stage Execution Time & \[\frac{Total Stage Execution Time}{Total Stages Processed}\] \\ \hline
+        Average Stage Outcome Success Rate & \[\frac{Number of Successful Stages}{Total Stages Processed}\] \\
         \hline
     \end{tabular*}
     \caption{Evaluation metrics calculated from the collected data for a run}
