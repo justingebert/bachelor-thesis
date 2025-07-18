@@ -1,20 +1,22 @@
-In the following section we will present our results from the implementation and evaluation. For accessing the potentials and limitations of integrating LLM based Automated Bug Fixing into software development workflows using Continuous Integration we implemented a working prototype. During the implementation \ref{chapter:implementation} all self developed requirements \ref{chapter:requirements} are satisfied.
+In the following section we will present our results our implementation and evaluation. We implemented a working prototype for accessing how to integrating LLM based Automated Bug Fixing into Continuous Integration and the resulting potentials and limitations of using this system in software development workflows.
 
-The application of the prototype on a real Github repository \ref{section:evaluation} is demonstrated in the first part of this chapter by showcasing the resulting workflow on GitHub. In the second part of this section we  present the results of the quantitative evaluation the prototype being used on the prepared mentioned repository containing the QuixBugs benchmark.
+The setup and usage of the prototype in a GitHub repository is demonstrated in the first part of this chapter. By showcasing the resulting workflow in the GitHub Web user interface. In the second part of this section we  present the results of the quantitative evaluation of the prototype being used on the repository containing the QuixBugs dataset as a bases.
 
 \section{Showcase of workflow} \label{section:showcase}
 %TODO structure: setup, usage, dev 
-Setting up the APR system in a repository is archived by adding 2 required files and one optional configuration file to the repository. As seen in \ref{fig:setup} the required files are the \textbf{.github/workflows/auto-fix.yml} file and the \textbf{.github/scripts/filter\_issues.py} file. The optional configuration file is the \textbf{.bugfix.yml} file.
+Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. As seen in \ref{fig:setup} the required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/workflow/setup.png}
-    \caption{Set up of APR in a repository}
-    \label{fig:setup}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\textwidth]{images/workflow/setup.png}
+%     \caption{Set up of APR in a repository}
+%     \label{fig:setup}
+% \end{figure}
 
-With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Automated bug fixing can be applied in two ways.
-Processing one issue per run by labeling the issue with the with the default (bug\_v01) or configured label will trigger the workflow and process the issue. This allows for fast feedback and quick bug fixing at issue creation
+With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automated fixed in two different ways.
+
+Processing a single issue right away when the issue is created and labeled with the ``bug\_v01'' shown in Figure \ref{fig:issue-trigger}. This allows for fast feedback and quick bug fixing at issue creation and triage \footnote{explain triage}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/GitHub Issue.png}
@@ -22,7 +24,8 @@ Processing one issue per run by labeling the issue with the with the default (bu
     \label{fig:issue-trigger}
 \end{figure}
 
-The second way is to process all issues labeled with the default (bug\_v01) or configured label by scheduling the workflow to run at a specific time or dispatching it manually. This allows for a more automated approach to bug fixing, where issues are processed in batches.
+The second way collects and processes all issues labeled with the ``bug\_v01'' label by scheduling the workflow to run at a specific time or dispatching it manually (see Figure \ref{fig:dispatch}). This allows for a more controlled approach for bug fixing, where issues are processed in batches.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/dispatch.png}
@@ -30,7 +33,7 @@ The second way is to process all issues labeled with the default (bug\_v01) or c
     \label{fig:dispatch}
 \end{figure}
 
-When the workflow is triggered it will create a new run in the GitHub Actions tab. This execute the relevant steps previously described in \ref{chapter:implementation}.
+When the workflow is triggered it creates a new run in the GitHub Actions tab (see figure \ref{fig:apr-action}). This executes the bug fixing logic described in \ref{chapter:implementation}.
 
 \begin{figure}[H]
     \centering
@@ -39,7 +42,8 @@ When the workflow is triggered it will create a new run in the GitHub Actions ta
     \label{fig:apr-action}
 \end{figure}
 
-A run can produce two possible outcomes for each issue it processes. On a successful repair attempt it will create a pull request with the changes made to the codebase and the issue it is related to. This allows for easy review and merging of the changes into the main branch. The pull request will also contain information about the issue that was fixed, making it easy to track the changes made to the codebase.
+A run can produce two possible outcomes for each issue it processes. Firstly, on a successful repair attempt it creates a Pull Request with the changes made to the codebase and the issue linked to it. The created Pull Requests allow code review and merging of fixes changes into the main branch. When merged the issue will automatically closed. Figure \ref{fig:pr} shows an example of a resulting Pull Request created by the APR system.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/PR.png}
@@ -47,7 +51,8 @@ A run can produce two possible outcomes for each issue it processes. On a succes
     \label{fig:pr}
 \end{figure}
 
-When a repair attempt fails for an issue that is processed the failure is reported to the issue and the issues is labeled as failed so it wont be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
+Secondly when an issue repair fails after all attempts have been exhausted, the failure is reported to the issue as a comment and the issues is labeled as failed (see figure \ref{fig:failure-report}) so it wont be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/issue comment.png}
@@ -55,9 +60,11 @@ When a repair attempt fails for an issue that is processed the failure is report
     \label{fig:failure-report}
 \end{figure}
 
-When a new comment containing context gets added to the issue the APR system will automatically pick up the issue again. This allows for a more dynamic approach to bug fixing, where issues can be fixed as new information becomes available.
+Failed issues can be picked up again by adding new context to the issue. This can be done by adding a comment to the issue, which will trigger the APR system to pick up the issue again and try to fix it with the new context. This allows for a more dynamic approach to bug fixing, where issues can be fixed as new information becomes available.
 
-For transparency and debugging, each run provides a live log stream in the GitHub Actions tab. This allows users to see the progress of the run and any errors that occur during the execution. For further analysis logs, metrics and the context are also stored as artifacts to download.
+%TODO pipeline from comment screenshot
+
+For transparency and debugging, each run provides a live log stream in the GitHub Actions tab (see figure \ref{fig:log-stream}). This allows users to see the progress of the run and any errors that occur during the execution. For further analysis logs, metrics and the complete context are published as artifacts to each run available to download in the run view.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/logs.png}
@@ -65,8 +72,9 @@ For transparency and debugging, each run provides a live log stream in the GitHu
     \label{fig:log-stream}
 \end{figure}
 
-In figure \ref{fig:flow} we can see the resulting flow diagram of the APR system. The diagram shows the steps taken by the user which have an effect on the state of the system and the steps taken by the system itself.
-%TODO rework image
+
+Figure \ref{fig:flow} visualized the resulting flow of the APR system. The diagram shows the relation between user actions (COLOR), repair success (COLOR) and the steps taken by the system.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/flowcharts/flowresult.png}
@@ -74,24 +82,22 @@ In figure \ref{fig:flow} we can see the resulting flow diagram of the APR system
     \label{fig:flow}
 \end{figure}
 
-\section{Evaluation Results}
-In this section we will present the results of the quantitative evaluation of the APR prototype. This evaluation is based on the data collected and calculated for each run of the prototype \ref{table:run-metrics}.
+\section{Evaluation Results} \label{section:evaluation-results}
+
+In this section we present the results of the quantitative evaluation of the implemented APR prototype. This evaluation is done using the collected and calculated data for each run of the prototype. How this data was collected and calculated is described in \ref{table:run-metrics}.
 
 \subsection{Validity}
 - github runners have a lot of computational noise
 - only small set of runs.
 
-more regarding validity of results in section \ref{section:validity}.
+We asses more threats to validity in section \ref{section:validity}.
 
 \subsection{Baseline of Evaluation}
-For the evaluation we executed the APR prototype on the repository containing 40 issues from the QuixBugs benchmark. \ref{subsection:environment-setup}. To evaluate effectiveness, performance and cost we evaluate the APR prototype using 12 different LLMs model defined in \ref{subsection:llm-selection}. This resulted in X pipelines runs each processing all 40 issues from the repository.
+The resulting data is based on the executions of the APR prototype in the prepared repository (see\ref{subsection:environment-setup}) which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance and cost we ran the APR prototype using eleven selected LLMs models defined in \ref{subsection:llm-selection}. This resulted in 22 pipeline runs each processing all 40 issues from the repository.
 \subsection{Results}
-The results of the evaluation are summarized in \ref{table:results}.
+The following tables tables shows the repair success rate, average cost and average execution time for each model used in the evaluation.
 
-For testing the impact of the retry loop we collected the values with the retry loop enabled and disabled. The results are shown in \ref{table:retry-results}.
-
-The table shows the repair success rate, average cost and average execution time for each model used in the evaluation.
-
+%TODO add exact model snapshot versions
 \begin{table}[ht]
     \centering
     \small
@@ -108,10 +114,9 @@ The table shows the repair success rate, average cost and average execution time
         \textbf{gpt-4.1-mini} & 92.5\% & \$0.0006 & 18.75s \\
         \textbf{gpt-4.1} & 92.5\% & \$0.0033 & 12.93s  \\
         \textbf{o4-mini} & 87.5\% & \$0.0064 & 57.05s  \\
-        \textbf{claude-3-haiku} & 0.00\% & \$0.00 & 0.00s  \\
-        \textbf{claude-3-5-haiku} & 0.00\% & \$0.00 & 0.00s \\
-        \textbf{claude-3-7-sonnet} & 0.00\% & \$0.00 & 0.00s \\
-        \textbf{claude-sonnet-4-0} & 0.00\% & \$0.00 & 0.00s \\
+        \textbf{claude-3-5-haiku} & 2.5\% & \$0.0024 & 23.1s \\
+        \textbf{claude-3-7-sonnet} & 87.5\% & \$0.0069 & 21.78s \\
+        \textbf{claude-sonnet-4-0} & 92.5\% & \$0.0102 & 28.93s \\
         \hline
     \end{tabular*}
     \caption{Results of evaluation}
@@ -119,27 +124,27 @@ The table shows the repair success rate, average cost and average execution time
 \end{table}
 
 
-The table shows the repair success rate, average cost, average number of attempts and average execution time for each model used in the evaluation.
+The table shows the repair success rate, average cost and average execution time for each model used in the evaluation.
 
 \begin{table}[ht]
     \centering
     \small
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} @{}}
         \hline
-        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost} & \textbf{Average Number of Attempts} & \textbf{Average Execution Time} \\
+        \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost}  & \textbf{Average Execution Time} \\
         \hline
-        \textbf{gemini-2.0-flash} & 92.5\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-flash-lite} & 95\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-flash} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gemini-2.5-pro} & 100\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4.1-nano} & 62.5\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4.1-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{gpt-4.1} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{o4-mini} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-5-haiku} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-3-7-sonnet} & 0.00\% & 0.00 & 0.00 & 0.00s \\
-        \textbf{claude-sonnet-4-0} & 0.00\% & 0.00 & 0.00 & 0.00s \\
+        \textbf{gemini-2.0-flash-lite} & 82.5\% & \$0.0002  & 19.97s \\
+        \textbf{gemini-2.0-flash} & 82.5\% & \$0.0004  & 15.62s \\
+        \textbf{gemini-2.5-flash-lite} & 87.5\% & \$0.0003 & 10.80s \\
+        \textbf{gemini-2.5-flash} & 92.5\% & \$0.01362  & 71.37s \\
+        \textbf{gemini-2.5-pro} & 100\% & 0.00  & 0.00s \\
+        \textbf{gpt-4.1-nano} & 70.0\% & \$0.0003  & 34.85s \\
+        \textbf{gpt-4.1-mini} & 97.5\% & \$0.0043  & 24.42s \\
+        \textbf{gpt-4.1} & 0.00\% & 0.00  & 0.00s \\
+        \textbf{o4-mini} & 0.00\% & 0.00  & 0.00s \\
+        \textbf{claude-3-5-haiku} & 15.0\% & \$0.0075  & 65.18s \\
+        \textbf{claude-3-7-sonnet} & 95.0\% & \$0.0087 & 24.39s \\
+        \textbf{claude-sonnet-4-0} & 0.00\% & 0.00 & 0.00s \\
         \hline
     \end{tabular*}
     \caption{Results of evaluation with retry loop enabled}

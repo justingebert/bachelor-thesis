@@ -32,13 +32,13 @@ Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Be
 \subsection{LLM Selection} \label{subsection:llm-selection}
 
 %TODO add taht these providers are a go to in code generation tools like github copilot, cursor, etc
-For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs in the lower tier, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
+For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
 
 \begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{4.5cm} | p{2.5cm} @{}}
     \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                   \\
 
     \hline
-    \textbf{Model Name}               & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens}   & \textbf{Benchmark performance} \\
+    \textbf{Model Name}               & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens}   & \textbf{Provider Description} \\
     \hline
     \endfirsthead
 
@@ -53,7 +53,6 @@ For the evaluation of our APR system we will test a selected pool of LLM models.
     \textbf{gpt-4.1-mini}             & OpenAI             & 1,047,576                              & input: \$0.40 output: \$1.60  & X                              \\ \hline
     \textbf{gpt-4.1}                  & OpenAI             & 1,047,576                              & input: \$2.00 output: \$8.00  & X                              \\ \hline
     \textbf{o4-mini}                  & OpenAI             & 200,000                                & input: \$1.10 output: \$4.40  & X                              \\ \hline
-    \textbf{claude-3-haiku}           & Anthropic          & 200,000                                & input: \$0.25 output: \$1.25  & X                              \\ \hline
     \textbf{claude-3-5-haiku}         & Anthropic          & 200,000                                & input: \$0.80 output: \$4.00  & X                              \\ \hline
     \textbf{claude-3-7-sonnet}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\ \hline
     \textbf{claude-sonnet-4-0}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\

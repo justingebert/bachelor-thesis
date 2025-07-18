@@ -6,6 +6,8 @@ The results from the evaluation are very promising but still face some limitatio
 
 %TODO cite + add that tokens and costs are estiamted and not 100% exact + only deafult valeus are used, it cost time and repair sucess coudl be optimzied 
 %TODO add that prompts might not be optimal and could be improved
+%TODO add that apis where overloaded and therefore the results are not 100% accurate
+%TODO issue with extensive descriptions wehere not tested
 Because the repair process is based on LLMs, which are non-deterministic by design, executions can vary in their results. Furthermore speed and availability of the tested LLMs is highly dependant on the providers APIs which can account for varying execution times during high traffic times. In addition, the system was executed on GitHub provided GitHub Actions runners included in the GitHub free Limits. Therefore the performance metrics reflect GitHubs cloud-hosted CI environments. While allowing quick iterations and setup this limits the feasibility of absolute, execution times and costs.
 
 The bases of evaluation is the QuixBugs benchmark which consists of 40 single line issues each in a separate file. This dataset is not fully representative of real-world software development, as it only covers a small niche from the complexity and variety of bugs that can arise in larger codebases.
@@ -18,53 +20,56 @@ Nevertheless, the threats outlined above delimit the scope of that claim. More b
 
 --add that knowledge cutoff is after the benchmark was publishes since the benchmark is open source it might have been in the training dataset of the models
 
+
+-- anthopric states: As a result, the token counts in usage will not match one-to-one with the exact visible content of an API request or response. https://docs.anthropic.com/en/api/messages
+
 \section{Potentials}
 
-agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
+Section \ref{chapter:implementation} answers RQ1 by demonstrating how LLM based Automated Bug Fixing can be integrated into a CI workflow using GitHub Actions and a containerized APR environment. A key advantage of this approach is, allows for adjustments and continuous improvement without the need for major changes to the system.
+This concept is applicable to other python repositories but was only tested on the ``quixbugs-apr'' repo and the ``bugfix-ci'' development repository. The option for configuration makes it adjustable to different repositories and environments.
 
-Section \ref{chapter:implementation} and \ref{section:showcase} demonstrated how LLM based Automated bug fixing can be integrated into a CI workflow using GitHub Actions, awnsering RQ1.
+Section \ref{section:showcase} demonstrated that with this integration getting a automatically generated fix for a bug only requires one action. Creating and labeling an issue in the GitHub repository. This shows that the approach can take over and submit fixes, without the need for developer intervention. Creating issues/ticket for features, adjustments or bugs is a key part in agile frameworks for tracking tasks for in each iteration. %\cite{} 
+The results indicate that this integration can support developers in the agile lifecycle by automating the process of design, development and testing for bugs, leaving only requirement specification in form of issues and review of generated fixes to the developers. Furthermore issue descriptions for bugs can be minimal as the issues for evaluation contained no detailed information on the bug. This allows developers to focus on more complex tasks, while the system takes care of the simpler bugs. This is in line with the findings of \cite{houLargeLanguageModels2024}, which state that LLMs can accelerate bug fixing and enhance software reliability and maintainability.
 
+The evaluation results in section \ref{section:evaluation-results} show that the prototype can achieve a repair success rate of up to 100\% with the best performing models (X, Y, Z). This indicates that the approach can be effective in fixing small single file bugs in a CI environment. When taking a deeper look at the results, we can see that the repair success rate is highly dependent on the LLM model used.
+With one attempt for every issue\footnote{zero shot prompting} the best performing models already achieve a repair success rate of 100\% on the QuixBugs benchmark, while smaller models like gemini-2.5-flash-lite and gpt-4.1-mini achieve a repair success rate of 95\% and 90\% respectively. This shows that with zero shot smaller models can achieve good results, but larger models are more effective in fixing bugs.
 
-shows how the self developed approach allows for LLM based automated bug fixing in a CI workflow.
+--zero shot inexpensive
 
----RESULTS SHOW
-- can take over small tasks in encapsulated environment without intervention
-- the workflow shows that bugs can be fixed by just adding a label to an issue
+The potential of smaller models like: X,Y,Z lies in their performance and costs effectiveness. The results show that smaller models can achieve a repair success rate of 95\% with a significantly lower cost and execution time compared to larger models. For example X solves x\% with an average cost of X taking an average time of X per issue while Y repairs Y\% successful with only \$Y average per issue and 1/3 of the time per issue. This indicates that smaller models can be used to automate bug fixing in a CI environments, keeping costs low and performance resulting in quicker submissions of fixes.
 
-- small models can solve more problems with retrying with feedback
-- smaller models are very fast and cost effective
-- no description is needed to solve small issues
-- this concept is applicable to other python repositories
-- configuration makes it adjustable to different repositories and environments
-- similar results to other approaches -> is feasible
+The introduction of multi attempt fixes with an internal feedback loop, enhances the effectiveness of a model significantly. By allowing a model to retry fix generation with additional context the repair success rates climb an average of X\% per model. Particularly smaller models benefit from the few shot approach because the success rates rise to factor of X while costs and execution times rise linearly. This shows that small models can archive similar performance to larger model with lower costs and better performance.
 
+With average repair times reaching from x-Y  per issue, the approach is feasible for use in a CI environment. Furthermore these times do not impose significant waiting times for developers and indicate that bugs can be fixed quickly and efficiently while developers focus on more important and complex tasks. With costs reaching from \$X to \$Y per issue, this approach is also relatively cost effective compared to .
+
+Overall repair success rates, execution times and costs demonstrate that the approach is feasible and can be used to automate bug fixing in a CI environment.
 does not take significant time and furthermore it can be run concurrently
 
-the results show promising reapir effectiveness of X\% up the cheapest model X
+overall X offers the most cost effective, performant models compared to Y and Z.
 
-- combines agentless and a bit of interactive but interactivity is limited due to timings but can resemble real world remote environment
+The results indicate that our approach holds up with state of the art APR research showing similar repair success rates on the QuixBugs benchmark while providing cost and performance insights .
+- similar results to other approaches like X -> is
+this can partly be accounted to the improvements and development of the LLMS used.
 
--with small models and attempt loop makes small models pass the whole benchmark?
+Leveraging paradimgms of an agentless approach added with interactivity of the github platform.
 
-
-- the framework is model agnostic and as LLMs get better the
-
-
-\ref{houLargeLanguageModels2024}
-- accelerate bug fixing
-- lets developers focus on more complex tasks
-- therefor enhance software reliability and maintainability
+The integration is model agnostic and as LLMs get better the bug fixing will improve as well. This is a key advantage of the approach, as it allows for continuous improvement without the need for major changes to the system.
+makes llm a key factor in effectiveness, good thing is the framework is model agnostic and as LLMs get better the bug fixing will improve as well. This is a key advantage of the approach, as it allows for continuous improvement without the need for major changes to the system.
 
 
-this setup is portable, modular and extendable so it can be adaped and further tests can be made more in \ref{section:roadmap}
+Our results supports what X states in \ref{houLargeLanguageModels2024} that Large Language Models can accelerate the process of fixing bugs, therefore letting developers focus on more complex. Resulting in enhanced software reliability and maintainability.
 
+
+this setup is portable, modular and extendable so it can be adapted and further tests can be made more in \ref{section:roadmap}
 
 Provides a framework for Strategic opportunities \ref{section:roadmap}
+
+agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
 \section{Limitations}
 Ultimately, there are also limitations faced by the prototype and the approach in general.
 
-As mentioned in the validity section \ref{section:validity}, the system is contained to addressing small issues only. Even with small issues the timings and availability of the system is highly dependant on external dependencies like the LLM providers APIs and the provided GitHub Actions runners. Which makes this a limitation in terms of reliability and performance in a real software development cycle.
+As mentioned in the validity section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues the timings and availability of the system is highly dependant on external dependencies like the LLM providers APIs and the provided GitHub Actions runners. Which makes this a limitation in terms of reliability and performance in a real software development cycle.
 
 In terms of the integration with GitHub is that the system faces more limitations that come from the Github Actions environment. Runs can not be skipped and filtering logic of events with external configuration data is very limited. This results in the workflow having to execute on every issue labeling event to filter in the first job. This fills the GitHub Actions tab with runs that have success as status but do not have any bugs to fix, resulting in cluttered the run history which may lead to confusion for users. This could be solved by migrating the APR core to a GitHub App which listens to webhook events and only triggers the workflow for relevant issues.
 
@@ -90,3 +95,5 @@ The development and evaluation of the prototype was an interesting and insightfu
 - dig further into collected data, see where it went wrong in the patches or localization
 - small model with fallback to larger model
 - more complex prompts and prompt engineering
+- token usage can be optimized
+- further analyze the collected data, we collected a lot of data which can be used for more insights
