@@ -4,9 +4,11 @@ The resulting system consists of two main components. The \textbf{APR core} whic
 
 \section{System Components}
 %TODO ask ZHANG -> is this necessary and if components should be subsections
-The implementation of the main components will be described in detail in the following section.
+The implementation of the main components will be described in detail in the following section. The complete code implementation can be on GitHub listed in Appendix~\ref{Appendix}
 
 \textbf{APR Core:}
+
+% agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
 
 The APR core contains the main bug fixing logic written in Python\footnote{todo ask ZHANG do i need this}. Embedding it into a Docker Image \footnote{link to docker} makes it easy to deploy, portable and small in memory. In order to use the APR core the following data needs to passed to the container:
 
@@ -129,19 +131,20 @@ The agent core is designed to be modular and extensible, allowing for future enh
 
 \textbf{Continuous Integration Pipeline:}
 
-%TODO add the runner operating system linux x64 
-The Github Action Workflow integrates the APR core into the desired GitHub repository. It is written in YAML\footnote{todo} according to the Github Action standard. %\ref{} 
-We will use runners provided and hosted by Github which takes away the overhead of managing our own runners but comes at the cost of unknown performance and availability. %\cite{}
-The Workflow is made up of multiple triggers and jobs. Triggers work by using events happening in the GitHub repository and serve as the entry point for executing the jobs. Given the triggers the workflow can is executed two different ways:
+A Github Action Workflow integrates the APR Core into the GitHub repository. The workflow is written in YAML\footnote{todo} according to the Github Action standard\footnote{link to GitHub}.
+For this prototype we use linux x64 runners\footnote{default runner, sufficient for this purpose} provided and hosted by GitHub. This takes away the overhead of managing our own runners but comes at the cost of uncertain performance and availability. %\cite{}
+The Workflow is made up of multiple triggers and jobs. Triggers are based on events\footnote{explain and link} from the GitHub repository and serve as the entry point for executing the jobs. Given the triggers the workflow can is executed two different ways:
 
 \begin{itemize}
-    \item Process all issues with desired state for repair. Triggered by manual dispatch (``workflow\_dispatch'') or scheduled execution (``cron'').
-    \item Process a single issue. Issue is labeled with the configured labels (``issue\_labeld'') or when extra information is added or edited on an issue in form of a comment (``issue\_comment'').
+    \item Batch processing by fetching all issues with state for repair. This can be triggered by a manual dispatch (``workflow\_dispatch'') or scheduled execution (``cron'').
+    \item Process a single issue from the event. The issue is passed from the (``issue\_labeld'') event when labeled with the configured labels or from (``issue\_comment'') when extra information is added issue in form of a comment.
 \end{itemize}
 
-The trigger event information gets passed as environment variables to the first job. ``gate'' uses this data to evaluating if the issue should be processed or skipped using a python script (filter\_issues.py). This script checks the labels and resolves the issue state to determine if the issue is relevant for the APR process. If no issues pass this ``gate'' the job ``skipped'' is executed, which simply logs that no issues were found to process and exits the workflow. When issues pass the ``gate'' the ``bugfix'' job is started.  This job is responsible for executing the APR core logic. It provides necessary prerequisites for the APR core Docker container to run \ref{tab:container-inputs} and perform the repair. This includes checking out and mounting the repository, setting up environment variables, and providing the necessary permissions for the core to edit repository content, create pull requests, and write issues.
+The trigger event information gets passed as environment variables to the first job named ``gate''. This uses the data to determine if the issue should be processed or skipped using a python script (filter\_issues.py). This script needs be placed accessable for the workflow file. It checks labels of the issue and resolves its state to determine if the issue is relevant for the APR process. If no issues pass ``gate'' the job ``skipped'' is executed, which simply logs that no issues were found and exits the workflow run. In case issues  pass the ``gate'' the ``bugfix'' job is started. This job is responsible for executing the APR Core logic. It provides necessary prerequisites (see \ref{tab:container-inputs}) to start a container using the latest APR Core Docker Image which performs the the repair. These include checking out and mounting the code repository, setting environment variables, and providing the necessary permissions for the APR Core to edit repository content, create pull requests, and write issues on GitHub.
 
-For giving access to the agent cores logs and metrics the job provides the logs directory as an artifact which is available after the workflow run is completed.
+As the last step of ``bugfix'' is uploading the logs and metric files of the APR core as artifacts, which makes them available after the workflow run has completed.
+
+Figure \ref{fig:ci} visualizes the workflow and its jobs.
 
 \begin{figure}[H]
     \centering
@@ -150,17 +153,11 @@ For giving access to the agent cores logs and metrics the job provides the logs 
     \label{fig:ci}
 \end{figure}
 
-To use this workflow in a repository, it needs to be placed in the `.github/workflows` directory of the repository along with the `filter\_issues.py` in `.github/scripts`.
-The following adjustments need to be made to the repository:
-\begin{itemize}
-    \item Add Secret: LLM provider API key
-    \item enable GitHub actions permission to create pull requests in repo settings -> actions -> General -> Workflow permissions (12.07.2025)
-\end{itemize}
-
+For using this integration in a repository, the workflow file needs to be placed in the `.github/workflows` directory of the repository along with the `filter\_issues.py` in `.github/scripts`. With this in place an ``LLM\_API\_KEY'' needs to be set as a secret in the repository settings. This key is used by the APR Core to authenticate with the configured LLM provider API. Lastly GitHub Actions needs to be granted permissions to create pull requests and write issues in the repository. This is done by setting the workflow permissions in the repository settings under Actions -> General -> Workflow permissions.
 
 \section{System Configuration}
 %TODO add  collision avoidance
-To fulfill requirement X some of the systems behavior can be controlled by adjusting a configuration. A configuration is optional when no configuration is in place the system will use default configuration which is defined in the code. The configuration is written in YAML and can be placed at the root of the repository. This allows for easy customization of the system without changing the code itself. The configuration file is named 'bugfix.yml' and is read by the APR core and CI Pipeline during execution. The configuration allows for controlling labels, workdir, branches, attempts and LLM models used for the repair process.
+For making the system easily adjustable the APR Core and the CI Pipeline can be configured using a YAML configuration file. The configuration is optional when no configuration is in place the system will use default configuration. A custom configuration must be named ``bugfix.yml'' and must be placed at the root of the repository. This allows for easy customization of the system without changing the code itself. The configuration read by system components during execution. Table \ref{table:configuration} lists the available configuration fields with a  description.
 
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{@{\extracolsep{\fill}} p{3.5cm} | p{11cm} @{}}
@@ -187,7 +184,6 @@ To fulfill requirement X some of the systems behavior can be controlled by adjus
 \end{longtable}
 
 
-The full implementation is listed in Appendix~\ref{Appendix}
 
 \section{Requirement Validation}
 

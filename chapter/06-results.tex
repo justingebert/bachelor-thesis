@@ -3,7 +3,7 @@ In the following section we will present our results our implementation and eval
 The setup and usage of the prototype in a GitHub repository is demonstrated in the first part of this chapter. By showcasing the resulting workflow in the GitHub Web user interface. In the second part of this section we  present the results of the quantitative evaluation of the prototype being used on the repository containing the QuixBugs dataset as a bases.
 
 \section{Showcase of workflow} \label{section:showcase}
-%TODO structure: setup, usage, dev 
+
 Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. As seen in \ref{fig:setup} the required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
 
 % \begin{figure}[H]
@@ -19,7 +19,7 @@ Processing a single issue right away when the issue is created and labeled with 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/github/GitHub Issue.png}
+    \includegraphics[width=1\textwidth]{images/workflow/label_issue.png}
     \caption{Trigger automatic fixing for single issue}
     \label{fig:issue-trigger}
 \end{figure}
@@ -28,7 +28,7 @@ The second way collects and processes all issues labeled with the ``bug\_v01'' l
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/workflow/dispatch.png}
+    \includegraphics[width=1\textwidth]{images/workflow/manual_dispatch.png}
     \caption{Manual Dispatch of APR}
     \label{fig:dispatch}
 \end{figure}
@@ -37,7 +37,7 @@ When the workflow is triggered it creates a new run in the GitHub Actions tab (s
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/workflow/Action.png}
+    \includegraphics[width=1\textwidth]{images/workflow/new_action.png}
     \caption{GitHub Action Run}
     \label{fig:apr-action}
 \end{figure}
@@ -46,7 +46,7 @@ A run can produce two possible outcomes for each issue it processes. Firstly, on
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/workflow/PR.png}
+    \includegraphics[width=1\textwidth]{images/workflow/pr.png}
     \caption{Resulting Pull Request}
     \label{fig:pr}
 \end{figure}
@@ -55,7 +55,7 @@ Secondly when an issue repair fails after all attempts have been exhausted, the 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/workflow/issue comment.png}
+    \includegraphics[width=1\textwidth]{images/workflow/failure_comment.png}
     \caption{Failure Report}
     \label{fig:failure-report}
 \end{figure}
@@ -93,12 +93,12 @@ In this section we present the results of the quantitative evaluation of the imp
 We asses more threats to validity in section \ref{section:validity}.
 
 \subsection{Baseline of Evaluation}
-The resulting data is based on the executions of the APR prototype in the prepared repository (see\ref{subsection:environment-setup}) which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance and cost we ran the APR prototype using eleven selected LLMs models defined in \ref{subsection:llm-selection}. This resulted in 22 pipeline runs each processing all 40 issues from the repository.
+The resulting data is based on the executions of the APR prototype in the prepared repository (see \ref{subsection:environment-setup}) which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance and cost we ran the APR prototype using eleven selected LLMs models defined in \ref{subsection:llm-selection}. All models where tested with one attempt per issue to evaluate zero shot performance and with a retry loop enabled to compare a few shot performance.
 \subsection{Results}
-The following tables tables shows the repair success rate, average cost and average execution time for each model used in the evaluation.
+The following tables tables show the repair success rate, average cost per issue and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and max attempts set to 3.
 
 %TODO add exact model snapshot versions
-\begin{table}[ht]
+\begin{table}[H]
     \centering
     \small
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{3cm} | p{3cm} | p{3cm} @{}}
@@ -107,9 +107,9 @@ The following tables tables shows the repair success rate, average cost and aver
         \hline
         \textbf{gemini-2.0-flash-lite} & 87.5\% & \$0.0001 & 11.33 \\
         \textbf{gemini-2.0-flash} & 72.5\% & \$0.0002 & 10.81s \\
-        \textbf{gemini-2.5-flash-lite-preview} & 87.5\% & \$0.0002 & 6.36s \\
+        \textbf{gemini-2.5-flash-lite} & 87.5\% & \$0.0002 & 6.36s \\
         \textbf{gemini-2.5-flash} & 90.0\% & \$0.009 & 50.16s \\
-        \textbf{gemini-2.5-pro} & 100\% & \$0.00 & 0.00s \\
+        \textbf{gemini-2.5-pro} & 95.0\% & \$0.0713 & 70.09s \\
         \textbf{gpt-4.1-nano} & 62.5\% & \$0.0002 & 14.88s \\
         \textbf{gpt-4.1-mini} & 92.5\% & \$0.0006 & 18.75s \\
         \textbf{gpt-4.1} & 92.5\% & \$0.0033 & 12.93s  \\
@@ -119,17 +119,14 @@ The following tables tables shows the repair success rate, average cost and aver
         \textbf{claude-sonnet-4-0} & 92.5\% & \$0.0102 & 28.93s \\
         \hline
     \end{tabular*}
-    \caption{Results of evaluation}
+    \caption{Zero shot evaluation results}
     \label{table:results}
 \end{table}
 
-
-The table shows the repair success rate, average cost and average execution time for each model used in the evaluation.
-
-\begin{table}[ht]
+\begin{table}[H]
     \centering
     \small
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} @{}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{3.5cm} | p{3cm} | p{3cm} | p{3cm}  @{}}
         \hline
         \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost}  & \textbf{Average Execution Time} \\
         \hline
@@ -140,17 +137,15 @@ The table shows the repair success rate, average cost and average execution time
         \textbf{gemini-2.5-pro} & 100\% & 0.00  & 0.00s \\
         \textbf{gpt-4.1-nano} & 70.0\% & \$0.0003  & 34.85s \\
         \textbf{gpt-4.1-mini} & 97.5\% & \$0.0043  & 24.42s \\
-        \textbf{gpt-4.1} & 0.00\% & 0.00  & 0.00s \\
-        \textbf{o4-mini} & 0.00\% & 0.00  & 0.00s \\
+        \textbf{gpt-4.1} & 97.5\% & 0.0041  & 14.76s \\
+        \textbf{o4-mini} & 100\% & 0.0075  & 60.98s \\
         \textbf{claude-3-5-haiku} & 15.0\% & \$0.0075  & 65.18s \\
         \textbf{claude-3-7-sonnet} & 95.0\% & \$0.0087 & 24.39s \\
-        \textbf{claude-sonnet-4-0} & 0.00\% & 0.00 & 0.00s \\
+        \textbf{claude-sonnet-4-0} & 92.5\% & \$0.011 & 30.13s \\
         \hline
     \end{tabular*}
-    \caption{Results of evaluation with retry loop enabled}
+    \caption{Few shot evaluation results}
     \label{table:retry-results}
 \end{table}
 
-
-Complete artifacts are available in the repository in the Appendix \ref{Appendix}.
-
+The full set of resulting data can be found the in ``apr\_evaluation'' directiory of the quixbugs-apr repository, listed in the Appendix \ref{Appendix}.
