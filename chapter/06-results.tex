@@ -4,14 +4,8 @@ The setup and usage of the prototype in a GitHub repository is demonstrated in t
 
 \section{Showcase of workflow} \label{section:showcase}
 
-Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. As seen in \ref{fig:setup} the required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
+Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. The required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=1\textwidth]{images/workflow/setup.png}
-%     \caption{Set up of APR in a repository}
-%     \label{fig:setup}
-% \end{figure}
 
 With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automated fixed in two different ways.
 

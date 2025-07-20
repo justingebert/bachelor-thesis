@@ -23,6 +23,7 @@ Section \ref{section:showcase} demonstrated that with this integration getting a
 The results indicate that this integration can support developers in the agile lifecycle by automating the design, development and testing stages in the lifecycle for bugs, leaving only requirement specification in form of issues and review of generated fixes to the developers. Furthermore issue descriptions for such bugs can be minimal, as the issues for evaluation contained no detailed information on the bug. This allows developers to focus on more complex tasks, while the system takes care of the simpler bugs. Our results align with the findings of \cite{houLargeLanguageModels2024}, who states that LLMs can accelerate bug fixing and enhance software reliability and maintainability.
 
 The evaluation results in section \ref{section:evaluation-results} show that the prototype can achieve a repair success rate of up to 100\% on the QuixBugs benchmark with the best performing models (X, Y, Z). This indicates that the approach taken can be effective in fixing single file bugs in a CI environment. When taking a deeper look at the results, we observed that the repair success rate is highly dependent on the LLM model used.
+
 With one attempt for every issue\footnote{zero shot prompting} the best performing models already achieve a repair success rate of 100\% on the QuixBugs benchmark, while smaller models like gemini-2.5-flash-lite and gpt-4.1-mini achieve a repair success rate of 95\% and 90\% respectively. This shows that with zero shot smaller models can achieve good results, but larger models are more effective in fixing bugs.
 
 The potential of smaller models like: X,Y,Z lies in their performance and costs effectiveness. The results show that smaller models can achieve a repair success rate of 95\% with a significantly lower cost and execution time compared to larger models. For example X solves x\% with an average cost of X taking an average time of X per issue while Y repairs Y\% successful with only \$Y average per issue and 1/3 of the time per issue. This indicates that smaller models can be used to automate bug fixing in a CI environments, keeping costs low and performance resulting in quicker submissions of fixes.
@@ -60,8 +61,10 @@ The development and evaluation of the prototype was an interesting and insightfu
 
 
 \section{Roadmap for Extensions} \label{section:roadmap}
-- cost, time and repair success could be optimized 
-- test different prompts 
+As mentioned before the prototype developed in this thesis is modular and easily extendable. This allows for future opportunities and research. Below we list potentials for further extensions and analysis which was not implemented because of the contained time for thesis.
+
+- cost, time and repair success could be optimized
+- test different prompts
 - richer benchmarks
 - Service Accounts for better and more transparent integration
 - try out complex agent architectures and compare metrics and results
