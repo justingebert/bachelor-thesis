@@ -32,30 +32,38 @@ Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Be
 \subsection{LLM Selection} \label{subsection:llm-selection}
 
 %TODO add taht these providers are a go to in code generation tools like github copilot, cursor, etc
-For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. The following were models selected and will be used for the evaluation:
+For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected selected models that will be used for evaluation with the following data:
 
-\begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{4.5cm} | p{2.5cm} @{}}
-    \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                   \\
+\begin{itemize}
+    \item (1) Model Name: The name of the LLM model.
+    \item (2) Publisher: The company or organization that developed the model.
+    \item (3) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
+    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens with the model, divided in input and output cost.
+    \item (5) Provider Description: A brief description of the model's capabilities and features.
+\end{itemize}
+
+\begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{2.5cm} | p{2.5cm} @{}}
+    \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                  \\
 
     \hline
-    \textbf{Model Name}               & \textbf{Publisher} & \textbf{Context Window Size in Tokens} & \textbf{Cost per 1M Tokens}   & \textbf{Provider Description} \\
+    \textbf{(1)}               & \textbf{(2)} & \textbf{(3)} & \textbf{(4)}   & \textbf{(5)} \\
     \hline
     \endfirsthead
 
     \hline
     \endfoot
-    \textbf{gemini-2.0-flash-lite}    & Google             & 1,048,576                              & input: \$0.075 output: \$0.30 & X                              \\ \hline
-    \textbf{gemini-2.0-flash}         & Google             & 1,048,576                              & input: \$0.15 output: \$0.60  & X                              \\ \hline
-    \textbf{gemini-2.5-flash-preview} & Google             & 1,000,000                              & input: \$0.10 output: \$0.40  & X                              \\ \hline
-    \textbf{gemini-2.5-flash}         & Google             & 1,048,576                              & input: \$0.30 output: \$2.50  & X                              \\ \hline
-    \textbf{gemini-2.5-pro}           & Google             & 1,048,576                              & input: \$1.25 output: \$10.00 & X                              \\ \hline
-    \textbf{gpt-4.1-nano}             & OpenAI             & 1,047,576                              & input: \$0.10 output: \$0.40  & X                              \\ \hline
-    \textbf{gpt-4.1-mini}             & OpenAI             & 1,047,576                              & input: \$0.40 output: \$1.60  & X                              \\ \hline
-    \textbf{gpt-4.1}                  & OpenAI             & 1,047,576                              & input: \$2.00 output: \$8.00  & X                              \\ \hline
-    \textbf{o4-mini}                  & OpenAI             & 200,000                                & input: \$1.10 output: \$4.40  & X                              \\ \hline
-    \textbf{claude-3-5-haiku}         & Anthropic          & 200,000                                & input: \$0.80 output: \$4.00  & X                              \\ \hline
-    \textbf{claude-3-7-sonnet}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\ \hline
-    \textbf{claude-sonnet-4-0}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                              \\
+    \textbf{gemini-2.0-flash-lite}    & Google             & 1,048,576                              & input: \$0.075 output: \$0.30 & X                             \\ \hline
+    \textbf{gemini-2.0-flash}         & Google             & 1,048,576                              & input: \$0.15 output: \$0.60  & X                             \\ \hline
+    \textbf{gemini-2.5-flash-preview} & Google             & 1,000,000                              & input: \$0.10 output: \$0.40  & X                             \\ \hline
+    \textbf{gemini-2.5-flash}         & Google             & 1,048,576                              & input: \$0.30 output: \$2.50  & X                             \\ \hline
+    \textbf{gemini-2.5-pro}           & Google             & 1,048,576                              & input: \$1.25 output: \$10.00 & X                             \\ \hline
+    \textbf{gpt-4.1-nano}             & OpenAI             & 1,047,576                              & input: \$0.10 output: \$0.40  & X                             \\ \hline
+    \textbf{gpt-4.1-mini}             & OpenAI             & 1,047,576                              & input: \$0.40 output: \$1.60  & X                             \\ \hline
+    \textbf{gpt-4.1}                  & OpenAI             & 1,047,576                              & input: \$2.00 output: \$8.00  & X                             \\ \hline
+    \textbf{o4-mini}                  & OpenAI             & 200,000                                & input: \$1.10 output: \$4.40  & X                             \\ \hline
+    \textbf{claude-3-5-haiku}         & Anthropic          & 200,000                                & input: \$0.80 output: \$4.00  & X                             \\ \hline
+    \textbf{claude-3-7-sonnet}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                             \\ \hline
+    \textbf{claude-sonnet-4-0}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                             \\
     \hline
 \end{longtable}
 
@@ -152,8 +160,6 @@ The following data is automatically collected by each run of the APR system. Usi
     \caption{Summary of metrics collected for each processed issue}
     \label{table:issue-metrics}
 \end{table}
-
-An attempt to repair an issue consists of multiple stages during the repair process, each with its own metrics. The following table summarizes the metrics collected for each stage:
 
 \begin{table}[H]
     \centering

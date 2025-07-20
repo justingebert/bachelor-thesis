@@ -9,20 +9,6 @@
 \usepackage{marvosym}
 \usepackage{graphicx}
 \usepackage{csquotes}
-\newtheorem{satz}{Satz}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}[satz]{Definition}
-\theoremstyle{definition}
-\newtheorem{lemma}[satz]{Lemma}
-\theoremstyle{definition}
-\newtheorem{bemerkung}[satz]{Bemerkung}
-\theoremstyle{definition}
-\newtheorem{korollar}[satz]{Korollar}
-\theoremstyle{definition}
-\newtheorem{beispiel}[satz]{Beispiel}
-\theoremstyle{definition}
-\newtheorem{algorithmus}{Algorithmus}
-\newenvironment{beweis}{\begin{proof}[Beweis]}{\end{proof}}
 \usepackage[hyphens]{url}
 \usepackage[hidelinks]{hyperref}
 
@@ -117,3 +103,8 @@
 \usepackage{amsmath} %for math formulas
 
 \usepackage{acronym}
+
+\RedeclareSectionCommand[
+  beforeskip=0pt,  % Space before chapter title (default is about 50pt)
+  afterskip=30pt   % Space after chapter title
+]{chapter}
