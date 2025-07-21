@@ -31,45 +31,44 @@ Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Be
 
 \subsection{LLM Selection} \label{subsection:llm-selection}
 
-%TODO add taht these providers are a go to in code generation tools like github copilot, cursor, etc
-For the evaluation of our APR system we will test a selected pool of LLM models. Focusing on smaller models for this benchmark. Small models have fast response times and produce little costs. We will compare a selection of recent (point 11.07.2025) models from well known providers (Google, OpenAI, Anthropic). The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected selected models that will be used for evaluation with the following data:
+For the evaluation of our APR system we will test a selected pool of LLM models. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI assisted coding workflows Google, OpenAI and Anthropic. The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected selected models that will be used for evaluation with the following data:
 
 \begin{itemize}
     \item (1) Model Name: The name of the LLM model.
     \item (2) Publisher: The company or organization that developed the model.
     \item (3) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
-    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens with the model, divided in input and output cost.
-    \item (5) Provider Description: A brief description of the model's capabilities and features.
+    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens divided in input and output cost.
+    \item (5) Provider Description: Description of the models characteristics
 \end{itemize}
 
 \begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{2.5cm} | p{2.5cm} @{}}
-    \caption{Characteristics of selected Large Language Models} \label{table:llms}                                                                                  \\
+    \caption{Characteristics of selected LLMs (21.07.2025)} \label{table:llms}                                     \\
 
     \hline
-    \textbf{(1)}               & \textbf{(2)} & \textbf{(3)} & \textbf{(4)}   & \textbf{(5)} \\
+    \textbf{(1)}                      & \textbf{(2)} & \textbf{(3)} & \textbf{(4)}                  & \textbf{(5)} \\
     \hline
     \endfirsthead
 
     \hline
     \endfoot
-    \textbf{gemini-2.0-flash-lite}    & Google             & 1,048,576                              & input: \$0.075 output: \$0.30 & X                             \\ \hline
-    \textbf{gemini-2.0-flash}         & Google             & 1,048,576                              & input: \$0.15 output: \$0.60  & X                             \\ \hline
-    \textbf{gemini-2.5-flash-preview} & Google             & 1,000,000                              & input: \$0.10 output: \$0.40  & X                             \\ \hline
-    \textbf{gemini-2.5-flash}         & Google             & 1,048,576                              & input: \$0.30 output: \$2.50  & X                             \\ \hline
-    \textbf{gemini-2.5-pro}           & Google             & 1,048,576                              & input: \$1.25 output: \$10.00 & X                             \\ \hline
-    \textbf{gpt-4.1-nano}             & OpenAI             & 1,047,576                              & input: \$0.10 output: \$0.40  & X                             \\ \hline
-    \textbf{gpt-4.1-mini}             & OpenAI             & 1,047,576                              & input: \$0.40 output: \$1.60  & X                             \\ \hline
-    \textbf{gpt-4.1}                  & OpenAI             & 1,047,576                              & input: \$2.00 output: \$8.00  & X                             \\ \hline
-    \textbf{o4-mini}                  & OpenAI             & 200,000                                & input: \$1.10 output: \$4.40  & X                             \\ \hline
-    \textbf{claude-3-5-haiku}         & Anthropic          & 200,000                                & input: \$0.80 output: \$4.00  & X                             \\ \hline
-    \textbf{claude-3-7-sonnet}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                             \\ \hline
-    \textbf{claude-sonnet-4-0}        & Anthropic          & 200,000                                & input: \$3.00 output: \$15.00 & X                             \\
+    \textbf{gemini-2.0-flash-lite}    & Google       & 1,048,576    & input: \$0.075 output: \$0.30 & X            \\ \hline
+    \textbf{gemini-2.0-flash}         & Google       & 1,048,576    & input: \$0.15 output: \$0.60  & X            \\ \hline
+    \textbf{gemini-2.5-flash-preview} & Google       & 1,000,000    & input: \$0.10 output: \$0.40  & X            \\ \hline
+    \textbf{gemini-2.5-flash}         & Google       & 1,048,576    & input: \$0.30 output: \$2.50  & X            \\ \hline
+    \textbf{gemini-2.5-pro}           & Google       & 1,048,576    & input: \$1.25 output: \$10.00 & X            \\ \hline
+    \textbf{gpt-4.1-nano}             & OpenAI       & 1,047,576    & input: \$0.10 output: \$0.40  & X            \\ \hline
+    \textbf{gpt-4.1-mini}             & OpenAI       & 1,047,576    & input: \$0.40 output: \$1.60  & X            \\ \hline
+    \textbf{gpt-4.1}                  & OpenAI       & 1,047,576    & input: \$2.00 output: \$8.00  & X            \\ \hline
+    \textbf{o4-mini}                  & OpenAI       & 200,000      & input: \$1.10 output: \$4.40  & X            \\ \hline
+    \textbf{claude-3-5-haiku}         & Anthropic    & 200,000      & input: \$0.80 output: \$4.00  & X            \\ \hline
+    \textbf{claude-3-7-sonnet}        & Anthropic    & 200,000      & input: \$3.00 output: \$15.00 & X            \\ \hline
+    \textbf{claude-sonnet-4-0}        & Anthropic    & 200,000      & input: \$3.00 output: \$15.00 & X            \\
     \hline
 \end{longtable}
 
 
 \subsection{Environment Setup} \label{subsection:environment-setup}
-To mirror a realistic software development environment, we prepared a GitHub repository containing the QuixBugs python dataset. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs. %Only relevant files and folders required for the bug fixing process were kept, ensuring a clean environment for the system to operate in.
+To mirror a realistic software development environment, we prepared a GitHub repository containing the QuixBugs python dataset. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs.
 
 Using the relevant 40 files we generate a GitHub issue for each bug. A consistent issue template that captures only the title of the Problem with a minimal description. The generated issues serve as the entry point and communication medium to the APR system. Figure \ref{fig:gh-issue} shows an example of a generated GitHub issue.
 
@@ -86,9 +85,11 @@ Before the implementation phase we constructed requirements for the prototype, a
 
 \section{System Implementation}
 
-In this section we will give a high level overview of the implemented Automated Bug Fixing Pipeline. More detailed information about the implementation can be found in \ref{chapter:implementation}.
+In this section we will give a high level overview of the implemented Automated Bug Fixing Pipeline. A detailed implementation description can be found in \ref{chapter:implementation}.
 
-The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the following System:
+The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the system visualized in figure \ref{fig:high-level} and figure \ref{fig:apr-core-overview}. 
+
+When the system is in place in a repository the pipeline can be triggered by different events. This will execute the CI pipeline on a GitHub Action runner. The first pipeline job, fetches and filters relevant issues. Resulting issues are passed to the APR Core which contains the main bug fixing logic. The APR core runs in a container and talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes, changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
 
 \begin{figure}[H]
     \centering
@@ -104,7 +105,7 @@ The Automated Bug Fixing Pipeline was developed using iterative prototyping and 
     \label{fig:apr-core-overview}
 \end{figure}
 
-When the system is in place in a repository the pipeline can automatically be triggered by the configured triggers. This will execute the pipeline on a GitHub Action runner. In the first pipeline job relevant issues are fetched and filtered for further processing. Filtered issues are then passed to the Dockerized APR Core which contains the main bug fixing logic. The APR core talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes changes get applied and a pull request is automatically opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
+
 
 \section{Evaluation} \label{section:evaluation}
 %TODO should I mention showcase of results here?
