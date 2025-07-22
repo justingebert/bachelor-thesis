@@ -6,7 +6,6 @@ The setup and usage of the prototype in a GitHub repository is demonstrated in t
 
 Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. The required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
 
-
 With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automated fixed in two different ways.
 
 Processing a single issue right away when the issue is created and labeled with the ``bug\_v01'' shown in Figure \ref{fig:issue-trigger}. This allows for fast feedback and quick bug fixing at issue creation and triage \footnote{explain triage}.
@@ -99,18 +98,18 @@ The following tables tables show the repair success rate, average cost per issue
         \hline
         \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost Per Issue} & \textbf{Average Execution Time in seconds} \\
         \hline
-        \textbf{gemini-2.0-flash-lite} & 87.5\% & \$0.0001 & 11.33 \\
-        \textbf{gemini-2.0-flash} & 72.5\% & \$0.0002 & 10.81s \\
-        \textbf{gemini-2.5-flash-lite} & 87.5\% & \$0.0002 & 6.36s \\
-        \textbf{gemini-2.5-flash} & 90.0\% & \$0.009 & 50.16s \\
-        \textbf{gemini-2.5-pro} & 95.0\% & \$0.0713 & 70.09s \\
-        \textbf{gpt-4.1-nano} & 62.5\% & \$0.0002 & 14.88s \\
-        \textbf{gpt-4.1-mini} & 92.5\% & \$0.0006 & 18.75s \\
-        \textbf{gpt-4.1} & 92.5\% & \$0.0033 & 12.93s  \\
-        \textbf{o4-mini} & 87.5\% & \$0.0064 & 57.05s  \\
-        \textbf{claude-3-5-haiku} & 2.5\% & \$0.0024 & 23.1s \\
-        \textbf{claude-3-7-sonnet} & 87.5\% & \$0.0069 & 21.78s \\
-        \textbf{claude-sonnet-4-0} & 92.5\% & \$0.0102 & 28.93s \\
+        \textbf{gemini-2.0-flash-lite} & 87.5\% & \$0.0001 & 11.33s \\
+        \textbf{gemini-2.0-flash} & 87.5\% & \$0.0002 & 8.18s \\
+        \textbf{gemini-2.5-flash-lite} & 90.0\% & \$0.0002 & 5.07s \\
+        \textbf{gemini-2.5-flash} & 92.5\% & \$0.009 & 20.46s \\
+        \textbf{gemini-2.5-pro} & 95.0\% & \$0.07130 & 70.09s \\
+        \textbf{gpt-4.1-nano} & 70.0\% & \$0.0001 & 6.73s \\
+        \textbf{gpt-4.1-mini} & 90.0\% & \$0.0007 & 8.96s \\
+        \textbf{gpt-4.1} & 90.0\% & \$0.0033 & 7.42s  \\
+        \textbf{o4-mini} & 90.0\% & \$0.0069 & 23.08s  \\
+        \textbf{claude-3-5-haiku} & 0.0\% & \$0.0024 & 9.17s \\
+        \textbf{claude-3-7-sonnet} & 87.5\% & \$0.0069 & 11.72s \\
+        \textbf{claude-sonnet-4-0} & 90.0\% & \$0.0103 & 12.96s \\
         \hline
     \end{tabular*}
     \caption{Zero shot evaluation results}
@@ -124,18 +123,18 @@ The following tables tables show the repair success rate, average cost per issue
         \hline
         \textbf{Model} & \textbf{Repair Success Rate} & \textbf{Average Cost}  & \textbf{Average Execution Time} \\
         \hline
-        \textbf{gemini-2.0-flash-lite} & 82.5\% & \$0.0002  & 19.97s \\
-        \textbf{gemini-2.0-flash} & 82.5\% & \$0.0004  & 15.62s \\
-        \textbf{gemini-2.5-flash-lite} & 87.5\% & \$0.0003 & 10.80s \\
-        \textbf{gemini-2.5-flash} & 92.5\% & \$0.01362  & 71.37s \\
-        \textbf{gemini-2.5-pro} & 100\% & 0.00  & 0.00s \\
-        \textbf{gpt-4.1-nano} & 70.0\% & \$0.0003  & 34.85s \\
-        \textbf{gpt-4.1-mini} & 97.5\% & \$0.0043  & 24.42s \\
-        \textbf{gpt-4.1} & 97.5\% & 0.0041  & 14.76s \\
-        \textbf{o4-mini} & 100\% & 0.0075  & 60.98s \\
-        \textbf{claude-3-5-haiku} & 15.0\% & \$0.0075  & 65.18s \\
-        \textbf{claude-3-7-sonnet} & 95.0\% & \$0.0087 & 24.39s \\
-        \textbf{claude-sonnet-4-0} & 92.5\% & \$0.011 & 30.13s \\
+        \textbf{gemini-2.0-flash-lite} & 85\% & \$0.0003  & 13.08s \\
+        \textbf{gemini-2.0-flash} & 90.0\% & \$0.0004  & 8.27s \\
+        \textbf{gemini-2.5-flash-lite} & 90.0\% & \$0.0003 & 7.18s \\
+        \textbf{gemini-2.5-flash} & 95.0\% & \$0.0111  & 23.65s \\
+        \textbf{gemini-2.5-pro} & 97.5\% & \$0.07086  & 68.78s \\
+        \textbf{gpt-4.1-nano} & 90.0\% & \$0.0003  & 10.61s \\
+        \textbf{gpt-4.1-mini} & 97.5\% & \$0.0043  & 11.98s \\
+        \textbf{gpt-4.1} & 97.5\% & \$0.004 & 7.45s \\
+        \textbf{o4-mini} & 100\% & \$0.007  & 21.54s \\
+        \textbf{claude-3-5-haiku} & 15.0\% & \$0.0076  & 23.98s \\
+        \textbf{claude-3-7-sonnet} & 95.0\% & \$0.0085 & 27.16s \\
+        \textbf{claude-sonnet-4-0} & 92.5\% & \$0.0117 & 16.80s \\
         \hline
     \end{tabular*}
     \caption{Few shot evaluation results}

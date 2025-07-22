@@ -37,7 +37,7 @@ With average repair times reaching from x-Y per issue, the approach is feasible 
 Overall repair success rates, execution times and costs demonstrate that the approach is feasible and can be used to automate bug fixing in a CI environment.
 does not take significant time and furthermore it can be run concurrently
 
-Leveraging paradigms of an agentless approach added with interactivity of the GitHub project platform we could achieve results that hold up with current APR research \cite{huCanGPTO1Kill2024, } showing similar repair success rates on the QuixBugs benchmark while providing an integrated approach with transparent cost and performance insights. 
+Leveraging paradigms of an agentless approach added with interactivity of the GitHub project platform we could achieve results that hold up with current APR research \cite{huCanGPTO1Kill2024, } showing similar repair success rates on the QuixBugs benchmark while providing an integrated approach with transparent cost and performance insights.
 
 As mentioned before the performance is highly dependant on the underlying LLMs used. As companies like OpenAI, Google and Anthropic are constantly improving their models, the approach taken in this thesis can be extended to use future models as they become available. This means that the system can be improved over time without the need for major changes making the approach future proof and adaptable to new developments in the field of LLMs. The portability, modularity and extendability allows for future opportunities mentioned in \ref{section:roadmap}.
 
@@ -63,17 +63,12 @@ The development and evaluation of the prototype was an interesting and insightfu
 \section{Roadmap for Extensions} \label{section:roadmap}
 As mentioned before the prototype developed in this thesis is modular and easily extendable. This allows for future opportunities and research. Below we list potentials for further extensions and analysis which was not implemented because of the contained time for thesis.
 
-- cost, time and repair success could be optimized
-- test different prompts
-- richer benchmarks
-- Service Accounts for better and more transparent integration
-- try out complex agent architectures and compare metrics and results
-- try out more complex bug fixing tasks - SWE bench
-- concurrency and parallelization of tasks
-- app which replies on webhook events
-- measure developer trust and satisfaction
-- dig further into collected data, see where it went wrong in the patches or localization
+- dig further into collected data, see where it went wrong in the patches or localization, further analyze the collected data, we collected a lot of data which can be used for more insights
+- test how cost, time and repair success can be optimized
 - small model with fallback to larger model
-- more complex prompts and prompt engineering
-- token usage can be optimized
-- further analyze the collected data, we collected a lot of data which can be used for more insights
+- more complex prompt and context and prompt engineering
+- richer benchmarks
+- Service Accounts for transparent and better platform integration a
+- github app which replies on webhook events for better integration
+- test complex agent architectures and compare metrics and results
+- measure developer trust and satisfaction
