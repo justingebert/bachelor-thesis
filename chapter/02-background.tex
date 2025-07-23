@@ -1,16 +1,16 @@
-In this section explains required the theoretical background and context for this thesis. First introducing fundamental concepts of software development, the agile software development lifecycle (SDLC), Continuous Integration (CI), and software project hosting platforms. The second part explores Generative Ai and LLMs with their rising role in software development practices. The third part explores the evolution and state of Automated Program Repair (APR) with examples of existing approaches.
+In this section, the required theoretical background and context for this thesis are explained. First, fundamental concepts of software development, the agile software development lifecycle (SDLC), Continuous Integration (CI), and software project hosting platforms are introduced. The second part explores Generative AI and LLMs with their rising role in software development practices. The third part examines the evolution and current state of Automated Program Repair (APR) with examples of existing approaches.
 
 \section{Software Development}
 
-The following section introduces core concepts of software development starting with the software development lifecycle followed by importance of Continuous Integration (CI) in modern software development and the role of software project hosting platforms.
+The following section introduces core concepts of software development, starting with the software development lifecycle, followed by the importance of Continuous Integration (CI) in modern software development, and the role of software project hosting platforms.
 
 \subsection{Software Development Lifecycle}
 %TODO add tickets that are created by developers, product managers, ...
-Engineering and developing software is complex process, consisting of multiple different tasks. For structuring this process, software development lifecycle models have been introduced. These frameworks evolve constantly to adapt to the changing needs of creating software. One of the most promising and widely used model today is Agile \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}.
+Engineering and developing software is a complex process, consisting of multiple different tasks. To structure this process, software development lifecycle models have been introduced. These frameworks constantly evolve to adapt to the changing needs of software creation. One of the most promising and widely used models today is Agile \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}.
 
-The Agile lifecycle introduces an iterative approach to software development, focusing on collaboration, feedback and adaptivity. The Goal is frequent delivery of small functional features of software, allowing for continuous improvement and adaptation to changing requirements \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}. Agile frameworks like Scrum or Kanban are used to apply this approach in a development environment \cite{zayatFrameworkStudyAgile2020}.
+The Agile lifecycle introduces an iterative approach to software development, focusing on collaboration, feedback, and adaptability. The goal is frequent delivery of small functional software features, allowing continuous improvement and adaptation to changing requirements \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}. Agile frameworks like Scrum or Kanban are used to apply this approach in a development environment \cite{zayatFrameworkStudyAgile2020}.
 
-An Agile iteration consists of multiple stages. Figure \ref{fig:agile-cycle} shows an example an agile iteration interpretation. Iterations start with a planning phase where requirements are gathered and prioritized. Secondly the architecture and design of the required changes is constructed in the design phase. The third stage is where the development of the prioritized requirements takes place. After development the changes are tested for issues or bugs in the testing stage. On successful integration and testing the changes are released in the deployment stage. Finally, internal and user feedback is collected for review \cite{huoSoftwareQualityAgile2004}.
+An Agile iteration consists of multiple stages. Figure \ref{fig\:agile-cycle} shows an example of an agile iteration interpretation. Iterations start with a planning phase where requirements are gathered and prioritized. Secondly, the architecture and design of the required changes are constructed in the design phase. The third stage involves developing the prioritized requirements. After development, the changes are tested for issues or bugs in the testing stage. Upon successful integration and testing, the changes are released in the deployment stage. Finally, internal and user feedback is collected for review \cite{huoSoftwareQualityAgile2004}.
 
 \begin{figure}[H]
     \centering
@@ -19,14 +19,13 @@ An Agile iteration consists of multiple stages. Figure \ref{fig:agile-cycle} sho
     \label{fig:agile-cycle}
 \end{figure}
 
+When bugs arise during an iteration, requirements can be reprioritized, and the iteration can be adapted to fix these issues. This adaptability is a key feature of Agile software development, allowing teams to quickly respond to changing requirements and issues that can slow down the delivery of planned features. %\cite{}. %TODO how do i cite this?
 
-When bugs arise during an iteration requirements can be reprioritized and the iteration can be adapted to fix these issues. This adaptivity is a key feature of Agile software development, allowing teams to respond quickly to changing requirements and issues which can slows down delivery of planed features %\cite{}. %TODO how do i cite this?
-
-Modern software systems are moving towards lightly coupled microservice architectures, which results in more repositories which are smaller in scale tailored towards a specialized domain. This trend is driven by the need for flexibility, scalability, and faster development cycles. This approach aligns with modern agile software development practices. \cite{francescoResearchArchitectingMicroservices2017} Along with this trend developers tend to work on multiple projects at the same time, which can lead to more interruptions and context switching when problems arise and priorities shift. \cite{tregubovImpactTaskSwitching2017, vasilescuSkyNotLimit2016}
+Modern software systems are moving towards loosely coupled microservice architectures, resulting in more repositories of smaller scale, tailored towards specialized domains. This trend is driven by the need for flexibility, scalability, and faster development cycles. This approach aligns with modern agile software development practices \cite{francescoResearchArchitectingMicroservices2017}. Along with this trend, developers tend to work on multiple projects simultaneously, which can lead to more interruptions and context switching when problems arise and priorities shift \cite{tregubovImpactTaskSwitching2017, vasilescuSkyNotLimit2016}.
 
 \subsection{Continuous Integration}
 
-For accelerating development and delivery of software in an Continuous Integration has become a standard in agile software development. CI can  development and testing in the development lifecycle \cite{ugwuezeContinuousIntegrationDeployment2024}. It enables frequent code integration into a code repository. Automating steps like building and testing into the development resulting in rapid feedback right where the changes are committed. This supports critical aspects of agile software development enhancing delivery, feedback and collaboration  \cite{ugwuezeContinuousIntegrationDeployment2024}. Figure \ref{fig:ci-cycle} illustrates a typical CI cycle, where code changes are automatically fetched from source control, built, and tested, with a report generated for the developer.
+Continuous Integration (CI) has become a standard practice in agile software development to accelerate software development and delivery. CI enables frequent code integration into a repository, automating steps like building and testing, thus providing rapid feedback right where the changes are committed. This supports critical aspects of agile software development, enhancing delivery, feedback, and collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}. Figure \ref{fig\:ci-cycle} illustrates a typical CI cycle, where code changes are automatically fetched from source control, built, and tested, with a report generated for the developer.
 
 \begin{figure}[H]
     \centering
@@ -35,35 +34,36 @@ For accelerating development and delivery of software in an Continuous Integrati
     \label{fig:ci-cycle}
 \end{figure}
 
-Although Continuous Integration improves feedback loops, can also add overhead. Effort and infrastructure needs to be invested tp keep pipelines running \cite{hiltonUsageCostsBenefits2016}, and projects suffer from long build times that harm developer productivity \cite{ghalebEmpiricalStudyLong2019}.
+Although Continuous Integration improves feedback loops, it can also add overhead. Effort and infrastructure must be invested to keep pipelines running \cite{hiltonUsageCostsBenefits2016}, and projects may suffer from long build times that harm developer productivity \cite{ghalebEmpiricalStudyLong2019}.
 
-\subsection{Software Project Hosting Platforms} \label{subsection:Software Project Hosting Platforms}
+\subsection{Software Project Hosting Platforms} \label{subsection\:Software Project Hosting Platforms}
 
-Modern software projects live on platforms like Github or GitLab. GitHub alone   100 million developers and more than 518 million repositories, making it the largest open-source community world wide \cite{staffOctoverseAILeads2024}.
+Modern software projects live on platforms like GitHub or GitLab. GitHub alone hosts 100 million developers and more than 518 million repositories, making it the largest open-source community worldwide \cite{staffOctoverseAILeads2024}.
 
-Development platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities. \cite{GitHubFeatures2025, abrahamssonAgileSoftwareDevelopment2017}
+Development platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities \cite{GitHubFeatures2025, abrahamssonAgileSoftwareDevelopment2017}.
 
-Github issues are a key feature of Github allowing for project a scoped backlog, tracking tasks, features, and bugs. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project \cite{Issues}. Figure \ref{fig:gh-issue} shows an example of a GitHub Issue.
+GitHub Issues are a key feature allowing project-scoped backlogs, tracking tasks, features, and bugs. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project \cite{Issues}. Figure \ref{fig\:gh-issue} shows an example of a GitHub Issue.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/github/github_issue.png}
+    \includegraphics[width=1\textwidth]{images/github/github\_issue.png}
     \caption{Example of a GitHub Issue}
     \label{fig:gh-issue}
 \end{figure}
 
-For integrating and reviewing code GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, bringing along an integrated review process to validate changes before they are merged into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format} allowing reviewers to see and dig into the changes made. This process is essential for maintaining code quality and ensuring that changes are validated before being merged. Pull requests can be linked to Issues, allowing for easy tracking of changes related to specific tasks or bugs. \cite{PullRequests}
+For integrating and reviewing code, GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, integrating a review process to validate changes before merging into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format}, allowing reviewers to examine the changes made. This process is essential for maintaining code quality and ensuring that changes are validated before merging. Pull requests can be linked to Issues, allowing easy tracking of changes related to specific tasks or bugs \cite{PullRequests}.
 
-Moreover, GitHub also provides a manged solution (Github Actions) for running CI pipelines in a repositories. CI pipelines can be used by writing workflows files in YAML. Workflows can run self hosted or hosted by GitHub. A workflow consists of triggers and jobs, and steps. One or more events can trigger a workflow which executed one ore more jobs which are made up of one or more steps. \cite{UnderstandingGitHubActions} Figure \ref{fig:gh-workflow} visualizes the part of a workflow on GitHub.
+Moreover, GitHub also provides a managed solution (GitHub Actions) for running CI pipelines in repositories. CI pipelines are configured by writing workflow files in YAML. Workflows can run self-hosted or hosted by GitHub. A workflow consists of triggers, jobs, and steps. One or more events trigger a workflow, which executes one or more jobs consisting of multiple steps \cite{UnderstandingGitHubActions}. Figure \ref{fig\:gh-workflow} visualizes part of a workflow on GitHub.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/overview-actions-simple.png}
-    \caption{Components of a Github Action}
+    \caption{Components of a GitHub Action}
     \label{fig:gh-workflow}
 \end{figure}
 
-Workflow results and logs can be viewed from multiple places in the GitHub Web User Interface (UI), including the Actions tab, the Pull Request page, and the repository's main page. This integration provides a seamless experience for developers to monitor and manage their CI processes directly within their repositories. \cite{GitHubActions2025}
+Workflow results and logs can be viewed from multiple places in the GitHub Web User Interface (UI), including the Actions tab, the Pull Request page, and the repository's main page. This integration provides a seamless experience for developers to monitor and manage their CI processes directly within their repositories \cite{GitHubActions2025}.
+
 
 \section{Generative AI in Software Development}
 
