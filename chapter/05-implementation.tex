@@ -161,26 +161,26 @@ For making the system easily adjustable the APR Core and the CI Pipeline can be 
 
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{@{\extracolsep{\fill}} p{3.5cm} | p{11cm} @{}}
-    \caption{Configuration Fields and Descriptions} \label{table:configuration}                                                         \\
+    \caption{Configuration Fields and Descriptions} \label{table:configuration}                        \\
     \toprule
-    \textbf{Configuration Field} & \textbf{Description}                                                                                 \\
+    \textbf{Configuration Field} & \textbf{Description}                                                \\
     \midrule
     \endfirsthead
 
     \bottomrule
     \endfoot
 
-    to\_fix\_label               & The label used to identify issues that need fixing.                                                  \\ \hline
-    submitted\_fix\_label        & The label applied to issues when a fix is submitted.                                                 \\ \hline
-    failed\_fix\_label           & The label applied to issues when a fix fails.                                                        \\ \hline
-    workdir                      & The working directory where the code resides, used for mounting in the Docker container.             \\ \hline
-    test\_cmd                    & The command used to run tests on the codebase.                                                       \\ \hline
-    branch\_prefix               & The prefix for branches created for bug fixes, allowing for easy identification of bug fix branches. \\ \hline
-    main\_branch                 & The main branch of the repository where bug fix branches are based.                                  \\ \hline
-    max\_issues                  & The maximum number of issues to process in a single run.                                             \\\hline
-    max\_attempts                & The maximum number of attempts to fix an issue before giving up.                                     \\ \hline
-    provider                     & The LLM provider used for generating fixes.                                                          \\ \hline
-    model                        & The specific model from the LLM provider used for generating fixes.                                  \\
+    to\_fix\_label               & The label used to identify issues that need fixing.                 \\ \hline
+    submitted\_fix\_label        & The label applied to issues when a fix is submitted.                \\ \hline
+    failed\_fix\_label           & The label applied to issues when a fix fails.                       \\ \hline
+    workdir                      & The working directory where the code lives.                         \\ \hline
+    test\_cmd                    & The command used to run tests on the codebase.                      \\ \hline
+    branch\_prefix               & The prefix for branches created for bug fixes.                      \\ \hline
+    main\_branch                 & The main branch of the repository where bug fix branches are based. \\ \hline
+    max\_issues                  & The maximum number of issues to process in a single run.            \\\hline
+    max\_attempts                & The maximum number of attempts to fix an issue.                      \\ \hline
+    provider                     & The LLM provider used for generating fixes.                         \\ \hline
+    model                        & The specific model from the LLM provider.                           \\
 \end{longtable}
 
 

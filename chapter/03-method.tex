@@ -87,7 +87,7 @@ Before the implementation phase we constructed requirements for the prototype, a
 
 In this section we will give a high level overview of the implemented Automated Bug Fixing Pipeline. A detailed implementation description can be found in \ref{chapter:implementation}.
 
-The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the system visualized in figure \ref{fig:high-level} and figure \ref{fig:apr-core-overview}. 
+The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the system visualized in figure \ref{fig:high-level} and figure \ref{fig:apr-core-overview}.
 
 When the system is in place in a repository the pipeline can be triggered by different events. This will execute the CI pipeline on a GitHub Action runner. The first pipeline job, fetches and filters relevant issues. Resulting issues are passed to the APR Core which contains the main bug fixing logic. The APR core runs in a container and talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes, changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
 
@@ -119,7 +119,7 @@ Furthermore we evaluate wether multiple attempts can help improve the repair suc
 
 For evaluating performance, we will analyze collected and fine grained timings of an issue repair attempt. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action run minutes are not included in the cost estimation, since 2000 minutes are included in the free tier of GitHub for public repositories.
 
-The following data is automatically collected by each run of the APR system. Using self developed scripts we collect the data from different sources for each run. Below we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics} and each stage of and issue repair process \ref{table:stage-metrics}. Using this data we calculate per model run results listed in table \ref{table:calculations} which will help in answering the RQ2.
+The following data is automatically collected by each run of the APR system. Using self developed scripts we collect the data from different sources for each run. Below we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics} and each stage of and issue repair process \ref{table:stage-metrics}. We use the collected data, to calculate results for different runs testing each of the selected models which will help in answering the RQ2. The calculations are listed in table \ref{table:calculations}.
 
 %TODO add calculations and check if all metrics are needed or evaluation
 \begin{table}[ht]
@@ -180,8 +180,6 @@ The following data is automatically collected by each run of the APR system. Usi
     \label{table:stage-metrics}
 \end{table}
 
-% Using this data we calculate the following metrics for each run of the system. This data will be calculated for each run using a different LLM model from the set of selected models \ref{subsection:llm-selection}. 
-
 \begin{table}[H]
     \centering
     \small
@@ -199,6 +197,6 @@ The following data is automatically collected by each run of the APR system. Usi
         Average Stage Outcome Success Rate & \[\frac{Number of Successful Stages}{Total Stages Processed}\] \\
         \hline
     \end{tabular*}
-    \caption{Evaluation metrics calculated from the collected data for a run}
+    \caption{Run evaluation metrics calculated from the collected data}
     \label{table:calculations}
 \end{table}
