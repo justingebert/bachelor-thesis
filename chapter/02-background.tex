@@ -10,7 +10,7 @@ Engineering and developing software is a complex process, consisting of multiple
 
 The Agile lifecycle introduces an iterative approach to software development, focusing on collaboration, feedback, and adaptability. The goal is frequent delivery of small functional software features, allowing continuous improvement and adaptation to changing requirements \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}. Agile frameworks like Scrum or Kanban are used to apply this approach in a development environment \cite{zayatFrameworkStudyAgile2020}.
 
-An Agile iteration consists of multiple stages. Figure \ref{fig\:agile-cycle} shows an example of an agile iteration interpretation. Iterations start with a planning phase where requirements are gathered and prioritized. Secondly, the architecture and design of the required changes are constructed in the design phase. The third stage involves developing the prioritized requirements. After development, the changes are tested for issues or bugs in the testing stage. Upon successful integration and testing, the changes are released in the deployment stage. Finally, internal and user feedback is collected for review \cite{huoSoftwareQualityAgile2004}.
+An Agile iteration consists of multiple stages. Figure \ref{fig:agile-cycle} shows an example of an agile iteration interpretation. Iterations start with a planning phase where requirements are gathered and prioritized. Secondly, the architecture and design of the required changes are constructed in the design phase. The third stage involves developing the prioritized requirements. After development, the changes are tested for issues or bugs in the testing stage. Upon successful integration and testing, the changes are released in the deployment stage. Finally, internal and user feedback is collected for review \cite{huoSoftwareQualityAgile2004}.
 
 \begin{figure}[H]
     \centering
@@ -25,7 +25,7 @@ Modern software systems are moving towards loosely coupled microservice architec
 
 \subsection{Continuous Integration}
 
-Continuous Integration (CI) has become a standard practice in agile software development to accelerate software development and delivery. CI enables frequent code integration into a repository, automating steps like building and testing, thus providing rapid feedback right where the changes are committed. This supports critical aspects of agile software development, enhancing delivery, feedback, and collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}. Figure \ref{fig\:ci-cycle} illustrates a typical CI cycle, where code changes are automatically fetched from source control, built, and tested, with a report generated for the developer.
+Continuous Integration (CI) has become a standard practice in agile software development to accelerate software development and delivery. CI enables frequent code integration into a repository, automating steps like building and testing, thus providing rapid feedback right where the changes are committed. This supports critical aspects of agile software development, enhancing delivery, feedback, and collaboration \cite{ugwuezeContinuousIntegrationDeployment2024}. Figure \ref{fig:ci-cycle} illustrates a typical CI cycle, where code changes are automatically fetched from source control, built, and tested, with a report generated for the developer.
 
 \begin{figure}[H]
     \centering
@@ -42,7 +42,7 @@ Modern software projects live on platforms like GitHub or GitLab. GitHub alone h
 
 Development platforms offer tools and services for the entire software development lifecycle, including project hosting, version control, issue tracking, bug reporting, project management, backups, collaborative workflows, and documentation capabilities \cite{GitHubFeatures2025, abrahamssonAgileSoftwareDevelopment2017}.
 
-GitHub Issues are a key feature allowing project-scoped backlogs, tracking tasks, features, and bugs. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project \cite{Issues}. Figure \ref{fig\:gh-issue} shows an example of a GitHub Issue.
+GitHub Issues are a key feature allowing project-scoped backlogs, tracking tasks, features, and bugs. Issues can be created, assigned, labeled, and commented on by everyone working on a codebase. This feature provides a structured way to manage and prioritize work within a project \cite{Issues}. Figure \ref{fig:gh-issue} shows an example of a GitHub Issue.
 
 \begin{figure}[H]
     \centering
@@ -53,7 +53,7 @@ GitHub Issues are a key feature allowing project-scoped backlogs, tracking tasks
 
 For integrating and reviewing code, GitHub provides Pull Requests. A Pull Request proposes changes to the codebase, integrating a review process to validate changes before merging into the production codebase. Code changes are displayed in a diff format \footnote{TODO explain format}, allowing reviewers to examine the changes made. This process is essential for maintaining code quality and ensuring that changes are validated before merging. Pull requests can be linked to Issues, allowing easy tracking of changes related to specific tasks or bugs \cite{PullRequests}.
 
-Moreover, GitHub also provides a managed solution (GitHub Actions) for running CI pipelines in repositories. CI pipelines are configured by writing workflow files in YAML. Workflows can run self-hosted or hosted by GitHub. A workflow consists of triggers, jobs, and steps. One or more events trigger a workflow, which executes one or more jobs consisting of multiple steps \cite{UnderstandingGitHubActions}. Figure \ref{fig\:gh-workflow} visualizes part of a workflow on GitHub.
+Moreover, GitHub also provides a managed solution (GitHub Actions) for running CI pipelines in repositories. CI pipelines are configured by writing workflow files in YAML. Workflows can run self-hosted or hosted by GitHub. A workflow consists of triggers, jobs, and steps. One or more events trigger a workflow, which executes one or more jobs consisting of multiple steps \cite{UnderstandingGitHubActions}. Figure \ref{fig:gh-workflow} visualizes part of a workflow on GitHub.
 
 \begin{figure}[H]
     \centering
@@ -77,7 +77,7 @@ The introduction of the transformer architecture revolutionized the field of tex
 
 To achieve specific tasks using LLMs, an input prompt is provided to the model. Designing these inputs to guide a model's output is called prompt engineering. This process is crucial for achieving desired results from LLMs, as the quality and specificity of the prompt directly influence the model's output. Text used for input and output of LLMs is tokenized, meaning the text is broken down into smaller units (tokens) for processing. The input is constrained by a model's context window, which is the maximum amount of text the model can process at once \cite{naveedComprehensiveOverviewLarge2024}.
 
-Large Language Models can be accessed via APIs offered by providers like OpenAI, Anthropic, or Google. A selection of LLMs with characteristics is shown in section \ref{subsection\:llm-selection}.
+Large Language Models can be accessed via APIs offered by providers like OpenAI, Anthropic, or Google. A selection of LLMs with characteristics is shown in section \ref{subsection:llm-selection}.
 
 \subsection{Large Language Models in Software Development}
 
@@ -85,7 +85,7 @@ Large Language Models are reshaping software development by automating various t
 
 Despite the rapid adoption of Generative AI in many areas of software development, this technology still faces limitations. LLMs have difficulty with tasks outside their training scope or requiring specific domain knowledge \cite{houLargeLanguageModels2024}. Limited context windows create challenges when working with large codebases and complex projects, restricting true contextual or business requirement understanding \cite{bhargavmallampatiRoleGenerativeAI2025}. When generating code, LLMs can produce incorrect or insecure outputs, leading to additional bugs and vulnerabilities \cite{houLargeLanguageModels2024, bhargavmallampatiRoleGenerativeAI2025}. Additionally, integrating LLMs can introduce vulnerabilities to prompt injection, where malicious instructions lead to harmful code generation \cite{liuPromptInjectionAttack2024}. Moreover, code generated by LLMs is based on existing training data, raising questions about ownership, responsibility, and intellectual property rights \cite{sauvolaFutureSoftwareDevelopment2024, houLargeLanguageModels2024}.
 
-Facing these challenges, different approaches are actively being developed and researched, including AI Agents \cite{liuMarsCodeAgentAInative2024, yangSWEagentAgentComputerInterfaces2024}, Retrieval Augmented Generation (RAG) approaches \cite{xiaAgentlessDemystifyingLLMbased2024}, and interactive systems \cite{xiaAutomatedProgramRepair2024}. These paradigms aim to enhance LLM capabilities by providing additional context, enabling multi-step reasoning, or allowing interactive feedback loops during code generation and debugging \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025}. Section \ref{subsection\:evolution-apr} discusses these approaches in more detail.
+Facing these challenges, different approaches are actively being developed and researched, including AI Agents \cite{liuMarsCodeAgentAInative2024, yangSWEagentAgentComputerInterfaces2024}, Retrieval Augmented Generation (RAG) approaches \cite{xiaAgentlessDemystifyingLLMbased2024}, and interactive systems \cite{xiaAutomatedProgramRepair2024}. These paradigms aim to enhance LLM capabilities by providing additional context, enabling multi-step reasoning, or allowing interactive feedback loops during code generation and debugging \cite{houLargeLanguageModels2024, puvvadiCodingAgentsComprehensive2025}. Section \ref{subsection:evolution-apr} discusses these approaches in more detail.
 
 Recent research is exploring solutions integrating LLMs into existing software development practices and workflows, leveraging existing development tools and platforms for seamless integration into the software development lifecycle \cite{puvvadiCodingAgentsComprehensive2025, dohmkeGitHubCopilotMeet2025, IntroducingCodex, sauvolaFutureSoftwareDevelopment2024}.
 
