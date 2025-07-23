@@ -100,11 +100,18 @@
 
 \usepackage{longtable} %tables across multiple pages
 
-\usepackage{amsmath} %for math formulas
-
 \usepackage{acronym}
+
+\usepackage{pdfpages}
 
 \RedeclareSectionCommand[
   beforeskip=10pt,  % Space before chapter title (default is about 50pt)
   afterskip=30pt   % Space after chapter title
 ]{chapter}
+
+\hypersetup{
+    pdfauthor={Justin Gebert},
+    pdftitle={Integrating LLM based Automated Bug Fixing into Continuous Integration - Analysis of Potentials and Limitations},
+    pdfsubject={Bachelor Thesis},
+    pdfkeywords={AI, Automated Program Repair, Continuous Integration, Large Language Models},
+}

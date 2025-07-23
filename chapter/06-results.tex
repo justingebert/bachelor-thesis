@@ -91,7 +91,7 @@ The resulting data is based on the executions of the APR prototype in the prepar
 
 \subsection{Results}
 
-The following tables show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3.
+The following tables and diagrams show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3.
 
 %TODO add exact model snapshot versions
 \begin{table}[H]
@@ -143,5 +143,43 @@ The following tables show the repair success rate, average cost per issue, and a
     \caption{Few shot evaluation results}
     \label{table:retry-results}
 \end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/diagrams/repair_success_rate_per_model_grouped.png}
+    \caption{Repair Success Rate per Model}
+    \label{fig:repair-success-rate}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/diagrams/avg_cost_per_issue_per_model_grouped.png}
+    \caption{Average Cost per Issue per Model}
+    \label{fig:avg-cost-per-issue}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/diagrams/avg_execution_time_per_issue_per_model_grouped.png}
+    \caption{Average Execution Time per Issue per Model}
+    \label{fig:avg-execution-time-per-issue}
+\end{figure}
+
+
+CI Overhead
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_1.png}
+    \caption{CI Overhead per Run with 1 Attempt}
+    \label{fig:ci-vs-exec-time-per-run-attempts-1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_3.png}
+    \caption{CI Overhead per Run with 3 Attempts}
+    \label{fig:ci-vs-exec-time-per-run-attempts-3}
+\end{figure}
+
 
 The full set of resulting data can be found in the ``apr\_evaluation'' directory of the quixbugs-apr repository, listed in the Appendix \ref{chapter:appendix}.
