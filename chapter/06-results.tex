@@ -1,14 +1,14 @@
-In the following section we will present our results our implementation and evaluation. We implemented a working prototype for accessing how to integrating LLM based Automated Bug Fixing into Continuous Integration and the resulting potentials and limitations of using this system in software development workflows.
+In the following section we present the results of our implementation and evaluation. We implemented a working prototype for assessing how to integrate LLM-based Automated Bug Fixing into Continuous Integration, and the resulting potentials and limitations of using this system in software development workflows.
 
-The setup and usage of the prototype in a GitHub repository is demonstrated in the first part of this chapter. By showcasing the resulting workflow in the GitHub Web user interface. In the second part of this section we  present the results of the quantitative evaluation of the prototype being used on the repository containing the QuixBugs dataset as a bases.
+The setup and usage of the prototype in a GitHub repository is demonstrated in the first part of this chapter by showcasing the resulting workflow in the GitHub Web user interface. In the second part of this section, we present the results of the quantitative evaluation of the prototype being used on the repository containing the QuixBugs dataset as a basis.
 
 \section{Showcase of workflow} \label{section:showcase}
 
-Setting up the APR system in a repository is archived by adding 2 files to the ``.github'' directory of the repository. The required files are the ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With this the system is ready to operate. Additionally a optional configuration file can be added to the root, this ``.bugfix.yml'' file can be used to overwrite the LLM model used, max attempts and naming conventions of labels and branches. Furthermore a ``LLM\_API\_KEY'' secret needs to be added to the repository secrets and GitHub actions needs to be granted permission to create Pull Requests.
+Setting up the APR system in a repository is achieved by adding 2 files to the ``.github'' directory of the repository. The required files are ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With these in place, the system is ready to operate. Additionally, an optional configuration file can be added to the root. This `.bugfix.yml'' file can be used to override the LLM model used, max attempts, and naming conventions for labels and branches. Furthermore, an ``LLM\_API\_KEY'' secret needs to be added to the repository secrets, and GitHub Actions needs to be granted permission to create Pull Requests.
 
-With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automated fixed in two different ways.
+With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automatically fixed in two different ways.
 
-Processing a single issue right away when the issue is created and labeled with the ``bug\_v01'' shown in Figure \ref{fig:issue-trigger}. This allows for fast feedback and quick bug fixing at issue creation and triage \footnote{explain triage}.
+One option is processing a single issue immediately when it is created and labeled with ``bug\_v01'', as shown in Figure \ref{fig:issue-trigger}. This allows for fast feedback and quick bug fixing at issue creation and triage\footnote{explain triage}.
 
 \begin{figure}[H]
     \centering
@@ -17,7 +17,7 @@ Processing a single issue right away when the issue is created and labeled with 
     \label{fig:issue-trigger}
 \end{figure}
 
-The second way collects and processes all issues labeled with the ``bug\_v01'' label by scheduling the workflow to run at a specific time or dispatching it manually (see Figure \ref{fig:dispatch}). This allows for a more controlled approach for bug fixing, where issues are processed in batches.
+The second way collects and processes all issues labeled with the ``bug\_v01'' label by scheduling the workflow to run at a specific time or dispatching it manually (see Figure \ref{fig:dispatch}). This allows for a more controlled approach to bug fixing, where issues are processed in batches.
 
 \begin{figure}[H]
     \centering
@@ -26,7 +26,7 @@ The second way collects and processes all issues labeled with the ``bug\_v01'' l
     \label{fig:dispatch}
 \end{figure}
 
-When the workflow is triggered it creates a new run in the GitHub Actions tab (see figure \ref{fig:apr-action}). This executes the bug fixing logic described in \ref{chapter:implementation}.
+When the workflow is triggered, it creates a new run in the GitHub Actions tab (see Figure \ref{fig:apr-action}). This executes the bug fixing logic described in \ref{chapter:implementation}.
 
 \begin{figure}[H]
     \centering
@@ -35,7 +35,7 @@ When the workflow is triggered it creates a new run in the GitHub Actions tab (s
     \label{fig:apr-action}
 \end{figure}
 
-A run can produce two possible outcomes for each issue it processes. Firstly, on a successful repair attempt it creates a Pull Request with the changes made to the codebase and the issue linked to it. The created Pull Requests allow code review and merging of fixes changes into the main branch. When merged the issue will automatically closed. Figure \ref{fig:pr} shows an example of a resulting Pull Request created by the APR system.
+A run can produce two possible outcomes for each issue it processes. Firstly, on a successful repair attempt, it creates a Pull Request with the changes made to the codebase and links the issue to it. The created Pull Requests allow code review and merging of the fixed changes into the main branch. When merged, the issue will be automatically closed. Figure \ref{fig:pr} shows an example of a resulting Pull Request created by the APR system.
 
 \begin{figure}[H]
     \centering
@@ -44,8 +44,7 @@ A run can produce two possible outcomes for each issue it processes. Firstly, on
     \label{fig:pr}
 \end{figure}
 
-Secondly when an issue repair fails after all attempts have been exhausted, the failure is reported to the issue as a comment and the issues is labeled as failed (see figure \ref{fig:failure-report}) so it wont be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
-
+Secondly, when an issue repair fails after all attempts have been exhausted, the failure is reported to the issue as a comment and the issue is labeled as failed (see Figure \ref{fig:failure-report}) so it won't be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/failure_comment.png}
@@ -57,7 +56,7 @@ Failed issues can be picked up again by adding new context to the issue. This ca
 
 %TODO pipeline from comment screenshot
 
-For transparency and debugging, each run provides a live log stream in the GitHub Actions tab (see figure \ref{fig:log-stream}). This allows users to see the progress of the run and any errors that occur during the execution. For further analysis logs, metrics and the complete context are published as artifacts to each run available to download in the run view.
+For transparency and debugging, each run provides a live log stream in the GitHub Actions tab (see Figure \ref{fig:log-stream}). This allows users to see the progress of the run and any errors that occur during the execution. For further analysis, logs, metrics, and the complete context are published as artifacts to each run, available to download in the run view.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/logs.png}
@@ -65,8 +64,7 @@ For transparency and debugging, each run provides a live log stream in the GitHu
     \label{fig:log-stream}
 \end{figure}
 
-
-Figure \ref{fig:flow} visualized the resulting flow of the APR system. The diagram shows the relation between user actions (yellow) and runs by the integrated APR system.
+Figure \ref{fig:flow} visualizes the resulting flow of the APR system. The diagram shows the relation between user actions (yellow) and runs by the integrated APR system.
 
 \begin{figure}[H]
     \centering
@@ -75,20 +73,24 @@ Figure \ref{fig:flow} visualized the resulting flow of the APR system. The diagr
     \label{fig:flow}
 \end{figure}
 
-\section{Evaluation Results} \label{section:evaluation-results}
+section{Evaluation Results} \label{section:evaluation-results}
 
-In this section we present the results of the quantitative evaluation of the implemented APR prototype. This evaluation is done using the collected and calculated data for each run of the prototype. How this data was collected and calculated is described in \ref{table:run-metrics}.
+In this section, we present the results of the quantitative evaluation of the implemented APR prototype. This evaluation is based on the collected and calculated data for each run of the prototype. How this data was collected and calculated is described in \ref{table:run-metrics}.
 
 \subsection{Validity}
-- github runners have a lot of computational noise
-- only small set of runs.
+
+- GitHub runners introduce a lot of computational noise
+- Only a small set of runs were performed
 
 We asses more threats to validity in section \ref{section:validity}.
 
 \subsection{Baseline of Evaluation}
-The resulting data is based on the executions of the APR prototype in the prepared repository (see \ref{subsection:environment-setup}) which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance and cost we ran the APR prototype using eleven selected LLMs models defined in \ref{subsection:llm-selection}. All models where tested with one attempt per issue to evaluate zero shot performance and with a retry loop enabled to compare a few shot performance.
+
+The resulting data is based on the executions of the APR prototype in the prepared repository (see \ref{subsection:environment-setup}), which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance, and cost, we ran the APR prototype using eleven selected LLM models defined in \ref{subsection:llm-selection}. All models were tested with one attempt per issue to evaluate zero-shot performance and with a retry loop enabled to compare few-shot performance.
+
 \subsection{Results}
-The following tables tables show the repair success rate, average cost per issue and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and max attempts set to 3.
+
+The following tables show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3.
 
 %TODO add exact model snapshot versions
 \begin{table}[H]
@@ -141,4 +143,4 @@ The following tables tables show the repair success rate, average cost per issue
     \label{table:retry-results}
 \end{table}
 
-The full set of resulting data can be found the in ``apr\_evaluation'' directiory of the quixbugs-apr repository, listed in the Appendix \ref{Appendix}.
+The full set of resulting data can be found in the ``apr\_evaluation'' directory of the quixbugs-apr repository, listed in the Appendix \ref{chapter:appendix}.
