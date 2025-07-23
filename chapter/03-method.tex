@@ -1,11 +1,11 @@
-The primary objective of this thesis is to implement and assess the potentials and limitations of integrating LLM based Automated Bug Fixing into Continuous Integration. We aim to answer the following research questions to evaluate the system's capabilities and impact on the software development process:
+The primary objective of this thesis is to implement and assess the potentials and limitations of integrating LLM-based Automated Bug Fixing into Continuous Integration. We aim to answer the following research questions to evaluate the system's capabilities and impact on the software development process:
 
 \begin{itemize}
     \item \textbf{RQ1:} How can LLM-based automated bug fixing be effectively and efficiently integrated into a CI pipeline?
     \item \textbf{RQ2:} What are the potentials and limitations of this integrated approach in terms of repair success rate, cost-effectiveness and developer workflow enhancement?
 \end{itemize}
 
-For answering these questions we streamlined this process into three phases preparation, implementation/usage and evaluation. The process is visualized below in Figure \ref{fig:method-overview}.
+To answer these questions, we streamlined the process into three phases: preparation, implementation/usage, and evaluation. The process is visualized below in Figure \ref{fig:method-overview}.
 
 \begin{figure}[H]
     \centering
@@ -14,31 +14,31 @@ For answering these questions we streamlined this process into three phases prep
     \label{fig:method-overview}
 \end{figure}
 
-In the preparation we select a suitable APR benchmark and a pool of LLMs. With the benchmark we set up a realistic development environment. By specifying requirements we lay the groundwork for the implementation of the APR system.
-In the second part we implement the APR system as a GitHub Action workflow based on the requirements.
-Lastly we evaluated the self developed prototype by using the defined evaluation metrics \ref{section:evaluation} collected during and after the execution of the APR system. Furthermore we will showcase the resulting workflow of using the system in the prepared repository.
-The following sections will go into detail of each of these phases.
+In the preparation phase, we select a suitable APR benchmark and a pool of LLMs. With the benchmark, we set up a realistic development environment. By specifying requirements, we lay the groundwork for the implementation of the APR system.
+In the second part, we implement the APR system as a GitHub Action workflow based on the requirements.
+Lastly, we evaluate the self-developed prototype using the defined evaluation metrics \ref{section:evaluation} collected during and after the execution of the APR system. Furthermore, we showcase the resulting workflow of using the system in the prepared repository.
+The following sections will go into detail about each of these phases.
 
 \section{Preparation}
 
-For implementing and evaluating our system we first need to prepare an environment where the system can be integrated, used and evaluated. This includes selecting a suitable dataset and Large Language Models, setting up the environment, and specifying the requirements for the system.
+For implementing and evaluating our system, we first need to prepare an environment where the system can be integrated, used, and evaluated. This includes selecting a suitable dataset and Large Language Models, setting up the environment, and specifying the requirements for the system.
 
 \subsection{Dataset Selection}
 
-For the evaluating the effectiveness of our APR integration, we selected the QuixBugs benchmark \cite{linQuixBugsMultilingualProgram2017}. This dataset is well-suited for our purposes due to its focus on small-scale bugs in Python\footnote{The QuixBugs benchmark contains the same bugs translated to Java as well. We will exclude this for evaluation research}. It consists of 40 individual files, each containing an algorithmic bug. Each bug is caused by single erroneous line. Corresponding tests and a corrected version for every file are also included in the benchmark which allows for seamless repair validation. QuixBugs was developed as challenging problems for developers \cite{linQuixBugsMultilingualProgram2017}, this means it enables us to evaluate if our system can take over the cognitive demanding task of fixing small bugs without developer intervention.
+For evaluating the effectiveness of our APR integration, we selected the QuixBugs benchmark \cite{linQuixBugsMultilingualProgram2017}. This dataset is well-suited for our purposes due to its focus on small-scale bugs in Python\footnote{The QuixBugs benchmark contains the same bugs translated to Java as well. We will exclude this for evaluation research}. It consists of 40 individual files, each containing an algorithmic bug. Each bug is caused by a single erroneous line. Corresponding tests and a corrected version for every file are also included in the benchmark, which allows for seamless repair validation. QuixBugs was developed as a set of challenging problems for developers \cite{linQuixBugsMultilingualProgram2017}, enabling us to evaluate whether our system can take over the cognitively demanding task of fixing small bugs without developer intervention.
 
-Additionally compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024} QuixBugs is relatively small which allows for accelerated setup and development.
+Additionally, compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024}, QuixBugs is relatively small, which allows for accelerated setup and development.
 
 \subsection{LLM Selection} \label{subsection:llm-selection}
 
-For the evaluation of our APR system we will test a selected pool of LLM models. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI assisted coding workflows Google, OpenAI and Anthropic. The models are selected to cover a range of capabilities and costs with focus on lower tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected selected models that will be used for evaluation with the following data:
+For the evaluation of our APR system, we will test a selected pool of LLM models. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. The models are selected to cover a range of capabilities and costs, with a focus on lower-tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected models that will be used for evaluation with the following data:
 
 \begin{itemize}
     \item (1) Model Name: The name of the LLM model.
     \item (2) Publisher: The company or organization that developed the model.
     \item (3) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
-    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens divided in input and output cost.
-    \item (5) Provider Description: Description of the models characteristics
+    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens, divided into input and output cost.
+    \item (5) Provider Description: Description of the model's characteristics.
 \end{itemize}
 
 \begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{2.5cm} | p{2.5cm} @{}}
@@ -68,9 +68,9 @@ For the evaluation of our APR system we will test a selected pool of LLM models.
 
 
 \subsection{Environment Setup} \label{subsection:environment-setup}
-To mirror a realistic software development environment, we prepared a GitHub repository containing the QuixBugs python dataset. This repository serves as the basis for the bug fixing process, allowing the system to interact with the codebase and perform repairs.
+To mirror a realistic software development environment, we prepared a GitHub repository containing the QuixBugs Python dataset. This repository serves as the basis for the bug-fixing process, allowing the system to interact with the codebase and perform repairs.
 
-Using the relevant 40 files we generate a GitHub issue for each bug. A consistent issue template that captures only the title of the Problem with a minimal description. The generated issues serve as the entry point and communication medium to the APR system. Figure \ref{fig:gh-issue} shows an example of a generated GitHub issue.
+Using the relevant 40 files, we generate a GitHub issue for each bug. A consistent issue template is used, capturing only the title of the problem with a minimal description. The generated issues serve as the entry point and communication medium for the APR system. Figure \ref{fig:gh-issue} shows an example of a generated GitHub issue.
 
 \begin{figure}[H]
     \centering
@@ -81,15 +81,15 @@ Using the relevant 40 files we generate a GitHub issue for each bug. A consisten
 
 \subsection{Requirements Specification}
 
-Before the implementation phase we constructed requirements for the prototype, applying the INVEST model, a widely-adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. With this framework we constructed both functional and non-functional requirements. The requirements are precisely defined, verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in \ref{chapter:requirements}.
+Before the implementation phase, we constructed requirements for the prototype, applying the INVEST model, a widely adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. Using this framework, we defined both functional and non-functional requirements. The requirements are precisely defined, verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in \ref{chapter:requirements}.
 
 \section{System Implementation}
 
-In this section we will give a high level overview of the implemented Automated Bug Fixing Pipeline. A detailed implementation description can be found in \ref{chapter:implementation}.
+In this section, we provide a high-level overview of the implemented Automated Bug Fixing Pipeline. A detailed implementation description can be found in \ref{chapter:implementation}.
 
-The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extendability. Using the self developed requirements\ref{chapter:requirements} we build the system visualized in figure \ref{fig:high-level} and figure \ref{fig:apr-core-overview}.
+The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extensibility. Based on the self-developed requirements \ref{chapter:requirements}, we built the system visualized in Figure \ref{fig:high-level} and Figure \ref{fig:apr-core-overview}.
 
-When the system is in place in a repository the pipeline can be triggered by different events. This will execute the CI pipeline on a GitHub Action runner. The first pipeline job, fetches and filters relevant issues. Resulting issues are passed to the APR Core which contains the main bug fixing logic. The APR core runs in a container and talks to the configured LLMs via API to localize and fix the issue. With the generated file edits the changes are validated and tested. When validation passes, changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of a unsuccessful repair or exhaustion of the maximum attempts a failure is reported to the issue.
+The integration of the pipeline into the repository is performed during this implementation phase. Once the system is in place, the pipeline can be triggered by different events. This executes the CI pipeline on a GitHub Action runner. The first pipeline job fetches and filters relevant issues. Resulting issues are passed to the APR Core, which contains the main bug-fixing logic. The APR Core runs in a container and communicates with the configured LLMs via API to localize and fix the issue. With the generated file edits, the changes are validated and tested. When validation passes, the changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of an unsuccessful repair or exhaustion of the maximum number of attempts, a failure is reported to the issue.
 
 \begin{figure}[H]
     \centering
@@ -109,17 +109,17 @@ When the system is in place in a repository the pipeline can be triggered by dif
 
 \section{Evaluation} \label{section:evaluation}
 %TODO should I mention showcase of results here?
-In this section, we describe how we measure the effectiveness, performance and cost of the APR pipeline when integrated into a Github repository. Using Github Actions Continuous Integration abilities, with the prepared QuixBugs repository as a base. We evaluate all the selected LLM models \ref{subsection:llm-selection} in the context of the APR system. The evaluation is based on the data collected during and after the execution of the APR pipeline.
+In this section, we describe how we measure the effectiveness, performance, and cost of the APR pipeline when integrated into a GitHub repository. We use GitHub Actions' Continuous Integration capabilities in combination with the prepared QuixBugs repository as a base. All selected LLM models from table \ref{subsection:llm-selection} are evaluated in the context of the APR system. The evaluation is based on data collected during and after the execution of the APR pipeline.
 
-We focus on several key data metrics to assess the system's performance and abilities in repairing software bugs. These metrics will provide insights into the system's effectiveness, performance, reliability, cost and overall impact on the software development lifecycle.
+We focus on several key data metrics to assess the system's performance and capabilities in repairing software bugs. These metrics provide insights into the system's effectiveness, performance, reliability, cost, and overall impact on the software development lifecycle.
 
-For evaluating the effectiveness of the LLM models used and approach, we determine a repair success rate. A successful repair of an issue is determined by validation and the complete test suite provided by QuixBugs. An issues is considered successfully repaired when the validation passes with correct syntax and the related test suite passes all tests.
+To evaluate the effectiveness of the LLM models and the approach, we determine a repair success rate. A successful repair of an issue is determined by validation and the complete test suite provided by QuixBugs. An issue is considered successfully repaired when the validation passes with correct syntax and the related test suite passes all tests.
 
-Furthermore we evaluate wether multiple attempts can help improve the repair success rate and how this relates to the cost of repairing process.
+Furthermore, we evaluate whether multiple attempts can help improve the repair success rate and how this relates to the cost of the repair process.
 
-For evaluating performance, we will analyze collected and fine grained timings of an issue repair attempt. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action run minutes are not included in the cost estimation, since 2000 minutes are included in the free tier of GitHub for public repositories.
+To assess performance, we analyze collected fine-grained timings of issue repair attempts. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action run minutes are not included in the cost estimation, as 2000 minutes are included in the free tier of GitHub for public repositories.
 
-The following data is automatically collected by each run of the APR system. Using self developed scripts we collect the data from different sources for each run. Below we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics} and each stage of and issue repair process \ref{table:stage-metrics}. We use the collected data, to calculate results for different runs testing each of the selected models which will help in answering the RQ2. The calculations are listed in table \ref{table:calculations}.
+The following data is automatically collected by each run of the APR system. Using self-developed scripts, we collect the data from different sources for each run. Below, we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics}, and each stage of an issue repair process \ref{table:stage-metrics}. We use the collected data to calculate results for different runs testing each of the selected models, which will help in answering RQ2. The calculations are listed in Table \ref{table:calculations}.
 
 %TODO add calculations and check if all metrics are needed or evaluation
 \begin{table}[ht]
@@ -189,12 +189,10 @@ The following data is automatically collected by each run of the APR system. Usi
         \textbf{Metrics} &  \textbf{Calculation} \\
         \hline
         Repair Success Rate & \[\frac{Number of Successful Repairs}{Total Issues Processed}\] \\ \hline
-        Average Number of Attempts & \[\frac{Total Attempts}{Total Issues Processed}\] \\ \hline
-        Average Execution Time & \[\frac{Total Execution Time}{Total Issues Processed}\] \\ \hline
-        Average Tokens Used & \[\frac{Total Tokens Used}{Total Issues Processed}\] \\ \hline
-        Average Cost & \[\frac{Total Cost}{Total Issues Processed}\] \\ \hline
-        Average Stage Execution Time & \[\frac{Total Stage Execution Time}{Total Stages Processed}\] \\ \hline
-        Average Stage Outcome Success Rate & \[\frac{Number of Successful Stages}{Total Stages Processed}\] \\
+        Average Execution Time per Issue & \[\frac{Total Execution Time}{Total Issues Processed}\] \\ \hline
+        Average Cost per Issue& \[\frac{Total Cost}{Total Issues Processed}\] \\ \hline
+        APR Core Execution Time & \[\frac{Total APR Core Execution Time}{Total Issues Processed}\] \\ \hline
+        CI Pipeline Execution Time & \[\frac{Total CI Pipeline Execution Time}{Total Issues Processed}\] \\ \hline
         \hline
     \end{tabular*}
     \caption{Run evaluation metrics calculated from the collected data}
