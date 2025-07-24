@@ -20,7 +20,7 @@
 \addbibresource{references/references.bib}
 %\usepackage{natbib} % use natbib for references 
 %----------------------------------------------------------------------------------------
-\usepackage{blindtext} % Package to generate dummy text throughout this template 
+
 
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
@@ -33,6 +33,8 @@
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{enumitem} % Customized lists
 \setlist[itemize]{noitemsep} % Make itemize lists more compact
+
+\urlstyle{same} % Use same font as text
 
 %\usepackage{abstract} % Allows abstract customization
 %\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
@@ -92,6 +94,7 @@
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
+
 \usepackage{parskip} % To avoid indentation of paragraphs and use line breaks instead
 
 \usepackage{placeins}
@@ -104,14 +107,27 @@
 
 \usepackage{pdfpages}
 
+\usepackage{ragged2e}
+
+
+\DeclareFieldFormat{url}{\begingroup\RaggedRight\url{#1}\endgroup}
+
+% Diese Zeilen sorgen dafür, dass URLs leichter umbrochen werden
+\setcounter{biburlnumpenalty}{9000} % Zahlen
+\setcounter{biburlucpenalty}{9000}  % Großbuchstaben
+\setcounter{biburllcpenalty}{9000}  % Kleinbuchstaben
+
+
 \RedeclareSectionCommand[
   beforeskip=10pt,  % Space before chapter title (default is about 50pt)
   afterskip=30pt   % Space after chapter title
 ]{chapter}
 
 \hypersetup{
-    pdfauthor={Justin Gebert},
-    pdftitle={Integrating LLM based Automated Bug Fixing into Continuous Integration - Analysis of Potentials and Limitations},
-    pdfsubject={Bachelor Thesis},
-    pdfkeywords={AI, Automated Program Repair, Continuous Integration, Large Language Models},
+  pdfauthor={Justin Gebert},
+  pdftitle={Integrating LLM based Automated Bug Fixing into Continuous Integration - Analysis of Potentials and Limitations},
+  pdfsubject={Bachelor Thesis},
+  pdfkeywords={AI, Automated Program Repair, Continuous Integration, Large Language Models},
+  pdfcreator={Justin Gebert},
+  pdfproducer={Justin Gebert}
 }
