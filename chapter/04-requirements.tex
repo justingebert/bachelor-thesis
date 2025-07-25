@@ -34,7 +34,7 @@ To guide the implementation of the prototype, we developed the following require
 
         F5 \label{f5} & Change \newline Validation
         & All generated changes are validated via formatting, linting, and running relevant tests.
-        & Context show results of \newline format/lint/test steps. \\ \hline
+        & Logs show results of \newline format/lint/test steps. \\ \hline
 
         F6 \label{f6} & Iterative \newline Patch \newline Generation
         & If F5 reports failures, retry F4-F5 until maximum number of attempts is reached.
@@ -50,7 +50,7 @@ To guide the implementation of the prototype, we developed the following require
 
         F9 \label{f9} & Log and \newline  Metric \newline Collection
         & For every run, logs and key metrics are collected and made available
-        & Artifacts or console logs are  available in CI run \newline  results \\
+        & Artifacts and console logs are available in CI run \newline  results \\
 \end{longtable}
 
 \section{Non-Functional Requirements}
@@ -72,7 +72,7 @@ To guide the implementation of the prototype, we developed the following require
 
         N1 \label{n1} & Configurable
         & Users can configure labels, \newline branches, number of attempts,and LLM in a YAML file.
-        & Editing the config file \newline changes the system's \newline behavior \\ \hline
+        & The system loads a custom configuration \\ \hline
 
         N2 \label{n2} & Portable
         & The system can be deployed and run on any Python GitHub repository with minimal setup.

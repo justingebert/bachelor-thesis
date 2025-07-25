@@ -43,6 +43,7 @@ By leveraging an agentless architecture together with the interactivity of the G
 As highlighted in the results, system effectiveness and efficiency is highly dependent on the underlying language model used. However, the modular design of the approach allows for straightforward integration of improved or newly released models from providers such as OpenAI, Google, or Anthropic. This ensures that the system can benefit from advances in \ac{LLM} technology without requiring major changes to the overall pipeline. Its portability and modularity allow for a wide range of enhancements, such as integrating new \acp{LLM}, experimenting with different prompting strategies or incorporating richer feedback mechanisms, as described in in Section~\ref{section:roadmap}.
 
 \section{Limitations}
+%TODO add that githuba action scheduleing is very unrealibale 
 Ultimately, there are also limitations faced by the prototype and the overall approach taken.
 
 As mentioned in section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues, the timing and availability of the system are highly dependent on external factors such as the \ac{LLM} providers' APIs and the GitHub Actions runners. This presents a limitation in terms of reliability and performance in a real software development cycle.

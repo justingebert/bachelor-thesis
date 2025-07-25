@@ -37,38 +37,38 @@ With this environment set, the APR core iterates over all issues fetched from th
 
 First, a clean workspace and the issue repair context is set up. The context acts as the main data structure for the issue repair process and is used at every step. \ref{lst:context-json} shows what the context looks like when initialized.
 
-\begin{lstlisting}[caption={Context JSON}, label={lst:context-json}]  
-    context = {
-        "bug": issue,
-        "config": config,
-        "state": {
-            "current_stage": None,
-            "current_attempt": 0,
-            "branch": None,
-            "repair_successful": False,
-        },
-        "files": {
-            "source_files": [],
-            "fixed_files": [],
-            "diff_file": None,
-            "log_dir": str(log_dir),
-        },
-        "stages": {},
-        "attempts": [],
-        "metrics": {
-            "github_run_id": os.getenv("GITHUB_RUN_ID"),
-            "script_execution_time": 0.0,
-            "execution_repair_stages" : {},
-            "tokens": {}
-        },
-    }
+\begin{lstlisting}[style=json, caption={Context JSON}, label={lst:context-json}]  
+context = {
+    "bug": issue,
+    "config": config,
+    "state": {
+        "current_stage": None,
+        "current_attempt": 0,
+        "branch": None,
+        "repair_successful": False,
+    },
+    "files": {
+        "source_files": [],
+        "fixed_files": [],
+        "diff_file": None,
+        "log_dir": str(log_dir),
+    },
+    "stages": {},
+    "attempts": [],
+    "metrics": {
+        "github_run_id": os.getenv("GITHUB_RUN_ID"),
+        "script_execution_time": 0.0,
+        "execution_repair_stages" : {},
+        "tokens": {}
+    },
+}
 \end{lstlisting}
 
 The context is passed between stages, with each stage performing a specific task in the bug fixing process and returning an updated context. The core stages are Localize, Fix, Build, and Test.
 
 The repair process starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's SDK\footnote{explain}. The localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
 
-\begin{lstlisting}[caption={Localization Prompt}, label={lst:localization-prompt}]
+\begin{lstlisting}[style=python, caption={Localization Prompt}, label={lst:localization-prompt}]
 system_instruction = "You are a bug localization system. Look at the issue description and return ONLY the exact file paths that need to be modified."
 
 prompt = f"""
@@ -87,7 +87,7 @@ prompt = f"""
 
 With the localized files in context, the Fix stage comes next. This stage again uses the configured \ac{LLM} API to generate a fix for the issue in the localized files. The prompt includes the issue details and file names along with their content. The response is expected to contain a list of edits for each file. The \ac{LLM} may also specify that no changes are required in certain files. The generated response is then parsed and applied to the files in the workspace. Finally, the context is updated with the new file content. Below is the system instruction and base prompt used for the Fix stage \ref{lst:repair-prompt}.
 
-\begin{lstlisting}[caption={Repair Prompt}, label={lst:repair-prompt}]
+\begin{lstlisting}[style=python, caption={Repair Prompt}, label={lst:repair-prompt}]
 system_instruction = "You are part of an automated bug-fixing system. Please return the complete, corrected raw source files for each file that needs changes, never use any markdown formatting. Follow the exact format requested."
 
 base_prompt = f"""
@@ -193,78 +193,131 @@ This section demonstrates how the prototype satisfies the functional and non-fun
 
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3.5cm} | p{1.5cm} | p{6cm} @{}}
-    \caption{Requirement Satisfaction and Validation} \label{tab:req-validation} \\
+    \caption{Requirement Satisfaction and Validation} \label{tab:req-validation}                                                                                                                                                                      \\
     \hline
-    \textbf{ID} & \textbf{Title} & \textbf{Satisfied} & \textbf{Verification / Reference} \\
+    \textbf{ID} & \textbf{Title}                      & \textbf{Satisfied} & \textbf{Verification / Reference}                                                                                                                                        \\
     \hline
     \endfirsthead
 
     \hline
     \endfoot
 
-    F0 & Multiple Triggers & Yes & See Figure~\ref{fig:triggers}. \\ \hline
-    F1 & Issue Filtering & Yes & See filtered issues log in Listing~\ref{lst:filtered-issues}. \\ \hline
-    F2 & Code Checkout & Yes & See log excerpt in Listing~\ref{fig:code-checkout}. \\ \hline
-    F3 & Bug Localization & Yes & See log excerpt in Listing~\ref{lst:loc}. \\ \hline
-    F4 & Fix Generation & Yes & See log excerpt in Listing~\ref{fig:fix}. \\ \hline
-    F5 & Change Validation & Yes & See log excerpt in Listing~\ref{fig:validation}. \\ \hline
-    F6 & Iterative Patch Generation & Yes & See log excerpt in Listing~\ref{fig:retry}. \\ \hline
-    F7 & Patch Application & Yes & See Figure~\ref{fig:branch-commit}. \\ \hline
-    F8 & Result Reporting & Yes & See Figure~\ref{fig:pr-report} and Figure \ref{fig:comment}. \\ \hline
-    F9 & Log and Metric Collection & Yes & See Figure~\ref{fig:logs-artifacts}. \\ \hline
-    N1 & Container Runtime & Yes & See log excerpt in Listing~\ref{lst:docker-log}. \\ \hline
-    N2 & Configurable & Yes & See log excerpts from Listing \ref{lst:log1} and Listing \ref{lst:log2}. \\ \hline
-    N3 & Portable & Yes & Demonstrated on two repositories: see Figure~\ref{fig:repo1-run} and igure~\ref{fig:repo2-run}. \\ \hline
-    N4 & Run Repeatable & No & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
-    N5 & Observable & Yes & See logs and metrics artifact in Figure~\ref{fig:metrics}. \\ \hline
-    N6 & End-to-End Automation & Yes & See full process in Section \ref{section:showcase}. \\ \hline
+    F0          & Multiple Triggers                   & Yes                & See Figure~\ref{fig:triggers}.                                                                                                                                           \\ \hline
+    F1          & Issue Filtering                     & Yes                & See filtered issues log in Listing~\ref{lst:filtered-issues}.                                                                                                            \\ \hline
+    F2          & Code Checkout                       & Yes                & See log excerpt in Listing~\ref{fig:code-checkout}.                                                                                                                      \\ \hline
+    F3          & Bug Localization                    & Yes                & See log excerpt in Listing~\ref{lst:loc}.                                                                                                                                \\ \hline
+    F4          & Fix Generation                      & Yes                & See context excerpt in Listing~\ref{fig:fix}.                                                                                                                            \\ \hline
+    F5          & Change Validation                   & Yes                & See log excerpt in Listing~\ref{fig:validation}.                                                                                                                         \\ \hline
+    F6          & Iterative Patch \newline Generation & Yes                & See log excerpt in Listing~\ref{fig:retry}.                                                                                                                              \\ \hline
+    F7          & Patch Application                   & Yes                & See og excerpt in Listing~\ref{lst:branch-commit}.                                                                                                                       \\ \hline
+    F8          & Result Reporting                    & Yes                & See Figure~\ref{fig:pr-report} and Figure \ref{fig:comment}.                                                                                                             \\ \hline
+    F9          & Log and Metric \newline  Collection & Yes                & See Figure~\ref{fig:logs-artifacts}.                                                                                                                                     \\ \hline
+    N1          & Container Runtime                   & Yes                & See log excerpt in Listing~\ref{lst:docker-log}.                                                                                                                         \\ \hline
+    N2          & Configurable                        & Yes                & See log excerpts from Listing \ref{lst:load-config}.                                                                                                                     \\ \hline
+    N3          & Portable                            & Yes                & Used in two repositories: see Appendix~\ref{chapter:appendix}                                                                           \\ \hline
+    N4          & Run Repeatable                      & No                 & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
+    N5          & Observable                          & Yes                & See Figure~\ref{fig:logs-artifacts}.{fig:metrics}.                                                                                                               \\ \hline
+    N6          & End-to-End Automation               & Yes                & See full process in Section \ref{section:showcase}.                                                                                                                      \\ \hline
 \end{longtable}
 
 
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{images/figures/triggers_placeholder.png}
-%     \caption{Workflow triggers for APR system}
-%     \label{fig:triggers}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/verification/triggers.png}
+    \caption{Workflow triggers for APR system}
+    \label{fig:triggers}
+\end{figure}
 
-% \begin{lstlisting}[caption={Filtered issues log excerpt}, label={lst:filtered-issues}]
-% [INFO] Filtered issues: #12, #15, #18
-% [INFO] Only issues with label 'to_fix' are processed.
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Filtered issues log excerpt}, label={lst:filtered-issues}, basicstyle=\ttfamily\small, breaklines=true, frame=single, columns=fullflexible]
+Found 1 issues to process
+[{"number": 27, "title": "Problem in next_palindrome", "body": "There is a bug in **`next_palindrome`**.", "labels": ["bug_v01", "quixbugs"]}]
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={Code checkout log excerpt}, label={fig:code-checkout}]
-% [INFO] Checking out repository: github.com/example/repo
-% [INFO] Checked out branch: main
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Code checkout log excerpt}, label={fig:code-checkout}, basicstyle=\ttfamily\small, breaklines=true, frame=single, columns=fullflexible]
+Run actions/checkout@v4
+Syncing repository: justingebert/bugfix-ci
+Getting Git version info
+Temporarily overriding HOME='/home/runner/work/_temp/6ca8e386-1931-4130-8b38-cd4993a6fa1f' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/bugfix-ci/bugfix-ci
+Deleting the contents of '/home/runner/work/bugfix-ci/bugfix-ci'
+Initializing the repository
+Disabling automatic garbage collection
+Setting up auth
+Fetching the repository
+Determining the checkout info
+/usr/bin/git sparse-checkout disable
+/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Checking out the ref
+/usr/bin/git log -1 --format=%H
+465a84dc8a989cd1ba7603324687f7d57cdc0998
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={Bug localization log excerpt}, label={lst:loc}]
-% [INFO] Localization result: ["src/module1.py", "src/utils.py"]
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Bug localization log excerpt}, label={lst:loc}]
+root - INFO - [localize] LLM response: ["next_palindrome.py"]
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={Fix generation log excerpt}, label={fig:fix}]
-% [INFO] Generated fix for src/module1.py
-% [INFO] No changes needed for src/utils.py
-% \end{lstlisting}
+\begin{lstlisting}[style=json, caption={Fix generation log excerpt}, label={fig:fix}]
+    "fix_attempt_1": {
+        "results": {
+          "status": "success",
+          "message": "Successfully fixed files",
+          "details": {
+            "fixed_files": [
+              "/workspace/quixbugs/python_programs/next_palindrome.py"
+            ],
+            "tokens": {
+              "input_tokens": 431,
+              "output_tokens": 288,
+              "total_tokens": 719,
+              "cost": 0.0006332
+            },
+            "raw_response": "=== File: /workspace/quixbugs/python_programs/next_palindrome.py ===\ndef next_palindrome(digit_list):\n    high_mid = len(digit_list) // 2\n    low_mid = (len(digit_list) - 1) // 2\n    while high_mid < len(digit_list) and low_mid >= 0:\n        if digit_list[high_mid] == 9:\n            digit_list[high_mid] = 0\n            digit_list[low_mid] = 0\n            high_mid += 1\n            low_mid -= 1\n        else:\n            digit_list[high_mid] += 1\n            if low_mid != high_mid:\n                digit_list[low_mid] = digit_list[high_mid]\n            return digit_list\n    return [1] + (len(digit_list) - 1) * [0] + [1]\n\n\"\"\"\nFinds the next palindromic integer when given the current integer\nIntegers are stored as arrays of base 10 digits from most significant to least significant\n\nInput:\n    digit_list: An array representing the current palindrome\n\nOutput:\n    An array which represents the next palindrome\n\nPreconditions:\n    The initial input array represents a palindrome\n\nExample\n    >>> next_palindrome([1,4,9,4,1])\n    [1,5,0,5,1]\n\"\"\""
+          }
+        },
+        "duration": 7.0682
+      },
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={Change validation log excerpt}, label={fig:validation}]
-% [INFO] Running Black formatter...
-% [INFO] Running flake8 linter...
-% [INFO] No syntax errors found.
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Change validation log excerpt}, label={fig:validation}]
+    root - INFO - == Running stage: build ==
+    root - INFO - [build] starting build process 
+    root - INFO - [build] Formatting /workspace/quixbugs/python_programs/next_palindrome.py with black...
+    root - INFO - [build] /workspace/quixbugs/python_programs/next_palindrome.py formatted successfully by black.
+    root - INFO - [build] Linting /workspace/quixbugs/python_programs/next_palindrome.py with flake8...
+    root - WARNING - [build] flake8 found issues in /workspace/quixbugs/python_programs/next_palindrome.py:
+    /workspace/quixbugs/python_programs/next_palindrome.py:20:80: E501 line too long (90 > 79 characters)
+    
+    root - ERROR - [build] Build failed. 1 files with issues.
+    root - INFO - == Stage build completed in 0.5411 seconds ==
+    root - INFO - == Running stage: test ==
+    root - INFO - [test] running tests for fixed files
+    root - INFO - [test] Testing next_palindrome...
+    root - INFO - [test] Looking for specific test: /workspace/quixbugs/python_testcases/test_next_palindrome.py
+    root - INFO - [test] Executing test command: cd /workspace/quixbugs && python -m pytest python_testcases/test_next_palindrome.py -v
+    root - INFO - [test] Specific test passed for next_palindrome.
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={Iterative patch generation log excerpt}, label={fig:retry}]
-% [INFO] Test failed, retrying fix (attempt 2/3)
-% [INFO] Feedback added to prompt for next attempt.
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Iterative patch generation log excerpt}, label={fig:retry}]
+    root - INFO - [test] Specific test failed for wrap.
+    root - ERROR - [test] Tests failed. 1 files with test failures.
+    root - INFO - == Stage test completed in 0.5417 seconds ==
+    root - INFO - === Repair failed on attempt 1/3, trying again ===
+    root - INFO - Resetting to main branch
+    root - INFO - Reset /workspace/python_programs/wrap.py to main branch
+    root - INFO - === Attempt 2/3 for issue #47 ===
+    root - INFO - == Running stage: fix ==
+    root - INFO - Loaded file: /workspace/python_programs/wrap.py
+\end{lstlisting}
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/branch_commit_placeholder.png}
-%     \caption{Branch and commit created for bugfix}
-%     \label{fig:branch-commit}
-% \end{figure}
+\begin{lstlisting}[style=log, caption={Branch and commit created for bugfix}, label={lst:branch-commit}]
+    root - INFO - === Repair successful on attempt 1/1 ===
+    root - INFO - Added file /workspace/quixbugs/python_programs/next_palindrome.py to staging area
+    root - INFO - 1 files with changes committed to branch bugfix_v01_27
+    root - INFO - Push successful
+\end{lstlisting}
+
 
 % \begin{figure}[H]
 %     \centering
@@ -280,45 +333,30 @@ This section demonstrates how the prototype satisfies the functional and non-fun
 %     \label{fig:comment}
 % \end{figure}
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/logs_artifacts_placeholder.png}
-%     \caption{Logs and metrics artifact from workflow run}
-%     \label{fig:logs-artifacts}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/verification/artifacts.png}
+    \caption{Downloadable Artifacts from workflow run}
+    \label{fig:logs-artifacts}
+\end{figure}
 
-% \begin{lstlisting}[caption={Docker container runtime log excerpt}, label={lst:docker-log}]
-% [INFO] Starting APR Core in Docker container...
-% [INFO] Container ID: 123abc456def
-% \end{lstlisting}
+\begin{lstlisting}[style=log, caption={Docker container runtime log excerpt}, label={lst:docker-log}]
+    Downloaded newer image for ghcr.io/justingebert/bugfix-ci:latest
+    Run docker run --rm \
+    docker run --rm \
+      -v "$GITHUB_WORKSPACE:/workspace" \
+      -e GITHUB_TOKEN -e GITHUB_RUN_ID -e GITHUB_REPOSITORY -e LLM_API_KEY -e FILTERED_ISSUES \
+      ghcr.io/justingebert/bugfix-ci:latest
+    shell: /usr/bin/bash -e {0}
+    env:
+      GITHUB_TOKEN: ***
+      GITHUB_REPOSITORY: justingebert/bugfix-ci
+      GITHUB_RUN_ID: 16531173399
+      LLM_API_KEY: ***
+      FILTERED_ISSUES: [{"number": 27, "title": "Problem in next_palindrome", "body": "There is a bug in **`next_palindrome`**.\n\n* **File**: `/Users/justingebert/Projects/Uni/BA/bugfix-ci/datasets/quixbugs/python_programs/next_palindrome.py`", "labels": ["bug_v01", "quixbugs"]}]
+\end{lstlisting}
 
-% \begin{lstlisting}[caption={System configuration log excerpt 1}, label={lst:log1}]
-% [INFO] Loaded configuration from bugfix.yml
-% [INFO] Max attempts set to 3
-% \end{lstlisting}
-
-% \begin{lstlisting}[caption={System configuration log excerpt 2}, label={lst:log2}]
-% [INFO] Using LLM provider: OpenAI
-% [INFO] Model: gpt-4
-% \end{lstlisting}
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/repo1_run_placeholder.png}
-%     \caption{APR run on repository 1}
-%     \label{fig:repo1-run}
-% \end{figure}
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/repo2_run_placeholder.png}
-%     \caption{APR run on repository 2}
-%     \label{fig:repo2-run}
-% \end{figure}
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/metrics_placeholder.png}
-%     \caption{Metrics artifact from workflow run}
-%     \label{fig:metrics}
-% \end{figure}
+\begin{lstlisting}[style=log, caption={Load custom configuration}, label={lst:load-config}]
+    root - INFO - [info] loaded default config from apr_core/default-config.yml
+    root - INFO - [info] loaded config from /workspace/bugfix.yml
+\end{lstlisting}
