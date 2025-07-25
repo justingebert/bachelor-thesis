@@ -3,7 +3,7 @@ To guide the implementation of the prototype, we developed the following require
 \section{Functional Requirements}
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
-\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
+\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{2.1cm} | p{6cm} | p{4.5cm} @{}}
     \caption{Functional requirements} \label{tab:functional-requirements} \\
     \hline
     \textbf{ID} & \textbf{Title} & \textbf{Description} & \textbf{Verification} \\
@@ -12,42 +12,51 @@ To guide the implementation of the prototype, we developed the following require
 
     \hline
     \endfoot
-        F0 \label{f0} & Multi Trigger
-        & The Pipeline can be triggered: manually, scheduled via cron or by issue creation/labeling.
-        & Runs can be found for these triggers \\ \hline
-        F1 \label{f1} & Issue Gathering
-        & Retrieve GitHub repository issues and filter them for correct state and configured labels \texttt{BUG}.
-        & \texttt{gate} logs list of fetched issues.  \\ \hline
-        F2 \label{f2} & Code Checkout
-        & Fetch the repository code into a fresh workspace and branch (via Docker mount).
-        & After F2, the Core has access the source files. \\ \hline
-        F3 \label{f3} & Issue Localization
-        & Use LLM to analyze the issue description and identify relevant files.
-        & LLM output contains file paths with files that shall be edited. \\ \hline
-        F4 \label{f4} & Fix Generation
-        & Use LLM to edit the identified files.
-        & LLM output contains adjusted content for the identified files. \\ \hline
-        F5 \label{f5} & Change Validation
-        & Run format, lint and relevant tests and capture pass/fail status.
-        & Context shows build and test results. \\ \hline
-        F6 \label{f6} & Iterative Patch Generation
-        & If F5 reports failures, retry F4-F5 up to \texttt{max\_attempts} times.
-        & Multiple stage execution are shown in context when Validation fails \\ \hline
-        F7 \label{f7} & Patch Application
+        F0 \label{f0} & Multiple \newline Triggers
+        & The Pipeline can be triggered: manually, scheduled or by issue labeling in GitHub.
+        & Runs can be found for \newline these triggers \\ \hline
+
+        F1 \label{f1} & Issue \newline Filtering
+        & The system retrieves and filters GitHub issues based on the \newline configured label.
+        & Logs show list of passing \newline issues.  \\ \hline
+
+        F2 \label{f2} & Code \newline Checkout
+        & The pipeline fetches the repository code into a fresh workspace and branch.
+        & Checkout and branch visible in logs.  \\ \hline
+
+        F3 \label{f3} & Bug \newline Localization
+        & The LLM analyzes the issue description and identifies the file(s) \newline needing changes.
+        & \ac{LLM} output contains \newline file paths. \\ \hline
+
+        F4 \label{f4} & Fix \newline Generation
+        & The LLM generates and proposes code edits for the identified files.
+        & \ac{LLM} output contains \newline adjusted content. \\ \hline
+
+        F5 \label{f5} & Change \newline Validation
+        & All generated changes are validated via formatting, linting, and running relevant tests.
+        & Context show results of \newline format/lint/test steps. \\ \hline
+
+        F6 \label{f6} & Iterative \newline Patch \newline Generation
+        & If F5 reports failures, retry F4-F5 until maximum number of attempts is reached.
+        & Logs show retries with \newline multiple stage executions.  \\ \hline
+
+        F7 \label{f7} & Patch \newline Application
         & Commit LLM-generated edits to the issue branch.
-        & Git shows a new branch with a commit referencing the Github issue \\ \hline
-        F8 \label{f8} & Result Reporting
-        & Report using Pull Requests and issue comments.
-        & A PR or appears for each issue, showing diff and summary. \\ \hline
-        F9 \label{f9} & Log and Metric Collection
-        & Provide log files and Metrics for evaluation and debugging.
-        & Log and metric files are accessible \\
+        & Git branch and commit with reference to the issue is visible \\ \hline
+
+        F8 \label{f8} & Result \newline Reporting
+        & The system reports the outcome by creating a Pull Request or adding a comments to the issue.
+        & Pull Requests and issue \newline comments are visible\\ \hline
+
+        F9 \label{f9} & Log and \newline  Metric \newline Collection
+        & For every run, logs and key metrics are collected and made available
+        & Artifacts or console logs are  available in CI run \newline  results \\
 \end{longtable}
 
 \section{Non-Functional Requirements}
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
-\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3cm} | p{6cm} | p{4cm} @{}}
+\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{2.1cm} | p{6cm} | p{4.5cm}  @{}}
     \caption{Non-Functional requirements} \label{tab:non-functional-requirements} \\
 
     \hline
@@ -57,22 +66,27 @@ To guide the implementation of the prototype, we developed the following require
 
     \hline
     \endfoot
-        N1 \label{n0} & Containerized Execution
-        & All APR code runs in CI runner in a Docker container.
-        & Workflow shows Docker container usage \\ \hline
-        N2 \label{n1} & Configurability
-        & User can specify issue labels, branches, attempts, LLM models.
-        & Changing the config file alters agent behavior accordingly. \\ \hline
-        N3 \label{n2} & Portability
-        & The system can be deployed on any python repository on GitHub.
-        & The system repairs at least one issue in more than one repository \\ \hline
-        N4 \label{n3} & Reproducibility
+        N0 \label{n0} & Container \newline Runtime
+        & All core logic runs inside a Docker container in the CI environment.
+        & CI logs confirm use of \newline Docker container. \\ \hline
+
+        N1 \label{n1} & Configurable
+        & Users can configure labels, \newline branches, number of attempts,and LLM in a YAML file.
+        & Editing the config file \newline changes the system's \newline behavior \\ \hline
+
+        N2 \label{n2} & Portable
+        & The system can be deployed and run on any Python GitHub repository with minimal setup.
+        & Demonstrate successful \newline run on at least two \newline different repositories. \\ \hline
+
+        N3 \label{n3} & Run \newline Repeatable
         & Runs are deterministic given identical repo state and config.
         & Multiple runs on the same issue report similar metrics. \\ \hline
-        N5 \label{n4} & Observability
-        & The system provides logs and metrics.
-        & Logs and metrics files are generated for each run. \\ \hline
-        N6 \label{n5} & No Manual Intervention
-        & The system runs fully automatically without user input.
-        & Issue creation to fix Pull Request works without any manual steps. \\ \hline
+
+        N4 \label{n4} & Observable
+        & Logs and metrics are generated for every run and accessible as CI artifacts.
+        & Downloadable artifacts \newline and visible logs for each run. \\ \hline
+
+        N5 \label{n5} & End-to-End \newline Automation
+        & The process is fully automated from issue creation to PR no manual intervention is needed.
+        & No manual steps are \newline needed, automation is \newline shown. \\ \hline
 \end{longtable}

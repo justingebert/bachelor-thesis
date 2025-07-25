@@ -25,7 +25,7 @@ The APR core contains the main bug fixing logic written in Python\footnote{todo 
     \\ \hline
     GITHUB\_TOKEN      & Token for GitHub API authentication             & Environment variable \\
     \hline
-    LLM\_API\_KEY      & API key for the LLM provider                    & Environment variable \\
+    LLM\_API\_KEY      & API key for the \ac{LLM} provider               & Environment variable \\
     \hline
     ISSUE\_TO\_PROCESS & The issue to process in JSON format             & Environment variable \\
     \hline
@@ -66,7 +66,7 @@ First, a clean workspace and the issue repair context is set up. The context act
 
 The context is passed between stages, with each stage performing a specific task in the bug fixing process and returning an updated context. The core stages are Localize, Fix, Build, and Test.
 
-The repair process starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured LLM model via the provider's SDK\footnote{explain}. The localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
+The repair process starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's SDK\footnote{explain}. The localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
 
 \begin{lstlisting}[caption={Localization Prompt}, label={lst:localization-prompt}]
 system_instruction = "You are a bug localization system. Look at the issue description and return ONLY the exact file paths that need to be modified."
@@ -85,7 +85,7 @@ prompt = f"""
     """
 \end{lstlisting}
 
-With the localized files in context, the Fix stage comes next. This stage again uses the configured LLM model API to generate a fix for the issue in the localized files. The prompt includes the issue details and file names along with their content. The response is expected to contain a list of edits for each file. The LLM may also specify that no changes are required in certain files. The generated response is then parsed and applied to the files in the workspace. Finally, the context is updated with the new file content. Below is the system instruction and base prompt used for the Fix stage \ref{lst:repair-prompt}.
+With the localized files in context, the Fix stage comes next. This stage again uses the configured \ac{LLM} API to generate a fix for the issue in the localized files. The prompt includes the issue details and file names along with their content. The response is expected to contain a list of edits for each file. The \ac{LLM} may also specify that no changes are required in certain files. The generated response is then parsed and applied to the files in the workspace. Finally, the context is updated with the new file content. Below is the system instruction and base prompt used for the Fix stage \ref{lst:repair-prompt}.
 
 \begin{lstlisting}[caption={Repair Prompt}, label={lst:repair-prompt}]
 system_instruction = "You are part of an automated bug-fixing system. Please return the complete, corrected raw source files for each file that needs changes, never use any markdown formatting. Follow the exact format requested."
@@ -154,7 +154,7 @@ Figure \ref{fig:ci} visualizes the workflow and its jobs.
     \label{fig:ci}
 \end{figure}
 
-To use this integration in a repository, the workflow file must be placed in the ``.github/workflows'' directory of the repository along with ``filter\_issues.py'' in ``.github/scripts''. With this in place, an ``LLM\_API\_KEY'' must be set as a secret in the repository settings. This key is used by the APR Core to authenticate with the configured LLM provider API. Lastly, GitHub Actions must be granted permissions to create pull requests and write to issues in the repository. This is done by setting the workflow permissions in the repository settings under Actions -> General -> Workflow permissions.
+To use this integration in a repository, the workflow file must be placed in the ``.github/workflows'' directory of the repository along with ``filter\_issues.py'' in ``.github/scripts''. With this in place, an ``LLM\_API\_KEY'' must be set as a secret in the repository settings. This key is used by the APR Core to authenticate with the configured \ac{LLM} provider API. Lastly, GitHub Actions must be granted permissions to create pull requests and write to issues in the repository. This is done by setting the workflow permissions in the repository settings under Actions -> General -> Workflow permissions.
 
 \section{System Configuration}
 %TODO add  collision avoidance
@@ -180,13 +180,145 @@ To make the system easily adjustable, the APR Core and the CI Pipeline can be co
     main\_branch                 & The main branch of the repository where bug fix branches are based. \\ \hline
     max\_issues                  & The maximum number of issues to process in a single run.            \\ \hline
     max\_attempts                & The maximum number of attempts to fix an issue.                     \\ \hline
-    provider                     & The LLM provider used for generating fixes.                         \\ \hline
-    model                        & The specific model from the LLM provider.                           \\
+    provider                     & The \ac{LLM} provider used for generating fixes.                    \\ \hline
+    model                        & The specific model from the \ac{LLM} provider.                      \\
 \end{longtable}
 
 
 
 \section{Requirement Validation}
 
-The following sections outline how each requirement was satisfied.
+This section demonstrates how the prototype satisfies the functional and non-functional requirements defined in Chapter \ref{chapter:requirements}. Table \ref{tab:req-validation} summarizes the satisfaction and verification of the requirements with provided screenshots, context excerpts and log excerpts captured during development. Full logs, configuration files, and context JSON files for all runs referenced available in the GitHub repositories listed in the Appendix \ref{chapter:appendix}.
 
+
+\renewcommand{\arraystretch}{1.5}
+\begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3.5cm} | p{1.5cm} | p{6cm} @{}}
+    \caption{Requirement Satisfaction and Validation} \label{tab:req-validation} \\
+    \hline
+    \textbf{ID} & \textbf{Title} & \textbf{Satisfied} & \textbf{Verification / Reference} \\
+    \hline
+    \endfirsthead
+
+    \hline
+    \endfoot
+
+    F0 & Multiple Triggers & Yes & See Figure~\ref{fig:triggers}. \\ \hline
+    F1 & Issue Filtering & Yes & See filtered issues log in Listing~\ref{lst:filtered-issues}. \\ \hline
+    F2 & Code Checkout & Yes & See log excerpt in Listing~\ref{fig:code-checkout}. \\ \hline
+    F3 & Bug Localization & Yes & See log excerpt in Listing~\ref{lst:loc}. \\ \hline
+    F4 & Fix Generation & Yes & See log excerpt in Listing~\ref{fig:fix}. \\ \hline
+    F5 & Change Validation & Yes & See log excerpt in Listing~\ref{fig:validation}. \\ \hline
+    F6 & Iterative Patch Generation & Yes & See log excerpt in Listing~\ref{fig:retry}. \\ \hline
+    F7 & Patch Application & Yes & See Figure~\ref{fig:branch-commit}. \\ \hline
+    F8 & Result Reporting & Yes & See Figure~\ref{fig:pr-report} and Figure \ref{fig:comment}. \\ \hline
+    F9 & Log and Metric Collection & Yes & See Figure~\ref{fig:logs-artifacts}. \\ \hline
+    N1 & Container Runtime & Yes & See log excerpt in Listing~\ref{lst:docker-log}. \\ \hline
+    N2 & Configurable & Yes & See log excerpts from Listing \ref{lst:log1} and Listing \ref{lst:log2}. \\ \hline
+    N3 & Portable & Yes & Demonstrated on two repositories: see Figure~\ref{fig:repo1-run} and igure~\ref{fig:repo2-run}. \\ \hline
+    N4 & Run Repeatable & No & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
+    N5 & Observable & Yes & See logs and metrics artifact in Figure~\ref{fig:metrics}. \\ \hline
+    N6 & End-to-End Automation & Yes & See full process in Section \ref{section:showcase}. \\ \hline
+\end{longtable}
+
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{images/figures/triggers_placeholder.png}
+%     \caption{Workflow triggers for APR system}
+%     \label{fig:triggers}
+% \end{figure}
+
+% \begin{lstlisting}[caption={Filtered issues log excerpt}, label={lst:filtered-issues}]
+% [INFO] Filtered issues: #12, #15, #18
+% [INFO] Only issues with label 'to_fix' are processed.
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={Code checkout log excerpt}, label={fig:code-checkout}]
+% [INFO] Checking out repository: github.com/example/repo
+% [INFO] Checked out branch: main
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={Bug localization log excerpt}, label={lst:loc}]
+% [INFO] Localization result: ["src/module1.py", "src/utils.py"]
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={Fix generation log excerpt}, label={fig:fix}]
+% [INFO] Generated fix for src/module1.py
+% [INFO] No changes needed for src/utils.py
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={Change validation log excerpt}, label={fig:validation}]
+% [INFO] Running Black formatter...
+% [INFO] Running flake8 linter...
+% [INFO] No syntax errors found.
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={Iterative patch generation log excerpt}, label={fig:retry}]
+% [INFO] Test failed, retrying fix (attempt 2/3)
+% [INFO] Feedback added to prompt for next attempt.
+% \end{lstlisting}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/branch_commit_placeholder.png}
+%     \caption{Branch and commit created for bugfix}
+%     \label{fig:branch-commit}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/pr_report_placeholder.png}
+%     \caption{Pull request report for bugfix}
+%     \label{fig:pr-report}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/comment_placeholder.png}
+%     \caption{Issue comment reporting repair result}
+%     \label{fig:comment}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/logs_artifacts_placeholder.png}
+%     \caption{Logs and metrics artifact from workflow run}
+%     \label{fig:logs-artifacts}
+% \end{figure}
+
+% \begin{lstlisting}[caption={Docker container runtime log excerpt}, label={lst:docker-log}]
+% [INFO] Starting APR Core in Docker container...
+% [INFO] Container ID: 123abc456def
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={System configuration log excerpt 1}, label={lst:log1}]
+% [INFO] Loaded configuration from bugfix.yml
+% [INFO] Max attempts set to 3
+% \end{lstlisting}
+
+% \begin{lstlisting}[caption={System configuration log excerpt 2}, label={lst:log2}]
+% [INFO] Using LLM provider: OpenAI
+% [INFO] Model: gpt-4
+% \end{lstlisting}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/repo1_run_placeholder.png}
+%     \caption{APR run on repository 1}
+%     \label{fig:repo1-run}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/repo2_run_placeholder.png}
+%     \caption{APR run on repository 2}
+%     \label{fig:repo2-run}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/figures/metrics_placeholder.png}
+%     \caption{Metrics artifact from workflow run}
+%     \label{fig:metrics}
+% \end{figure}

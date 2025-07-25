@@ -14,7 +14,7 @@ To answer these questions, we streamlined the process into three phases: prepara
     \label{fig:method-overview}
 \end{figure}
 
-In the preparation phase, we select a suitable APR benchmark and a pool of LLMs. With the benchmark, we set up a realistic development environment. By specifying requirements, we lay the groundwork for the implementation of the APR system.
+In the preparation phase, we select a suitable APR benchmark and a pool of \acp{LLM}. With the benchmark, we set up a realistic development environment. By specifying requirements, we lay the groundwork for the implementation of the APR system.
 In the second part, we implement the APR system as a GitHub Action workflow based on the requirements.
 Lastly, we evaluate the self-developed prototype using the defined evaluation metrics \ref{section:evaluation} collected during and after the execution of the APR system. Furthermore, we showcase the resulting workflow of using the system in the prepared repository.
 The following sections will go into detail about each of these phases.
@@ -30,41 +30,42 @@ For evaluating the effectiveness of our APR integration, we selected the QuixBug
 Additionally, compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024}, QuixBugs is relatively small, which allows for accelerated setup and development.
 
 \subsection{LLM Selection} \label{subsection:llm-selection}
-
-For the evaluation of our APR system, we will test a selected pool of LLM models. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. The models are selected to cover a range of capabilities and costs, with a focus on lower-tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected models that will be used for evaluation with the following data:
+For the evaluation of our APR system, we will test a selected pool of \acp{LLM}. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. The models are selected to cover a range of capabilities and costs, with a focus on lower-tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected models that will be used for evaluation with the following data:
 
 \begin{itemize}
-    \item (1) Model Name: The name of the LLM model.
-    \item (2) Publisher: The company or organization that developed the model.
-    \item (3) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
-    \item (4) Cost per 1M Tokens: The cost of processing 1 million tokens, divided into input and output cost.
-    \item (5) Provider Description: Description of the model's characteristics.
+    \item (1) Model Name: The name of the \ac{LLM}.
+    \item (2) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
+    \item (3) Cost per 1M Tokens: The cost of processing 1 million tokens, divided into input and output cost.
+    \item (4) Provider Description: Description of the model's characteristics.
+    \item (5) Source: The source where the model information was obtained.
 \end{itemize}
 
-\begin{longtable}{@{\extracolsep{\fill}}  p{4cm} | p{2cm} | p{2cm} | p{2.5cm} | p{2.5cm} @{}}
-    \caption{Characteristics of selected LLMs (21.07.2025)} \label{table:llms}                                     \\
+\begin{longtable}{@{\extracolsep{\fill}} p{3cm} | p{1cm} | p{2.5cm} | p{6cm} | p{1cm} @{}}
+    \caption{Characteristics of selected \acp{LLM} (21.07.2025)} \label{table:llms}                                                                                                                                        \\
 
     \hline
-    \textbf{(1)}                      & \textbf{(2)} & \textbf{(3)} & \textbf{(4)}                  & \textbf{(5)} \\
+    \textbf{(1)}                      & \textbf{(2)} & \textbf{(3)}                               & \textbf{(4)}                                                                               & \textbf{(5)}              \\
     \hline
     \endfirsthead
 
     \hline
     \endfoot
-    \textbf{gemini-2.0-flash-lite}    & Google       & 1,048,576    & input: \$0.075 output: \$0.30 & X            \\ \hline
-    \textbf{gemini-2.0-flash}         & Google       & 1,048,576    & input: \$0.15 output: \$0.60  & X            \\ \hline
-    \textbf{gemini-2.5-flash-preview} & Google       & 1,000,000    & input: \$0.10 output: \$0.40  & X            \\ \hline
-    \textbf{gemini-2.5-flash}         & Google       & 1,048,576    & input: \$0.30 output: \$2.50  & X            \\ \hline
-    \textbf{gemini-2.5-pro}           & Google       & 1,048,576    & input: \$1.25 output: \$10.00 & X            \\ \hline
-    \textbf{gpt-4.1-nano}             & OpenAI       & 1,047,576    & input: \$0.10 output: \$0.40  & X            \\ \hline
-    \textbf{gpt-4.1-mini}             & OpenAI       & 1,047,576    & input: \$0.40 output: \$1.60  & X            \\ \hline
-    \textbf{gpt-4.1}                  & OpenAI       & 1,047,576    & input: \$2.00 output: \$8.00  & X            \\ \hline
-    \textbf{o4-mini}                  & OpenAI       & 200,000      & input: \$1.10 output: \$4.40  & X            \\ \hline
-    \textbf{claude-3-5-haiku}         & Anthropic    & 200,000      & input: \$0.80 output: \$4.00  & X            \\ \hline
-    \textbf{claude-3-7-sonnet}        & Anthropic    & 200,000      & input: \$3.00 output: \$15.00 & X            \\ \hline
-    \textbf{claude-sonnet-4-0}        & Anthropic    & 200,000      & input: \$3.00 output: \$15.00 & X            \\
+    \textbf{gemini-2.0-flash-lite}    & 1M           & input: \$0.075 \newline output: \$0.30 & Cost efficiency and low latency                                                            & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.0-flash}         & 1M           & input: \$0.15 \newline output: \$0.60               & Next generation features, speed, and realtime streaming.                                   & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-flash-preview} & 1M           & input: \$0.10 \newline output: \$0.40               & Most cost-efficient model supporting high throughput                                       & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-flash}         & 1M           & input: \$0.30 \newline output: \$2.50               & Adaptive thinking, cost efficiency                                                         & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-pro}           & 1M           & input: \$1.25 \newline output: \$10.00              & Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more       & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gpt-4.1-nano}             & 1M           & input: \$0.10 \newline output: \$0.40               & Fastest, most cost-effective                                                               & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{gpt-4.1-mini}             & 1M           & input: \$0.40 \newline output: \$1.60               & Balanced for intelligence, speed, and cost                                                 & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{gpt-4.1}                  & 1M           & input: \$2.00 \newline output: \$8.00               & Flagship GPT model for complex tasks                                                       & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{o4-mini}                  & 200k         & input: \$1.10 \newline output: \$4.40               & optimized for fast, effective reasoning with exceptionally efficient performance in coding & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{claude-3-5-haiku}         & 200k         & input: \$0.80 \newline output: \$4.00               & Our fastest model                                                                          & \cite{ModelsOverview}     \\ \hline
+    \textbf{claude-3-7-sonnet}        & 200k         & input: \$3.00 \newline output: \$15.00              & High-performance model with early extended thinking                                        & \cite{ModelsOverview}     \\ \hline
+    \textbf{claude-sonnet-4-0}        & 200k         & input: \$3.00 \newline output: \$15.00              & High-performance model                                                                     & \cite{ModelsOverview}     \\
     \hline
 \end{longtable}
+
+The exact versions of each model used are listed in the appendix \ref{chapter:appendix}.
 
 
 \subsection{Environment Setup} \label{subsection:environment-setup}
@@ -81,7 +82,7 @@ Using the relevant 40 files, we generate a GitHub issue for each bug. A consiste
 
 \subsection{Requirements Specification}
 
-Before the implementation phase, we constructed requirements for the prototype, applying the INVEST model, a widely adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. Using this framework, we defined both functional and non-functional requirements. The requirements are precisely defined, verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in \ref{chapter:requirements}.
+Before the implementation phase, we constructed requirements for the prototype, applying the INVEST model, a widely adopted method in Agile software development for engineering requirements \cite{10.5555/984017}. According to the INVEST principles, each requirement was formulated to be independent, negotiable, valuable, estimable, small, and testable. Using this framework, we defined both functional and non-functional requirements. The requirements are precisely defined, verifiable, and easily adaptable to iterative development. The resulting requirements are detailed in chapter \ref{chapter:requirements}.
 
 \section{System Implementation}
 
@@ -89,7 +90,7 @@ In this section, we provide a high-level overview of the implemented Automated B
 
 The Automated Bug Fixing Pipeline was developed using iterative prototyping and testing, with a focus on simplicity and extensibility. Based on the self-developed requirements \ref{chapter:requirements}, we built the system visualized in Figure \ref{fig:high-level} and Figure \ref{fig:apr-core-overview}.
 
-The integration of the pipeline into the repository is performed during this implementation phase. Once the system is in place, the pipeline can be triggered by different events. This executes the CI pipeline on a GitHub Action runner. The first pipeline job fetches and filters relevant issues. Resulting issues are passed to the APR Core, which contains the main bug-fixing logic. The APR Core runs in a container and communicates with the configured LLMs via API to localize and fix the issue. With the generated file edits, the changes are validated and tested. When validation passes, the changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of an unsuccessful repair or exhaustion of the maximum number of attempts, a failure is reported to the issue.
+The integration of the pipeline into the repository is performed during this implementation phase. Once the system is in place, the pipeline can be triggered by different events. This executes the CI pipeline on a GitHub Action runner. The first pipeline job fetches and filters relevant issues. Resulting issues are passed to the APR Core, which contains the main bug-fixing logic. The APR Core runs in a container and communicates with the configured \acp{LLM} via API to localize and fix the issue. With the generated file edits, the changes are validated and tested. When validation passes, the changes are applied and a Pull Request is opened on the repository, linking the issue and providing details about the repair process. In case of an unsuccessful repair or exhaustion of the maximum number of attempts, a failure is reported to the issue.
 
 \begin{figure}[H]
     \centering
@@ -119,7 +120,7 @@ Furthermore, we evaluate whether multiple attempts can help improve the repair s
 
 To assess performance, we analyze collected fine-grained timings of issue repair attempts. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action run minutes are not included in the cost estimation, as 2000 minutes are included in the free tier of GitHub for public repositories.
 
-The following data is automatically collected by each run of the APR system. Using self-developed scripts, we collect the data from different sources for each run. Below, we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics}, and each stage of an issue repair process \ref{table:stage-metrics}. We use the collected data to calculate results for different runs testing each of the selected models, which will help in answering RQ2. The calculations are listed in Table \ref{table:calculations}.
+Each execution of the APR system collects repair process data. Using self-developed scripts, we aggregate the data from different sources for each run. Below, we list the relevant data collected for each run \ref{table:run-metrics}, each issue processed \ref{table:issue-metrics}, and each stage of an issue repair process \ref{table:stage-metrics}. We use the collected data to calculate results for different runs testing each of the selected models, which will help in answering RQ2. The calculations are listed in Table \ref{table:calculations}.
 
 %TODO add calculations and check if all metrics are needed or evaluation
 \begin{table}[ht]
@@ -179,20 +180,19 @@ The following data is automatically collected by each run of the APR system. Usi
     \caption{Summary of metrics collected for each stage}
     \label{table:stage-metrics}
 \end{table}
-
 \begin{table}[H]
     \centering
     \small
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{5cm} | p{10cm} @{}}
+    \renewcommand{\arraystretch}{2.5} % Increase row height
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} p{7cm} | >{\centering\arraybackslash}p{7cm} @{}}
         \hline
         \textbf{Metrics} &  \textbf{Calculation} \\
         \hline
-        Repair Success Rate & \[\frac{Number of Successful Repairs}{Total Issues Processed}\] \\ \hline
-        Average Execution Time per Issue & \[\frac{Total Execution Time}{Total Issues Processed}\] \\ \hline
-        Average Cost per Issue& \[\frac{Total Cost}{Total Issues Processed}\] \\ \hline
-        APR Core Execution Time & \[\frac{Total APR Core Execution Time}{Total Issues Processed}\] \\ \hline
-        CI Pipeline Execution Time & \[\frac{Total CI Pipeline Execution Time}{Total Issues Processed}\] \\ \hline
+        Repair Success Rate & \(\displaystyle\frac{\mathit{Number\ of\ Successful\ Repairs}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
+        Average Execution Time per Issue & \(\displaystyle\frac{\mathit{Total\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
+        Average Cost per Issue & \(\displaystyle\frac{\mathit{Total\ Cost}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
+        APR Core Execution Time & \(\displaystyle\frac{\mathit{Total\ APR\ Core\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
+        CI Pipeline Execution Time & \(\displaystyle\frac{\mathit{Total\ CI\ Pipeline\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
         \hline
     \end{tabular*}
     \caption{Run evaluation metrics calculated from the collected data}

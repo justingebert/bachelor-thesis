@@ -4,7 +4,7 @@ The setup and usage of the prototype in a GitHub repository is demonstrated in t
 
 \section{Showcase of workflow} \label{section:showcase}
 
-Setting up the APR system in a repository is achieved by adding 2 files to the ``.github'' directory of the repository. The required files are ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With these in place, the system is ready to operate. Additionally, an optional configuration file can be added to the root. This `.bugfix.yml'' file can be used to override the LLM model used, max attempts, and naming conventions for labels and branches. Furthermore, an ``LLM\_API\_KEY'' secret needs to be added to the repository secrets, and GitHub Actions needs to be granted permission to create Pull Requests.
+Setting up the APR system in a repository is achieved by adding 2 files to the ``.github'' directory of the repository. The required files are ``.github/workflows/auto-fix.yml'' and ``.github/scripts/filter\_issues.py''. With these in place, the system is ready to operate. Additionally, an optional configuration file can be added to the root. This `.bugfix.yml'' file can be used to override the \ac{LLM} used, max attempts, and naming conventions for labels and branches. Furthermore, an ``LLM\_API\_KEY'' secret needs to be added to the repository secrets, and GitHub Actions needs to be granted permission to create Pull Requests.
 
 With the system in place and a custom configuration file set up, the APR system is ready to be used in the repository. Bugs can be automatically fixed in two different ways.
 
@@ -73,7 +73,7 @@ Figure \ref{fig:flow} visualizes the resulting flow of the APR system. The diagr
     \label{fig:flow}
 \end{figure}
 
-section{Evaluation Results} \label{section:evaluation-results}
+\section{Evaluation Results} \label{section:evaluation-results}
 
 In this section, we present the results of the quantitative evaluation of the implemented APR prototype. This evaluation is based on the collected and calculated data for each run of the prototype. How this data was collected and calculated is described in \ref{table:run-metrics}.
 
@@ -87,7 +87,7 @@ We asses more threats to validity in section \ref{section:validity}.
 
 \subsection{Baseline of Evaluation}
 
-The resulting data is based on the executions of the APR prototype in the prepared repository (see \ref{subsection:environment-setup}), which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance, and cost, we ran the APR prototype using eleven selected LLM models defined in \ref{subsection:llm-selection}. All models were tested with one attempt per issue to evaluate zero-shot performance and with a retry loop enabled to compare few-shot performance.
+The resulting data is based on the executions of the APR prototype in the prepared repository (see \ref{subsection:environment-setup}), which contains all 40 issues from the QuixBugs benchmark. For evaluating the effectiveness, performance, and cost, we ran the APR prototype using twelve selected \acp{LLM} defined in \ref{subsection:llm-selection}. All models were tested with one attempt per issue to evaluate zero-shot performance and with a retry loop enabled to compare few-shot performance.
 
 \subsection{Results}
 
@@ -182,4 +182,4 @@ CI Overhead
 \end{figure}
 
 
-The full set of resulting data can be found in the ``apr\_evaluation'' directory of the quixbugs-apr repository, listed in the Appendix \ref{chapter:appendix}.
+The full set of resulting data can be found in the ``apr\_evaluation'' directory of the ``quixbugs-apr'' repository, listed in the Appendix \ref{chapter:appendix}.

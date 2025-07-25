@@ -12,11 +12,42 @@
 \usepackage[hyphens]{url}
 \usepackage[hidelinks]{hyperref}
 
+\usepackage{xurl}
+\usepackage{ragged2e}
+
 
 %----------------------------------------------------------------------------------------
 %	BIB.-Datei und Quellenverwaltung
 %----------------------------------------------------------------------------------------
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage[
+  backend=biber, 
+  style=numeric,
+  sorting=none,
+  uniquename=false,
+  uniquelist=false,
+  ibidtracker=false,
+  language=auto,
+  autolang=other,
+  babel=other
+  %dashed=false
+  ]{biblatex}
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+
+\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+\DeclareFieldFormat{howpublished}{%
+  \mkbibacro{URL}\addcolon\space
+  \url{#1}%
+}
+
+% URLs im Literaturverzeichnis linksbündig umbrechen, Rest bleibt Blocksatz
+\DeclareFieldFormat{url}{\begingroup\RaggedRight\url{#1}\endgroup}
+
+% Diese Zeilen sorgen dafür, dass URLs leichter umbrochen werden
+\setcounter{biburlnumpenalty}{9000} % Zahlen
+\setcounter{biburlucpenalty}{9000}  % Großbuchstaben
+\setcounter{biburllcpenalty}{9000}  % Kleinbuchstaben
+\def\UrlBreaks{\do\/\do-\,\do=\do&\do?\do\#\do_}
 \addbibresource{references/references.bib}
 %\usepackage{natbib} % use natbib for references 
 %----------------------------------------------------------------------------------------
@@ -108,6 +139,8 @@
 \usepackage{pdfpages}
 
 \usepackage{ragged2e}
+
+\usepackage{tabularx}
 
 
 \DeclareFieldFormat{url}{\begingroup\RaggedRight\url{#1}\endgroup}
