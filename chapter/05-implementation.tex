@@ -214,9 +214,9 @@ This section demonstrates how the prototype satisfies the functional and non-fun
     F9          & Log and Metric \newline  Collection & Yes                & See Figure~\ref{fig:logs-artifacts}.                                                                                                                                     \\ \hline
     N1          & Container Runtime                   & Yes                & See log excerpt in Listing~\ref{lst:docker-log}.                                                                                                                         \\ \hline
     N2          & Configurable                        & Yes                & See log excerpts from Listing \ref{lst:load-config}.                                                                                                                     \\ \hline
-    N3          & Portable                            & Yes                & Used in two repositories: see Appendix~\ref{chapter:appendix}                                                                           \\ \hline
+    N3          & Portable                            & Yes                & Used in two repositories: see Appendix~\ref{chapter:appendix}                                                                                                            \\ \hline
     N4          & Run Repeatable                      & No                 & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
-    N5          & Observable                          & Yes                & See Figure~\ref{fig:logs-artifacts}.{fig:metrics}.                                                                                                               \\ \hline
+    N5          & Observable                          & Yes                & See Figure~\ref{fig:logs-artifacts}.{fig:metrics}.                                                                                                                       \\ \hline
     N6          & End-to-End Automation               & Yes                & See full process in Section \ref{section:showcase}.                                                                                                                      \\ \hline
 \end{longtable}
 
@@ -319,19 +319,19 @@ root - INFO - [localize] LLM response: ["next_palindrome.py"]
 \end{lstlisting}
 
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/pr_report_placeholder.png}
-%     \caption{Pull request report for bugfix}
-%     \label{fig:pr-report}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/verification/pr.png}
+    \caption{Pull request report for bugfix}
+    \label{fig:pr-report}
+\end{figure}
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/figures/comment_placeholder.png}
-%     \caption{Issue comment reporting repair result}
-%     \label{fig:comment}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/verification/comment.png}
+    \caption{Issue comment reporting repair result}
+    \label{fig:comment}
+\end{figure}
 
 \begin{figure}[H]
     \centering
