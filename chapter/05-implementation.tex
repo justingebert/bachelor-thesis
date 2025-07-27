@@ -66,7 +66,7 @@ context = {
 
 The context is passed between stages, with each stage performing a specific task in the bug fixing process and returning an updated context. The core stages are Localize, Fix, Build, and Test.
 
-The repair process starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's SDK\footnote{explain}. The localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
+The repair process starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's Software Development Kit (SDK). The localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. The localization system instruction and prompt are shown in \ref{lst:localization-prompt}.
 
 \begin{lstlisting}[style=python, caption={Localization Prompt}, label={lst:localization-prompt}]
 system_instruction = "You are a bug localization system. Look at the issue description and return ONLY the exact file paths that need to be modified."
