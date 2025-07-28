@@ -129,7 +129,7 @@ The APR core is designed to be modular and extensible, allowing for future enhan
 
 \textbf{Continuous Integration Pipeline:}
 
-A GitHub Action Workflow integrates the APR Core into the GitHub repository. The workflow is written in YAML\footnote{YAML is a human readable data serialization language. \cite{OfficialYAMLWeb}} according to the GitHub Action standard \cite{WorkflowSyntaxGitHub}. For this prototype, we use Linux x64 runners\footnote{Default GitHub runner configuration \cite{}} provided and hosted by GitHub. This eliminates the overhead of managing our own runners but comes at the cost of uncertain performance and availability. %\cite{}
+A GitHub Action Workflow integrates the APR Core into the GitHub repository. The workflow is written in YAML\footnote{YAML is a human readable data serialization language. \cite{OfficialYAMLWeb}} according to the GitHub Action standard \cite{WorkflowSyntaxGitHub}. For this prototype, we use Linux x64 runners provided and hosted by GitHub. This eliminates the overhead of managing our own runners but comes at the cost of uncertain performance and availability.
 
 The workflow is made up of multiple triggers and jobs. Triggers are based on events\footnote{explain and link} from the GitHub repository and serve as the entry point for executing the jobs. Given the triggers, the workflow can be executed in two different ways:
 
