@@ -3,7 +3,7 @@
 \chapter{Appendix} \label{chapter:appendix}
 
 \section{Source Code and Data}
-The source code of the thesis is available on GitHub split in two repositories.
+The source code of the thesis is available on GitHub split in two repositories. Both repositories have Readme files that explain how to use the code and data. 
 \begin{itemize}
     \item \textbf{Prototype Repository:} Contains the implementation of the APR Core and the CI configuration. It is available at: \url{https://github.com/justingebert/bugfix-ci}
     \item \textbf{Evaluation Repository:} Contains the evaluation scripts and results of the APR system, including the QuixBugs benchmark setup. It is available at: \url{https://github.com/justingebert/quixbugs-apr}
@@ -11,8 +11,8 @@ The source code of the thesis is available on GitHub split in two repositories.
 
 
 \section{LLM Versions}
-The following LLM version have been used with the system:
-\begin{longtable}{@{\extracolsep{\fill}} p{5cm} | p{5cm} @{}}
+The following Table lists the exact LLM versions that where used during development and evaluation. 
+\begin{longtable}{p{5cm} | p{6cm}}
     \caption{LLM models and their versions used in the system} \label{table:llm_versions} \\
     \hline
     \textbf{Model Name} & \textbf{Version} \\
@@ -20,18 +20,18 @@ The following LLM version have been used with the system:
     \endfirsthead
     \hline
     \endfoot
-    gemini-2.0-flash-lite    &  \\
-    gemini-2.0-flash         &  \\
-    gemini-2.5-flash-preview &  \\
-    gemini-2.5-flash         &  \\
-    gemini-2.5-pro           &  \\
-    gpt-4.1-nano             &  \\
-    gpt-4.1-mini             &  \\
-    gpt-4.1                  &  \\
-    o4-mini                  &  \\
-    claude-3-5-haiku         &  \\
-    claude-3-7-sonnet        &  \\
-    claude-sonnet-4-0        &  \\
+    gemini-2.0-flash-lite    & gemini-2.0-flash-lite \\
+    gemini-2.0-flash         & gemini-2.0-flash \\
+    gemini-2.5-flash-lite & gemini-2.5-flash-lite-preview-06-17 \\
+    gemini-2.5-flash         &  gemini-2.5-flash\\
+    gemini-2.5-pro           & gemini-2.5-pro \\
+    gpt-4.1-nano             & gpt-4.1-nano-2025-04-14 \\
+    gpt-4.1-mini             & gpt-4.1-mini-2025-04-14 \\
+    gpt-4.1                  & gpt-4.1-2025-04-14 \\
+    o4-mini                  & o4-mini-2025-04-16 \\
+    claude-3-5-haiku         & claude-3-5-haiku-20241022 \\
+    claude-3-7-sonnet        & claude-3-7-sonnet-20250219 \\
+    claude-sonnet-4-0        & claude-sonnet-4-20250514 \\
     \hline
 \end{longtable}
 
