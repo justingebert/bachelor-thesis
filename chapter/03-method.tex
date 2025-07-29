@@ -10,7 +10,7 @@ To answer these questions, we streamlined the process into three phases: prepara
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/method.png}
-    \caption{Thesis methodology approach}
+    \caption{Thesis methodology approach, Source: own representation}
     \label{fig:method-overview}
 \end{figure}
 
@@ -31,37 +31,37 @@ Additionally, compared to other APR benchmarks \ref{table:benchmarks} like SWE-B
 
 \subsection{LLM Selection} \label{subsection:llm-selection}
 For the evaluation of our APR system, we will test a selected pool of \acp{LLM}. We evaluate with the latest models released before 11 July 2025 from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. The models are selected to cover a range of capabilities and costs, with a focus on lower-tier models, allowing us to evaluate the performance and cost-effectiveness of the APR system. Table \ref{table:llms} shows the selected models that will be used for evaluation with the following data:
-
 \begin{itemize}
     \item (1) Model Name: The name of the \ac{LLM}.
+    \item (1a) Abbreviation: Short identifier used for results and tables.
     \item (2) Context Window Size in Tokens: The maximum number of tokens the model can process in a single request.
     \item (3) Cost per 1M Tokens: The cost of processing 1 million tokens, divided into input and output cost.
     \item (4) Provider Description: Description of the model's characteristics.
     \item (5) Source: The source where the model information was obtained.
 \end{itemize}
 
-\begin{longtable}{@{\extracolsep{\fill}} p{3cm} | p{1cm} | p{2.5cm} | p{6cm} | p{1cm} @{}}
+\begin{longtable}{@{\extracolsep{\fill}} p{3cm} | p{1.5cm} | p{1cm} | p{2.5cm} | p{6cm} | p{1cm} @{}}
     \caption{Characteristics of selected \acp{LLM} (21.07.2025)} \label{table:llms}                                                                                                                                    \\
 
     \hline
-    \textbf{(1)}                      & \textbf{(2)} & \textbf{(3)}                           & \textbf{(4)}                                                                               & \textbf{(5)}              \\
+    \textbf{(1)}                      & \textbf{(1a)} & \textbf{(2)} & \textbf{(3)}                           & \textbf{(4)}                                                                               & \textbf{(5)}              \\
     \hline
     \endfirsthead
 
     \hline
     \endfoot
-    \textbf{gemini-2.0-flash-lite}    & 1M           & input: \$0.075 \newline output: \$0.30 & Cost efficiency and low latency                                                            & \cite{GeminiModelsGemini} \\ \hline
-    \textbf{gemini-2.0-flash}         & 1M           & input: \$0.15 \newline output: \$0.60  & Next generation features, speed, and realtime streaming.                                   & \cite{GeminiModelsGemini} \\ \hline
-    \textbf{gemini-2.5-flash-preview} & 1M           & input: \$0.10 \newline output: \$0.40  & Most cost-efficient model supporting high throughput                                       & \cite{GeminiModelsGemini} \\ \hline
-    \textbf{gemini-2.5-flash}         & 1M           & input: \$0.30 \newline output: \$2.50  & Adaptive thinking, cost efficiency                                                         & \cite{GeminiModelsGemini} \\ \hline
-    \textbf{gemini-2.5-pro}           & 1M           & input: \$1.25 \newline output: \$10.00 & Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more       & \cite{GeminiModelsGemini} \\ \hline
-    \textbf{gpt-4.1-nano}             & 1M           & input: \$0.10 \newline output: \$0.40  & Fastest, most cost-effective                                                               & \cite{ModelsOpenAIAPI}    \\ \hline
-    \textbf{gpt-4.1-mini}             & 1M           & input: \$0.40 \newline output: \$1.60  & Balanced for intelligence, speed, and cost                                                 & \cite{ModelsOpenAIAPI}    \\ \hline
-    \textbf{gpt-4.1}                  & 1M           & input: \$2.00 \newline output: \$8.00  & Flagship GPT model for complex tasks                                                       & \cite{ModelsOpenAIAPI}    \\ \hline
-    \textbf{o4-mini}                  & 200k         & input: \$1.10 \newline output: \$4.40  & optimized for fast, effective reasoning with exceptionally efficient performance in coding & \cite{ModelsOpenAIAPI}    \\ \hline
-    \textbf{claude-3-5-haiku}         & 200k         & input: \$0.80 \newline output: \$4.00  & Our fastest model                                                                          & \cite{ModelsOverview}     \\ \hline
-    \textbf{claude-3-7-sonnet}        & 200k         & input: \$3.00 \newline output: \$15.00 & High-performance model with early extended thinking                                        & \cite{ModelsOverview}     \\ \hline
-    \textbf{claude-sonnet-4-0}        & 200k         & input: \$3.00 \newline output: \$15.00 & High-performance model                                                                     & \cite{ModelsOverview}     \\
+    \textbf{gemini-2.0-flash-lite}    & G2F-L         & 1M           & input: \$0.075 \newline output: \$0.30 & Cost efficiency and low latency                                                            & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.0-flash}         & G2F           & 1M           & input: \$0.15 \newline output: \$0.60  & Next generation features, speed, and realtime streaming.                                   & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-flash-preview} & G25F-P        & 1M           & input: \$0.10 \newline output: \$0.40  & Most cost-efficient model supporting high throughput                                       & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-flash}         & G25F          & 1M           & input: \$0.30 \newline output: \$2.50  & Adaptive thinking, cost efficiency                                                         & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gemini-2.5-pro}           & G25P          & 1M           & input: \$1.25 \newline output: \$10.00 & Enhanced thinking and reasoning, multimodal understanding, advanced coding, and more       & \cite{GeminiModelsGemini} \\ \hline
+    \textbf{gpt-4.1-nano}             & GPT4N         & 1M           & input: \$0.10 \newline output: \$0.40  & Fastest, most cost-effective                                                               & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{gpt-4.1-mini}             & GPT4M         & 1M           & input: \$0.40 \newline output: \$1.60  & Balanced for intelligence, speed, and cost                                                 & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{gpt-4.1}                  & GPT4          & 1M           & input: \$2.00 \newline output: \$8.00  & Flagship GPT model for complex tasks                                                       & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{o4-mini}                  & O4M           & 200k         & input: \$1.10 \newline output: \$4.40  & optimized for fast, effective reasoning with exceptionally efficient performance in coding & \cite{ModelsOpenAIAPI}    \\ \hline
+    \textbf{claude-3-5-haiku}         & C35H          & 200k         & input: \$0.80 \newline output: \$4.00  & Our fastest model                                                                          & \cite{ModelsOverview}     \\ \hline
+    \textbf{claude-3-7-sonnet}        & C37S          & 200k         & input: \$3.00 \newline output: \$15.00 & High-performance model with early extended thinking                                        & \cite{ModelsOverview}     \\ \hline
+    \textbf{claude-sonnet-4-0}        & CS40          & 200k         & input: \$3.00 \newline output: \$15.00 & High-performance model                                                                     & \cite{ModelsOverview}     \\
     \hline
 \end{longtable}
 
@@ -76,7 +76,7 @@ Using the relevant 40 files, we generate a GitHub issue for each bug. A consiste
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/github_issue.png}
-    \caption{Example of a generated GitHub Issue}
+    \caption{Example of a generated GitHub Issue, Source: own representation}
     \label{fig:gh-issue2}
 \end{figure}
 
@@ -95,14 +95,14 @@ The integration of the pipeline into the repository is performed during this imp
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/overview.png}
-    \caption{Overview of the APR Pipeline}
+    \caption{Overview of the CI Pipeline, Source: own representation}
     \label{fig:high-level}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/apr_core_overview.png}
-    \caption{Overview of the APR Core}
+    \caption{Overview of the APR Core, Source: own representation}
     \label{fig:apr-core-overview}
 \end{figure}
 

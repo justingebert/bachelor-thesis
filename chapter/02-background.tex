@@ -1,11 +1,11 @@
-In this section, the required theoretical background and context for this thesis are explained. First, fundamental concepts of software development, the agile \acf{SDLC}, \ac{CI}, and software project hosting platforms are introduced. The second part explores \ac{GenAI} and \acp{LLM} with their rising role in software development practices. The third part examines the evolution and current state of \ac{APR} with examples of existing approaches.
+In this section, the required theoretical background and context for this thesis are explained. First, fundamental concepts of software development, the agile \acf{SDLC}, \acf{CI}, and software project hosting platforms are introduced. The second part explores \ac{GenAI} and \acp{LLM} with their rising role in software development practices. The third part examines the evolution and current state of \acf{APR} with examples of existing approaches.
 
 \section{Software Development}
 
 The following section introduces core concepts of software development, starting with the \ac{SDLC}, followed by the importance of \ac{CI} in modern software development, and the role of software project hosting platforms.
 
 \subsection{Software Development Lifecycle}
-%TODO add tickets that are created by developers, product managers, ...
+
 Engineering and developing software is a complex process, consisting of multiple different tasks. To structure this process, \ac{SDLC} models have been introduced. These frameworks constantly evolve to adapt to the changing needs of software creation. One of the most promising and widely used models today is Agile \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}.
 
 The Agile lifecycle introduces an iterative approach to software development, focusing on collaboration, feedback, and adaptability. The goal is frequent delivery of small functional software features, allowing continuous improvement and adaptation to changing requirements \cite{rupareliaSoftwareDevelopmentLifecycle2010, abrahamssonAgileSoftwareDevelopment2017}. Agile frameworks like Scrum or Kanban are used to apply this approach in a development environment \cite{zayatFrameworkStudyAgile2020}.
@@ -15,7 +15,7 @@ An Agile iteration consists of multiple stages. Figure \ref{fig:agile-cycle} sho
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/agile-cycle.png}
-    \caption{Agile software development lifecycle}
+    \caption{Agile software development lifecycle, Source: \cite{7MistakesIve2020}}
     \label{fig:agile-cycle}
 \end{figure}
 
@@ -30,7 +30,7 @@ Modern software systems are moving towards loosely coupled microservice architec
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/ci-cycle.png}
-    \caption{Continuous Integration cycle}
+    \caption{Continuous Integration cycle, Source:~\cite{lovettTop12Benefits2023}}
     \label{fig:ci-cycle}
 \end{figure}
 
@@ -47,18 +47,18 @@ GitHub Issues are a key feature of GitHub, this feature enables project-scoped b
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/github_issue.png}
-    \caption{Example of a GitHub Issue}
+    \caption{Example of a GitHub, Source: own representation}
     \label{fig:gh-issue}
 \end{figure}
 
 For integrating and reviewing code, GitHub uses Pull Requests. A Pull Request proposes changes to the codebase, integrating a review process to validate changes before merging into the production codebase. Code changes are displayed in a diff format\footnote{A diff format shows the difference between two files by highlighting added, removed, or modified lines \cite{WhatDiffUnderstanding}.}, allowing reviewers to examine the changes made. This process is essential for maintaining code quality and ensuring that changes are validated before merging. Pull requests can be linked to Issues, allowing easy tracking of changes related to specific tasks or bugs \cite{PullRequests}.
 
-Moreover, GitHub also provides a managed solution (GitHub Actions) for running CI pipelines in repositories. CI pipelines are configured by writing workflow files in YAML. Workflows can run self-hosted or hosted by GitHub. A workflow consists of triggers, jobs, and steps. One or more events trigger a workflow, which executes one or more jobs consisting of multiple steps \cite{UnderstandingGitHubActions}. Figure \ref{fig:gh-workflow} visualizes part of a workflow on GitHub.
+Moreover, GitHub also provides a managed solution (GitHub Actions) for running CI pipelines in repositories. CI pipelines are configured by writing workflow files in YAML. Workflows can run self-hosted or hosted by GitHub. A workflow consists of triggers, jobs, and steps. One or more events trigger a workflow, which executes one or more jobs consisting of multiple steps \cite{UnderstandingGitHubActionsa}. Figure \ref{fig:gh-workflow} visualizes part of a workflow on GitHub.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/overview-actions-simple.png}
-    \caption{Components of a GitHub Action}
+    \caption{Components of a GitHub Action, Source:~\cite{UnderstandingGitHubActionsa}}
     \label{fig:gh-workflow}
 \end{figure}
 

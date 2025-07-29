@@ -13,7 +13,7 @@ One option is processing a single issue immediately when it is created and label
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/label_issue.png}
-    \caption{Trigger automatic fixing for single issue}
+    \caption{Trigger automatic fixing for single issue, Source: own representation}
     \label{fig:issue-trigger}
 \end{figure}
 
@@ -22,7 +22,7 @@ The second way collects and processes all issues labeled with the ``bug\_v01'' l
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/manual_dispatch.png}
-    \caption{Manual Dispatch of APR}
+    \caption{Manual Dispatch of APR, Source: own representation}
     \label{fig:dispatch}
 \end{figure}
 
@@ -31,24 +31,24 @@ When the workflow is triggered, it creates a new run in the GitHub Actions tab (
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/new_action.png}
-    \caption{GitHub Action Run}
+    \caption{GitHub Action Run, Source: own representation}
     \label{fig:apr-action}
 \end{figure}
 
-A run can produce two possible outcomes for each issue it processes. Firstly, on a successful repair attempt, it creates a Pull Request with the changes made to the codebase and links the issue to it. The created Pull Requests allow code review and merging of the fixed changes into the main branch. When merged, the issue will be automatically closed. Figure \ref{fig:pr} shows an example of a resulting Pull Request created by the APR system.
+A run can produce two possible outcomes for each issue it processes. First, on a successful repair attempt, it creates a Pull Request with the changes made to the codebase and links the issue to it. The created Pull Requests allow code review and merging of the fixed changes into the main branch. When merged, the issue will be automatically closed. Figure \ref{fig:pr} shows an example of a resulting Pull Request created by the APR system.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/pr.png}
-    \caption{Resulting Pull Request}
+    \caption{Resulting Pull Request, Source: own representation}
     \label{fig:pr}
 \end{figure}
 
-Secondly, when an issue repair fails after all attempts have been exhausted, the failure is reported to the issue as a comment and the issue is labeled as failed (see Figure \ref{fig:failure-report}) so it won't be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
+Second, when an issue repair fails after all attempts have been exhausted, the failure is reported to the issue as a comment and the issue is labeled as failed (see Figure \ref{fig:failure-report}) so it won't be picked up again. This allows for easy tracking of issues that could not be fixed by the APR system.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/failure_comment.png}
-    \caption{Failure Report}
+    \caption{Failure Report, Source: own representation}
     \label{fig:failure-report}
 \end{figure}
 
@@ -60,7 +60,7 @@ For transparency and debugging, each run provides a live log stream in the GitHu
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/logs.png}
-    \caption{APR log stream}
+    \caption{APR log stream, Source: own representation}
     \label{fig:log-stream}
 \end{figure}
 
@@ -69,7 +69,7 @@ Figure \ref{fig:flow} visualizes the resulting flow of the APR system. The diagr
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/flowcharts/flowresult.png}
-    \caption{Resulting flow diagram}
+    \caption{Resulting flow diagram, Source: own representation}
     \label{fig:flow}
 \end{figure}
 
@@ -81,9 +81,9 @@ In this section, we present the results of the quantitative evaluation of the im
 
 - GitHub runners introduce a lot of computational noise
 - Only a small set of runs were performed
-- results for average times do not fully ad up to apr core because the timing where stoped when an issue was completed not when the APR core finished
+- results for average times do not fully add up to APR Core because the timing where stoped when an issue was completed not when the APR core finished
 
-We asses more threats to validity in section \ref{section:validity}.
+We asses more threats to validity in Section \ref{section:validity}.
 
 \subsection{Baseline of Evaluation}
 
@@ -93,7 +93,6 @@ The resulting data is based on the executions of the APR prototype in the prepar
 
 The following tables and diagrams show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. The first table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the second table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3.
 
-%TODO add exact model snapshot versions
 \begin{table}[H]
     \centering
     \small
@@ -147,21 +146,21 @@ The following tables and diagrams show the repair success rate, average cost per
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/repair_success_rate_per_model_grouped.png}
-    \caption{Repair Success Rate per Model}
+    \caption{Repair Success Rate per Model, Source: own representation}
     \label{fig:repair-success-rate}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/avg_cost_per_issue_per_model_grouped.png}
-    \caption{Average Cost per Issue per Model}
+    \caption{Average Cost per Issue per Model, Source: own representation}
     \label{fig:avg-cost-per-issue}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/avg_execution_time_per_issue_per_model_grouped.png}
-    \caption{Average Execution Time per Issue per Model}
+    \caption{Average Execution Time per Issue per Model, Source: own representation}
     \label{fig:avg-execution-time-per-issue}
 \end{figure}
 
@@ -170,14 +169,14 @@ CI Overhead
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_1.png}
-    \caption{CI Overhead per Run with 1 Attempt}
+    \caption{CI Overhead per Run with 1 Attempt, Source: own representation}
     \label{fig:ci-vs-exec-time-per-run-attempts-1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_3.png}
-    \caption{CI Overhead per Run with 3 Attempts}
+    \caption{CI Overhead per Run with 3 Attempts, Source: own representation}
     \label{fig:ci-vs-exec-time-per-run-attempts-3}
 \end{figure}
 

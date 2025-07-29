@@ -59,7 +59,7 @@ The development and evaluation of this prototype provided several valuable insig
 
 \begin{itemize}
     \item \textbf{Effectiveness of \acp{LLM}:} Large Language Models can automate bug fixing in CI environments, but outcomes are highly dependent on the model's capabilities, context and prompting techniques.
-    \item \textbf{Provider and API Reliability:} The APIs of \ac{LLM} providers are fully reliable, with some, such as Googles Gemini-2.5-pro, experiencing instabilities or high latency. Developing retry logic and proper error handling is essential for using external APIs.
+    \item \textbf{Provider and API Reliability:} The APIs of \ac{LLM} providers are not fully reliable, with some, such as Googles Gemini-2.5-pro, experiencing instabilities or high latency. Developing retry logic and proper error handling is essential for using external APIs.
     \item \textbf{Rapid Evolution of the Field:} The landscape of AI is evolving quickly, with new models and approaches released on a daily basis. Following research and designing modular software are important to stay up to date in this field.
     \item \textbf{Benchmarking Challenges:} Benchmark datasets like QuixBugs provide a starting point for evaluation, but real-world applications will require broader benchmarks like SWE Bench with diverse scenarios to fully assess effectiveness.
     \item \textbf{Human Oversight Remains Important:} While automation can handle routine bugs, human review remains important, particularly for accessing fixes for edge cases, hallucinations and insecurities.
