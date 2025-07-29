@@ -8,7 +8,7 @@ The implementation of the main components will be described in detail in the fol
 \textbf{APR Core:}
 
 % agent architectures produce good results epically paired with containerized environments. \cite{puvvadiCodingAgentsComprehensive2025}
-The APR core contains the main bug fixing logic written in Python\footnote{}. Embedding it into a Docker Image \footnote{} makes it easy to deploy, portable and small in memory. In order to use the APR core the following data (displayed in table \ref{tab:container-inputs}) needs to passed to the container:
+The APR core contains the main bug fixing logic written in Python. Embedding it into a Docker Image\footnote{A Docker image is a standardized package that contains all code, libraries and configuration required to run a containerized application \cite{WhatImage0800}.} makes it easy to deploy, portable and small in memory. In order to use the APR core the following data (displayed in table \ref{tab:container-inputs}) needs to passed to the container:
 
 \renewcommand{\arraystretch}{1.5} % Set row spacing to 1.5
 \begin{longtable}{@{\extracolsep{\fill}} p{3.7cm} | p{7cm} | p{4cm}  @{}}
@@ -108,7 +108,7 @@ base_prompt = f"""
     
 \end{lstlisting}
 
-For validating the generated edits, two stages are available: Build and Test. The Build stage is responsible for validating the syntax of the changes made in the Fix stage. It checks if the code can be built. For Python code, this means checking if all syntax is valid and follows standardized code quality and maintenance rules \footnote{todo}. To achieve this, the code is first formatted using the Python formatter Black\footnote{todo} and then linted using flake8\footnote{todo}. This ensures properly formatted code and appends any warnings or errors to the context.
+For validating the generated edits, two stages are available: Build and Test. The Build stage is responsible for validating the syntax of the changes made in the Fix stage. It checks if the code can be built. For Python code, this means checking if all syntax is valid and follows standardized code quality and maintenance rules. To achieve this, the code is first formatted using the Python formatter Black\footnote{Black is a code formatter for Python that reformats code to comply with its style guide, aiming for consistent and readable code \cite{Black2510Documentation}.} and then linted using flake8\footnote{Flake8 tool that checks Python source code for compliance with coding standards and potential errors \cite{Flake8YourTool}.}. This ensures properly formatted code and appends any warnings or errors to the context.
 
 After validation, the generated code is tested, if a test command is configured. The test stage runs the tests defined in the repository using the configured test command for each fixed file. In case tests fail, the context is updated with the error messages, and the repair returns to the Fix stage for a new attempt.
 
@@ -131,7 +131,7 @@ The APR core is designed to be modular and extensible, allowing for future enhan
 
 A GitHub Action Workflow integrates the APR Core into the GitHub repository. The workflow is written in YAML\footnote{YAML is a human readable data serialization language. \cite{OfficialYAMLWeb}} according to the GitHub Action standard \cite{WorkflowSyntaxGitHub}. For this prototype, we use Linux x64 runners provided and hosted by GitHub. This eliminates the overhead of managing our own runners but comes at the cost of uncertain performance and availability.
 
-The workflow is made up of multiple triggers and jobs. Triggers are based on events\footnote{explain and link} from the GitHub repository and serve as the entry point for executing the jobs. Given the triggers, the workflow can be executed in two different ways:
+The workflow is made up of multiple triggers and jobs. Triggers are based on events\footnote{Events are specific activities or changes in a repository. \cite{GitHubEventTypes}} from the GitHub repository and serve as the entry point for executing the jobs. Given the triggers, the workflow can be executed in two different ways:
 
 \begin{itemize}
     \item Batch processing by fetching all issues marked for repair. This can be triggered by a manual dispatch (``workflow\_dispatch'') or scheduled execution (``cron'').
