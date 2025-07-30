@@ -1,4 +1,4 @@
-To guide the implementation of the prototype, we developed the following requirements to help design the system. These requirements enable better planning and prioritization during development and allow for tracking progress throughout the implementation. We constructed both functional \ref{tab:functional-requirements} and non-functional \ref{tab:non-functional-requirements} requirements.
+To guide the implementation of the prototype, we developed the following requirements to help design and develop the prototype. These requirements enable structured planning and prioritization during development and track progress throughout the implementation. Both functional (Table\ref{tab:functional-requirements}) and non-functional (Table\ref{tab:non-functional-requirements}) requirements are listed below.
 
 \section{Functional Requirements}
 
@@ -42,15 +42,15 @@ To guide the implementation of the prototype, we developed the following require
 
         F7 \label{f7} & Patch \newline Application
         & Commit LLM-generated edits to the issue branch.
-        & Git branch and commit with reference to the issue is visible \\ \hline
+        & Git branch and commit with reference to the issue is visible. \\ \hline
 
         F8 \label{f8} & Result \newline Reporting
         & The system reports the outcome by creating a Pull Request or adding a comment to the issue.
-        & Pull Requests and issue \newline comments are visible\\ \hline
+        & Pull Requests and issue \newline comments are visible.\\ \hline
 
         F9 \label{f9} & Log and \newline  Metric \newline Collection
-        & For every run, logs and key metrics are collected and made available
-        & Artifacts and console logs are available in CI run \newline  results \\
+        & For every run, logs and key metrics are collected and made available.
+        & Artifacts and console logs are available in CI run \newline  results. \\
 \end{longtable}
 
 \section{Non-Functional Requirements}
@@ -71,8 +71,8 @@ To guide the implementation of the prototype, we developed the following require
         & CI logs confirm use of \newline Docker container. \\ \hline
 
         N1 \label{n1} & Configurable
-        & Users can configure labels, \newline branches, number of attempts,and LLM in a YAML file.
-        & The system loads a custom configuration \\ \hline
+        & Users can configure labels, \newline branches, number of attempts and LLM in a YAML file.
+        & The system loads a custom configuration. \\ \hline
 
         N2 \label{n2} & Portable
         & The system can be deployed and run on any Python GitHub repository with minimal setup.

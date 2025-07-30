@@ -14,12 +14,12 @@ The APR core contains the main bug fixing logic written in Python. Embedding it 
 \begin{longtable}{@{\extracolsep{\fill}} p{3.7cm} | p{7cm} | p{4cm}  @{}}
     \caption{Container Inputs} \label{tab:container-inputs}                                     \\
 
-    \toprule
+    \hline
     \textbf{Name}      & \textbf{Description}                            & \textbf{Type}        \\
-    \midrule
+    \hline
     \endfirsthead
 
-    \bottomrule
+    \hline
     \endfoot
     Source Code        & Git repository where APR fix bugs               & Docker volume mount
     \\ \hline
@@ -30,7 +30,6 @@ The APR core contains the main bug fixing logic written in Python. Embedding it 
     ISSUE\_TO\_PROCESS & The issue to process in JSON format             & Environment variable \\
     \hline
     GITHUB\_REPO       & GitHub repository for fetching and writing data & Environment variable \\
-    \hline
 \end{longtable}
 
 With this environment set, the APR core iterates over all issues fetched from the ``ISSUE\_TO\_PROCESS'' environment variable. For each issue, the main APR logic is executed. This logic follows a predefined flow that makes use of multiple stages and tools.
