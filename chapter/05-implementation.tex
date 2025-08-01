@@ -1,6 +1,6 @@
 In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous chapters. The complete implementation and source code be found in the appendix \ref{chapter:appendix}.
 
-The resulting prototype consists of two main components. The \textbf{APR Core} which holds the core logic for the repair process and a \textbf{\ac{CI} pipeline} which integrates the APR core logic within a GitHub repository. The \ac{CI pipeline} serves as an entry point and orchestrates the execution of the APR Core based on configured trigger events in the repository.
+The resulting prototype consists of two main components. The \textbf{APR Core} which holds the core logic for the repair process and a \textbf{CI pipeline} which integrates the APR core logic within a GitHub repository. The \ac{CI pipeline} serves as an entry point and orchestrates the execution of the APR Core based on configured trigger events in the repository.
 
 \section{System Components} \label{section:sc}
 The implementation of the main components will be described in detail in the following section.
@@ -207,7 +207,7 @@ This section demonstrates how the prototype satisfies the functional and non-fun
     F4          & Fix Generation                      & Yes                & See context excerpt in Listing~\ref{fig:fix}                                                                                                                             \\ \hline
     F5          & Change Validation                   & Yes                & See log excerpt in Listing~\ref{fig:validation}                                                                                                                          \\ \hline
     F6          & Iterative Patch \newline Generation & Yes                & See log excerpt in Listing~\ref{fig:retry}                                                                                                                               \\ \hline
-    F7          & Patch Application                   & Yes                & See og excerpt in Listing~\ref{lst:branch-commit}                                                                                                                        \\ \hline
+    F7          & Patch Application                   & Yes                & See log excerpt in Listing~\ref{lst:branch-commit}                                                                                                                        \\ \hline
     F8          & Result Reporting                    & Yes                & See Figure~\ref{fig:pr-report} and Figure \ref{fig:comment}                                                                                                              \\ \hline
     F9          & Log and Metric \newline  Collection & Yes                & See Figure~\ref{fig:logs-artifacts}                                                                                                                                      \\ \hline
     N1          & Container Runtime                   & Yes                & See log excerpt in Listing~\ref{lst:docker-log}                                                                                                                          \\ \hline
