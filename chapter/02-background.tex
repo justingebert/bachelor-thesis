@@ -2,7 +2,7 @@ In this chapter, the required theoretical background and context for this thesis
 
 \section{Software Development}
 
-The following section introduces core concepts of software development, starting with the \ac{SDLC}, followed by the importance of \ac{CI} in modern software development, and the role of software project hosting platforms.
+This section introduces core concepts of software development, starting with the \ac{SDLC}, followed by the importance of \ac{CI} in modern software development, and the role of software project hosting platforms.
 
 \subsection{Software Development Lifecycle}
 
@@ -14,7 +14,7 @@ An Agile iteration consists of multiple stages, each contributing to the overall
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/agile-cycle.png}
+    \includegraphics[width=0.8\textwidth]{images/agile-cycle.png}
     \caption{Agile software development lifecycle, Source: \cite{7MistakesIve2020}}
     \label{fig:agile-cycle}
 \end{figure}
@@ -29,7 +29,7 @@ Modern software systems are moving towards loosely coupled microservice architec
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/ci-cycle.png}
+    \includegraphics[width=0.8\textwidth]{images/ci-cycle.png}
     \caption{Continuous Integration cycle, Source:~\cite{lovettTop12Benefits2023}}
     \label{fig:ci-cycle}
 \end{figure}
@@ -53,7 +53,7 @@ A key feature of GitHub is GitHub issues, this feature enables backlogs and trac
 
 For integrating and reviewing code, GitHub provides pull requests. A pull request proposes changes to the codebase, integrating a review process to validate changes before merging into the production codebase. Code changes are displayed in a diff format\footnote{A diff format shows the difference between two files by highlighting added, removed, or modified lines \cite{WhatDiffUnderstanding}.}, allowing reviewers to examine the changes made. This process is essential for maintaining code quality and ensuring that changes are validated before merging. Pull requests can be linked to Issues, allowing easy tracking of changes related to specific tasks or bugs \cite{PullRequests}.
 
-Additionally, GitHub offers a managed solution for running CI pipelines called GitHub Actions. These pipelines are configured using workflow files written in YAML\footnote{YAML is a human-readable data serialization language \cite{OfficialYAMLWeb}}. Workflows can run on either self-hosted or GitHub-hosted runners. Each workflow is defined by triggers, jobs, and steps. Specific events trigger the workflow, which then executes one or more jobs, each composed of multiple steps \cite{UnderstandingGitHubActionsa}. Figure \ref{fig:gh-workflow} illustrates the components of a GitHub workflow.
+Additionally, GitHub offers a managed solution for running CI pipelines called GitHub Actions. These pipelines are configured using workflow files written in YAML\footnote{YAML is a human-readable data serialization language \cite{OfficialYAMLWeb}.}. Workflows can run on either self-hosted or GitHub-hosted runners. Each workflow is defined by triggers, jobs, and steps. Specific events trigger the workflow, which then executes one or more jobs, each composed of multiple steps \cite{UnderstandingGitHubActionsa}. Figure \ref{fig:gh-workflow} illustrates the components of a GitHub workflow.
 
 \begin{figure}[H]
     \centering
@@ -74,7 +74,7 @@ This section examines the role of \ac{GenAI} in modern software development. Fir
 
 The introduction of the transformer architecture revolutionized the field of text generation and \ac{NLP}. This architecture lays the groundwork for Large Language Models \cite{changSurveyEvaluationLarge2024, naveedComprehensiveOverviewLarge2024}. Extensive training, results in \acp{LLM} with billions of parameters, allowing them to understand and generate text in diverse natural and programming languages. Research has shown that a model's size directly impacts its performance, with larger models generally achieving better results in various \ac{NLP} tasks \cite{kaplanScalingLawsNeural2020}. However, training and operating larger models requires significant computational resources \cite{LLMsWhatsLarge, naveedComprehensiveOverviewLarge2024}. Furthermore, despite modern \acp{LLM} showing promising results in text generation, they can still hallucinate incorrect or biased content \cite{LLMsWhatsLarge}.
 
-To achieve specific tasks using a \ac{LLM}, an input prompt must be provided. Designing this input is a process known as prompt engineering. The quality and specificity of the prompt directly influence the model's output. In zero-shot prompting, the model is given only the task description, while in few-shot prompting, a few relevant examples are included to better guide the model's behavior. Brown et al.~\cite{brownLanguageModelsAre2020} showed that few-shot prompting can remarkably improve model performance across diverse tasks.
+When using a \ac{LLM}, an input prompt must be provided. Designing this input is a process known as prompt engineering. The quality and specificity of the prompt directly influence the model's output. In zero-shot prompting, the model is given only the task description, while in few-shot prompting, a few relevant examples are included to better guide the model's behavior. Brown et al.~\cite{brownLanguageModelsAre2020} showed that few-shot prompting can remarkably improve model performance across diverse tasks.
 
 Text used for input and output is tokenized, meaning the text is broken down into smaller units (tokens) for processing. The input is constrained by a model's context window, which is the maximum amount of text the model can process at once \cite{naveedComprehensiveOverviewLarge2024}.
 
@@ -100,7 +100,7 @@ The field of APR has greatly benefited from rapid advancements in \ac{AI}, with 
 
 This section provides an overview of the evolution of APR, related work, and the current state of APR systems, followed by a selected list of APR benchmarks used in research and industry.
 
-\subsection{Evolution of Automated Program Repair} \label{subsection:evolution-apr}
+\subsection{Evolution of Automated Program Repair Techniques} \label{subsection:evolution-apr}
 
 \ac{APR} has experienced multiple paradigm shifts over the years, categorized into key stages marked by significant advancements in techniques and methodologies.
 

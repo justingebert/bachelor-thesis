@@ -49,7 +49,7 @@ As highlighted in the results, system effectiveness and efficiency is highly dep
 %TODO add that github action scheduling is very unreliable 
 Ultimately, there are also limitations faced by the implementation and the overall approach taken.
 
-As mentioned in section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues, the timing and availability of the system are highly dependent on external factors such as the \ac{LLM} providers' APIs and the GitHub Actions runners. This presents a limitation in terms of reliability and performance in a real software development cycle.
+As mentioned in section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues, the performance and availability of the system are highly dependent on external factors such as the \ac{LLM} providers' APIs and the GitHub Actions runners. This presents a limitation in terms of reliability and performance in a real software development cycle.
 
 Regarding integration with GitHub, the system faces additional limitations imposed by the GitHub Actions environment. Workflow runs cannot be skipped, and the filtering logic for events using external configuration data is limited. As a result, the workflow must execute on every issue labeling event to perform filtering in the first job. This causes the GitHub Actions tab to fill with runs that are marked as successful but did not process any bugs, resulting in a cluttered run history and potential confusion for users. This could be improved by migrating the APR Core to a GitHub App integration that listens to webhook events and only triggers the workflow for relevant issues.
 
