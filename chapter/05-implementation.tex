@@ -1,6 +1,6 @@
 In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous chapters. The complete implementation and source code be found in the appendix \ref{chapter:appendix}.
 
-The resulting prototype consists of two main components. The \textbf{APR Core} which holds the core logic for the repair process and a \textbf{CI pipeline} which integrates the APR core logic within a GitHub repository. The \ac{CI pipeline} serves as an entry point and orchestrates the execution of the APR Core based on configured trigger events in the repository.
+The resulting prototype consists of two main components. The \textbf{APR Core} which holds the core logic for the repair process and a \textbf{CI pipeline} which integrates the APR core logic within a GitHub repository. The \ac{CI} pipeline serves as an entry point and orchestrates the execution of the APR Core based on configured trigger events in the repository.
 
 \section{System Components} \label{section:sc}
 The implementation of the main components will be described in detail in the following section.
@@ -108,7 +108,7 @@ base_prompt = f"""
     
 \end{lstlisting}
 
-For validating generated fixes, two stages are used: Build and Test. The Build stage is responsible for checking if the code can built by validating the syntax  the changes made in the Fix stage.  For Python code, this means checking if all syntax is valid and follows standardized code quality and maintenance rules. To achieve this, the code is first formatted using the Python formatter Black\footnote{Black is a code formatter for Python that reformats code to comply with its style guide, aiming for consistent and readable code \cite{Black2510Documentation}.} and then linted using flake8\footnote{Flake8 tool that checks Python source code for compliance with coding standards and potential errors \cite{Flake8YourTool}.}. This ensures properly formatted code and appends any warnings or errors to the context.
+For validating generated fixes, two stages are used: Build and Test. The Build stage is responsible for checking if the code can be built by validating the syntax  the changes made in the Fix stage.  For Python code, this means checking if all syntax is valid and follows standardized code quality and maintenance rules. To achieve this, the code is first formatted using the Python formatter Black\footnote{Black is a code formatter for Python that reformats code to comply with its style guide, aiming for consistent and readable code \cite{Black2510Documentation}.} and then linted using flake8\footnote{Flake8 tool that checks Python source code for compliance with coding standards and potential errors \cite{Flake8YourTool}.}. This ensures properly formatted code and appends any warnings or errors to the context.
 
 If a test command is configured, the next stage of the validation process tests the generated changes. The Test stage runs the tests defined in the repository using the configured test command for each fixed file. In case tests fail, the context is updated with the error messages, and the repair returns to the Fix stage for a new attempt.
 
@@ -145,7 +145,7 @@ If at least one issue passes the ``gate'', the ``bugfix'' job is started. This j
 
 The final step of ``bugfix'' uploads all logs and metric files from the APR Core as artifacts to GitHub, making them available after the workflow run has completed.
 
-Figure \ref{fig:ci} visualizes and overview of the the workflow and its functionality.
+Figure \ref{fig:ci} visualizes and overview of the workflow and its functionality.
 
 \begin{figure}[H]
     \centering
@@ -210,12 +210,12 @@ This section demonstrates how the prototype satisfies the functional and non-fun
     F7          & Patch Application                   & Yes                & See log excerpt in Listing~\ref{lst:branch-commit}                                                                                                                        \\ \hline
     F8          & Result Reporting                    & Yes                & See Figure~\ref{fig:pr-report} and Figure \ref{fig:comment}                                                                                                              \\ \hline
     F9          & Log and Metric \newline  Collection & Yes                & See Figure~\ref{fig:logs-artifacts}                                                                                                                                      \\ \hline
-    N1          & Container Runtime                   & Yes                & See log excerpt in Listing~\ref{lst:docker-log}                                                                                                                          \\ \hline
-    N2          & Configurable                        & Yes                & See log excerpts from Listing \ref{lst:load-config}                                                                                                                     \\ \hline
-    N3          & Portable                            & Yes                & Used in two repositories: see Appendix~\ref{chapter:appendix}                                                                                                            \\ \hline
-    N4          & Run Repeatable                      & No                 & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
-    N5          & Observable                          & Yes                & See Figure~\ref{fig:logs-artifacts}{fig:metrics}.                                                                                                                       \\ \hline
-    N6          & End-to-End Automation               & Yes                & See full process in Section \ref{section:showcase}                                                                                                                      \\ \hline
+    N0          & Container Runtime                   & Yes                & See log excerpt in Listing~\ref{lst:docker-log}                                                                                                                          \\ \hline
+    N1          & Configurable                        & Yes                & See log excerpts from Listing \ref{lst:load-config}                                                                                                                     \\ \hline
+    N2          & Portable                            & Yes                & Used in two repositories: see Appendix~\ref{chapter:appendix}                                                                                                            \\ \hline
+    N3          & Run Repeatable                      & No                 & Due to non deterministic LLM outputs and varying execution environments, identical runs resulted in different results. See discussion in Section~\ref{section:validity}. \\ \hline
+    N4          & Observable                          & Yes                & See Figure~\ref{fig:logs-artifacts}{fig:metrics}.                                                                                                                       \\ \hline
+    N5          & End-to-End Automation               & Yes                & See full process in Section \ref{section:showcase}                                                                                                                      \\ \hline
 \end{longtable}
 
 \begin{figure}[H]
@@ -320,7 +320,7 @@ root - INFO - [localize] LLM response: ["next_palindrome.py"]
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/verification/pr.png}
-    \caption{Pull request report for bugfix, Source: screenshot, Source: screenshot}
+    \caption{Pull request report for bugfix, Source: screenshot}
     \label{fig:pr-report}
 \end{figure}
 
