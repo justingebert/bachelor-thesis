@@ -41,7 +41,7 @@ The models are selected to cover a range of capabilities and costs, with a focus
 \end{itemize}
 
 \begin{longtable}{@{\extracolsep{\fill}} p{3cm} | p{1.3cm} | p{1cm} | p{2.5cm} | p{4cm} | p{1cm} @{}}
-    \caption{Characteristics of selected LLMs (21.07.2025)} \label{table:llms}                                                                                                                                                            \\
+    \caption{Characteristics of selected LLMs} \label{table:llms}                                                                                                                                                            \\
 
     \hline
     \textbf{(1)}                      & \textbf{(1a)} & \textbf{(2)} & \textbf{(3)}                           & \textbf{(4)}                                                                                  & \textbf{(5)}              \\
@@ -76,7 +76,7 @@ Using the 40 buggy files, we generate a GitHub issue for each. A consistent issu
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/github_issue.png}
-    \caption{Example of a generated GitHub Issue, Source: own representation}
+    \caption{Example of a generated GitHub Issue, Source: screenshot}
     \label{fig:gh-issue2}
 \end{figure}
 
@@ -192,7 +192,7 @@ Each execution of the APR system collects repair process data. Using self-develo
 {
 \small
 \renewcommand{\arraystretch}{2.5}
-\begin{longtable}{@{\extracolsep{\fill}} p{7cm} | >{\centering\arraybackslash}p{7cm} @{}}
+\begin{longtable}{@{\extracolsep{\fill}} p{5.5cm} | >{\centering\arraybackslash}p{8.5cm} @{}}
     \caption{Run evaluation metrics} \label{table:calculations} \\
 
     \hline
@@ -205,7 +205,7 @@ Each execution of the APR system collects repair process data. Using self-develo
     Repair Success Rate & \(\displaystyle\frac{\mathit{Number\ of\ Successful\ Repairs}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
     Average Execution Time per Issue & \(\displaystyle\frac{\mathit{Total\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
     Average Cost per Issue & \(\displaystyle\frac{\mathit{Total\ Cost}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
-    APR Core Execution Time & \(\displaystyle\frac{\mathit{Total\ APR\ Core\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
-    CI Pipeline Execution Time & \(\displaystyle\frac{\mathit{Total\ CI\ Pipeline\ Execution\ Time}}{\mathit{Total\ Issues\ Processed}}\) \\ \hline
-\end{longtable}
+    APR Core Execution Time & \textit{APR Core Execution Time} \\ \hline
+    CI Pipeline Overhead & \(\mathit{CI\ Pipeline\ Execution\ Time} - \mathit{APR\ Core\ Execution\ Time}\) \\ 
+    \end{longtable}
 }
