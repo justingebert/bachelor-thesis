@@ -64,7 +64,7 @@ context = {
 
 This context object is passed between stages, with each stage performing a specific task in the bug fixing process and returning an updated context. The APR core uses four implemented stages: Localize, Fix, Build, and Test.
 
-The repair process for an issue starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's Software Development Kit (SDK). A localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. System instruction and prompt for localization are show below in Listing \ref{lst:localization-prompt}.
+The repair process for an issue starts with the localization stage. This stage attempts to identify the files in the codebase required to fix the bug, using the configured \ac{LLM} via the provider's Software Development Kit (SDK). A localization prompt is built using the issue and a constructed hierarchy of the repository's file structure. The response is expected to return a list of files where the bug might be located. System instruction and prompt for localization are shown below in Listing \ref{lst:localization-prompt}.
 
 \vspace{3.9cm}
 
@@ -85,7 +85,7 @@ prompt = f"""
     """
 \end{lstlisting}
 
-With localized files in the context, the Fix stage comes next. This stage calls the configured \ac{LLM} API to generate a fix for the issue in the localized files. To construct the prompt, issue details and relevant file names, along with their content, are included. Responses should specify the necessary edits for each file, or indicate when no changes are required. After parsing the generated output, edits are applied to the corresponding files in the workspace. The context is then updated to reflect the new file content. Listing \ref{lst:repair-prompt} shows the system instruction and base prompt used for the Fix stage.
+With localized files in the context, the Fix stage comes next. This stage calls the configured \ac{LLM} \ac{API} to generate a fix for the issue in the localized files. To construct the prompt, issue details and relevant file names, along with their content, are included. Responses should specify the necessary edits for each file, or indicate when no changes are required. After parsing the generated output, edits are applied to the corresponding files in the workspace. The context is then updated to reflect the new file content. Listing \ref{lst:repair-prompt} shows the system instruction and base prompt used for the Fix stage.
 
 \begin{lstlisting}[style=python, caption={Repair Prompt}, label={lst:repair-prompt}]
 system_instruction = "You are part of an automated bug-fixing system. Please return the complete, corrected raw source files for each file that needs changes, never use any markdown formatting. Follow the exact format requested."
@@ -135,7 +135,7 @@ The workflow is made up of four triggers and three jobs. Triggers are based on e
 
 \begin{itemize}
     \item Batch processing by fetching all issues marked for repair. This can be triggered by a manual dispatch (``workflow\_dispatch'') or scheduled execution (``cron'').
-    \item Processing a single issue from an event. The issue is passed from the (``issue\_labeled'') event when labeled with the configured label and from (`'`issue\_comment'') when information is added to the issue in the form of a comment.
+    \item Processing a single issue from an event. The issue is passed from the (``issue\_labeled'') event when labeled with the configured label and from (``issue\_comment'') when information is added to the issue in the form of a comment.
 \end{itemize}
 
 The trigger event information gets passed as environment variables to the first job named ``gate''. This job uses the event data to determine whether the issue should be processed or skipped. This is determined by a Python script (``filter\_issues.py''). This script must be placed accessible to the workflow file. It checks the labels of issues and evaluates their state to determine which are relevant for the APR process.
@@ -145,7 +145,7 @@ If at least one issue passes the ``gate'', the ``bugfix'' job is started. This j
 
 The final step of ``bugfix'' uploads all logs and metric files from the APR Core as artifacts to GitHub, making them available after the workflow run has completed.
 
-Figure \ref{fig:ci} visualizes and overview of the workflow and its functionality.
+Figure \ref{fig:ci} visualizes an overview of the workflow and its functionality.
 
 \begin{figure}[H]
     \centering

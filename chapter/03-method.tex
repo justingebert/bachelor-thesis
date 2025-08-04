@@ -90,7 +90,7 @@ In this section, we provide a high-level overview of the implemented automated b
 
 The prototype was developed using iterative prototyping and testing, with a focus on simplicity and extensibility. It is based on the self-developed requirements. An overview of the system is visualized in Figure \ref{fig:high-level} and Figure \ref{fig:apr-core-overview}.
 
-Figure \ref{fig:high-level} shows that once the system is in place, a \ac{CI} pipeline can be triggered by different events. This executes the CI pipeline on a GitHub Action runner. The first pipeline job fetches and filters relevant issues. Resulting issues are passed to the APR Core, which contains the main bug-fixing logic. The APR Core (visualized in Figure \ref{fig:apr-core-overview}) runs in a container and communicates with the configured \acp{LLM} via API to localize and fix the issue. With the generated file edits, the changes are validated and tested. When validation passes, the changes are applied and a pull request is opened on the repository, linking the issue. In case of an unsuccessful repair or exhaustion of the maximum number of attempts, a failure is reported to the issue.
+Figure \ref{fig:high-level} shows that once the system is in place, a \ac{CI} pipeline can be triggered by different events. This executes the CI pipeline on a GitHub Action runner. The first pipeline job fetches and filters relevant issues. Resulting issues are passed to the APR Core, which contains the main bug-fixing logic. The APR Core (visualized in Figure \ref{fig:apr-core-overview}) runs in a container and communicates with the configured \acp{LLM} via \ac{API} to localize and fix the issue. With the generated file edits, the changes are validated and tested. When validation passes, the changes are applied and a pull request is opened on the repository, linking the issue. In case of an unsuccessful repair or exhaustion of the maximum number of attempts, a failure is reported to the issue.
 
 \begin{figure}[H]
     \centering
@@ -116,7 +116,7 @@ We focus on several key data metrics to assess the system's performance and capa
 
 Effectiveness of the \acp{LLM} and the approach, is measured by the repair success rate. A repair is considered successful if it passes both the validation stage and the complete test suite provided by QuixBugs. Specifically, an issue is deemed fixed when the generated code is syntactically correct and all associated tests pass without errors.
 
-To assess performance, we analyze collect timings of issue repair attempts. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by API providers. GitHub Action minutes are not included in the cost estimation, as 2000 minutes are included in the free tier of GitHub for public repositories \cite{GitHubsPlans}.
+To assess performance, we analyze collected timings of issue repair attempts. Feasibility is evaluated by estimating the cost of a repair attempt based on the number of tokens and token pricing listed by \ac{API} providers. GitHub Action minutes are not included in the cost estimation, as 2000 minutes are included in the free tier of GitHub for public repositories \cite{GitHubsPlans}.
 
 Furthermore, we evaluate whether multiple attempts\footnote{equivalent to few shot prompting} can help improve the repair success rate and how this relates to the execution time and cost of the repair process.
 

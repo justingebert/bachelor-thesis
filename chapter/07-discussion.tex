@@ -4,9 +4,9 @@ In this section, we will discuss the results of the evaluation of our prototype 
 
 The evaluation results are very promising but face several limitations that affect their validity.
 
-Since the repair process relies on \acp{LLM}, which are non-deterministic by design, executions may vary in their results. As the pipeline was only run twice per model, these results are not fully representative of each model's performance. Furthermore, the speed and availability of the tested \acp{LLM} heavily depends on the providers' APIs, which can cause fluctuating execution times or even failures during periods of high traffic.
+Since the repair process relies on \acp{LLM}, which are non-deterministic by design, executions may vary in their results. As the pipeline was only run twice per model, these results are not fully representative of each model's performance. Furthermore, the speed and availability of the tested \acp{LLM} heavily depends on the providers' \acp{API}, which can cause fluctuating execution times or even failures during periods of high traffic.
 
-Repair costs are calculated based on token usage reported by the providers' API responses. However, these numbers are not fully accurate, as providers can be non-transparent about actual token counts \cite{sunCoInCountingInvisible2025d}. As a result, the reported costs and execution times should be interpreted with caution and are not reliably comparable across providers.
+Repair costs are calculated based on token usage reported by the providers' \ac{API} responses. However, these numbers are not fully accurate, as providers can be non-transparent about actual token counts \cite{sunCoInCountingInvisible2025d}. As a result, the reported costs and execution times should be interpreted with caution and are not reliably comparable across providers.
 
 Additionally, the system was executed on GitHub-hosted runners included in the free tier of GitHub. Therefore, the performance metrics reflect the behavior of GitHub's cloud-hosted CI environment. While this allows for rapid prototyping and testing, it limits the generalizability of absolute execution times and costs.
 
@@ -41,16 +41,7 @@ In terms of cost, repair attempts vary from as little as \$0.0001 per issue for 
 Overall, the combination of high repair success rates, low execution times, and minimal costs demonstrates that this approach is both feasible and practical for automating bug fixing in CI environments. Because each repair task is isolated, multiple issues can be processed concurrently, further increasing throughput and minimizing delays for development.
 
 %TODO add other cites for comparison
-By implementing a lightweight approach together with the interactivity of the GitHub platform, this system achieves repair success rates on the QuixBugs benchmark that are comparable to those reported in recent APR research~\cite{huCanGPTO1Kill2024,yinThinkRepairSelfDirectedAutomated2024}. 
-%For instance
-%~\cite{huCanGPTO1Kill2024,yinThinkRepairSelfDirectedAutomated2024 }.
-% yinThinkRepairSelfDirectedAutomated2024 21/40
-% zhangSTEAMSimulatingInTeractive2025 26/32
-% zhangPATCHEmpoweringLarge2025 36/37
-% xiaLessTrainingMore2022 27/32
-% leeUnifiedDebuggingApproach2024 40/40
-%These comparisons underscore that our approach, integrated directly into CI, matches or exceeds performance reported in \ac{APR} research
-In addition, the direct integration into the CI workflow provides transparent metrics for both cost and performance, offering practical advantages over many traditional APR approaches.
+By implementing a lightweight approach together with the interactivity of the GitHub platform, this system achieves repair success rates on the QuixBugs benchmark that match or exceed those reported in recent APR research~\cite{huCanGPTO1Kill2024,yinThinkRepairSelfDirectedAutomated2024, zhangSTEAMSimulatingInTeractive2025, xiaLessTrainingMore2022, leeUnifiedDebuggingApproach2024 }. In addition, the direct integration into the CI workflow provides transparent metrics for both cost and performance, offering practical advantages over many traditional APR approaches.
 
 As highlighted in the results, system effectiveness and efficiency are highly dependent on the underlying \ac{LLM} used. However, the modular design of the approach allows for straightforward integration of improved or newly released models. This ensures that the system can benefit from advances in \ac{LLM} technology without requiring major changes to the overall pipeline. Its portability and modularity allow for a wide range of enhancements, such as integrating new \acp{LLM}, experimenting with different prompting strategies or incorporating richer feedback mechanisms, as described in in Section~\ref{section:roadmap}.
 
@@ -58,7 +49,7 @@ As highlighted in the results, system effectiveness and efficiency are highly de
 %TODO add that github action scheduling is very unreliable 
 Ultimately, there are also limitations faced by the implementation and the overall approach.
 
-As mentioned in section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues, the performance and availability of the system highly depend on external factors such as the \ac{LLM} providers' APIs and the GitHub Actions runners. This presents a limitation in terms of reliability and performance in a real software development cycle.
+As mentioned in section \ref{section:validity}, the system is constrained to addressing small issues only. Even with small issues, the performance and availability of the system highly depend on external factors such as the \ac{LLM} providers' \acp{API} and the GitHub Actions runners. This presents a limitation in terms of reliability and performance in a real software development cycle.
 
 Regarding integration with GitHub, the system faces additional limitations imposed by the GitHub Actions environment. Workflow runs cannot be skipped, and the filtering logic for events using external configuration data is limited. As a result, the workflow must execute on every issue labeling event to perform filtering in the first job. This causes the GitHub Actions tab to fill with runs that are marked as successful but did not process any bugs, resulting in a cluttered run history and potential confusion for users. This could be improved by migrating the APR Core to a GitHub App integration that listens to webhook events and only triggers the workflow for relevant issues.
 
@@ -71,7 +62,7 @@ The development and evaluation of this prototype provided several valuable insig
 
 \begin{itemize}
     \item \textbf{Effectiveness of \acp{LLM}:} Large Language Models can automate bug fixing in CI environments, but outcomes are highly dependent on the model's capabilities, context and prompting techniques.
-    \item \textbf{Provider and API Reliability:} The APIs of \ac{LLM} providers are not fully reliable, with some, such as Googles Gemini-2.5-pro, experiencing instabilities or high latency. Developing retry logic and proper error handling is essential for using external APIs.
+    \item \textbf{Provider and API Reliability:} The \acp{API} of \ac{LLM} providers are not fully reliable, with some, such as Googles Gemini-2.5-pro, experiencing instabilities or high latency. Developing retry logic and proper error handling is essential for using external \acp{API}.
     \item \textbf{Rapid Evolution:} The landscape of AI is evolving quickly, with new models and approaches released on a daily basis. Following research and designing modular software are important to stay up to date in this field.
     \item \textbf{Benchmarking Challenges:} Benchmark datasets like QuixBugs provide a starting point for evaluation, but real-world applications will require broader benchmarks like SWE Bench with diverse scenarios to fully assess effectiveness.
     \item \textbf{Human Oversight Remains Important:} While automation can handle routine bugs, human review remains important, particularly for accessing fixes for edge cases, hallucinations and insecurities.
