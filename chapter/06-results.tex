@@ -24,7 +24,7 @@ The second way fetches and processes all issues labeled with the ``bug\_v01'' la
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/dispatch.png}
-    \caption{Manual Dispatch of APR, Source: screenshot}
+    \caption{Manual dispatch of APR, Source: screenshot}
     \label{fig:dispatch}
 \end{figure}
 
@@ -34,7 +34,7 @@ When the workflow is triggered, it creates a new run in the GitHub Actions tab (
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/new_run.png}
-    \caption{GitHub Action Run, Source: own representation}
+    \caption{GitHub Action run, Source: own representation}
     \label{fig:apr-action}
 \end{figure}
 
@@ -45,7 +45,7 @@ Figure \ref{fig:pr} shows an example of a resulting pull request created by the 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/pr.png}
-    \caption{Resulting Pull Request, Source: screenshot}
+    \caption{Resulting pull request, Source: screenshot}
     \label{fig:pr}
 \end{figure}
 
@@ -54,13 +54,11 @@ When an issue repair fails after all attempts have been exhausted, the failure i
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/workflow/failure_comment.png}
-    \caption{Failure Report, Source: screenshot}
+    \caption{Failure report, Source: screenshot}
     \label{fig:failure-report}
 \end{figure}
 
 Issues marked as failed can be picked up again by adding new context to the issue. This can be done by adding a comment to the issue, which will trigger the APR system to pick up the issue again and try to fix it with the added context. This allows for a more dynamic approach to bug fixing, where issues can be fixed as new information becomes available.
-
-%TODO pipeline from comment screenshot
 
 For transparency and debugging, each run provides a live log stream in the GitHub Actions tab (see Figure \ref{fig:log-stream}). This allows users to see the progress of the run and any errors that occur during the execution. For further analysis, logs, metrics, and the complete context objects are published as artifacts for each run, available to download in the run view.
 \begin{figure}[H]
@@ -89,7 +87,7 @@ The resulting data is based on 24 executions of the APR prototype in the prepare
 
 \subsection{Results}
 
-The following tables and diagrams show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. Table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the Table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3. Diagrams \ref{fig:repair-success-rate}, \ref{fig:avg-cost-per-issue}, and \ref{fig:avg-execution-time-per-issue} visualize and compare the results of the evaluation for each model in a grouped manner. Diagrams \ref{fig:ci-vs-exec-time-per-run-attempts-1} and \ref{fig:ci-vs-exec-time-per-run-attempts-3} show the CI overhead for each model in relation to the execution time of the run. 
+The following tables and diagrams show the repair success rate, average cost per issue, and average execution time per issue for each model used in the evaluation. Table \ref{table:results} shows the results of the evaluation with one attempt per issue, while the Table \ref{table:retry-results} shows the results with the retry loop enabled and the max attempts set to 3. Diagrams \ref{fig:repair-success-rate}, \ref{fig:avg-cost-per-issue}, and \ref{fig:avg-execution-time-per-issue} visualize and compare the results of the evaluation for each model in a grouped manner. Diagrams \ref{fig:ci-vs-exec-time-per-run-attempts-1} and \ref{fig:ci-vs-exec-time-per-run-attempts-3} show the CI overhead for each model in relation to the execution time of the run.
 
 \begin{table}[H]
     \centering
@@ -114,65 +112,65 @@ The following tables and diagrams show the repair success rate, average cost per
         \textbf{claude-sonnet-4-0}        & CS40   & 90.0\% & \$0.0103 & 12.96s \\
         \hline
     \end{tabular*}
-    \end{table}
+\end{table}
 
-    \begin{table}[H]
-        \centering
-        \small
-        \caption{Few shot evaluation results}
-        \label{table:retry-results}
-        \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}  p{3.5cm} | p{1.3cm} | p{2.5cm} | p{2.7cm} | p{3cm} @{}}
-            \hline
-            \textbf{Model} & \textbf{ID} & \textbf{Repair Success Rate} & \textbf{Average Cost Per Issue}  & \textbf{Average Execution Time Per Issue} \\
-            \hline
-            \textbf{gemini-2.0-flash-lite}    & G2F-L  & 85\%   & \$0.0003  & 13.08s \\
-            \textbf{gemini-2.0-flash}         & G2F    & 90.0\% & \$0.0004  & 8.27s \\
-            \textbf{gemini-2.5-flash-lite}    & G25F-L & 90.0\% & \$0.0003  & 7.18s \\
-            \textbf{gemini-2.5-flash}         & G25F   & 95.0\% & \$0.0111  & 23.65s \\
-            \textbf{gemini-2.5-pro}           & G25P   & 97.5\% & \$0.0708 & 68.78s \\
-            \textbf{gpt-4.1-nano}             & GPT4N  & 90.0\% & \$0.0003  & 10.61s \\
-            \textbf{gpt-4.1-mini}             & GPT4M  & 97.5\% & \$0.0043  & 11.98s \\
-            \textbf{gpt-4.1}                  & GPT4   & 97.5\% & \$0.004   & 7.45s \\
-            \textbf{o4-mini}                  & O4M    & 100\%  & \$0.007   & 21.54s \\
-            \textbf{claude-3-5-haiku}         & C35H   & 15.0\% & \$0.0076  & 23.98s \\
-            \textbf{claude-3-7-sonnet}        & C37S   & 95.0\% & \$0.0085  & 27.16s \\
-            \textbf{claude-sonnet-4-0}        & CS40   & 92.5\% & \$0.0117  & 16.80s \\
-            \hline
-        \end{tabular*}
-    \end{table}
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Few shot evaluation results}
+    \label{table:retry-results}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}  p{3.5cm} | p{1.3cm} | p{2.5cm} | p{2.7cm} | p{3cm} @{}}
+        \hline
+        \textbf{Model} & \textbf{ID} & \textbf{Repair Success Rate} & \textbf{Average Cost Per Issue}  & \textbf{Average Execution Time Per Issue} \\
+        \hline
+        \textbf{gemini-2.0-flash-lite}    & G2F-L  & 85\%   & \$0.0003  & 13.08s \\
+        \textbf{gemini-2.0-flash}         & G2F    & 90.0\% & \$0.0004  & 8.27s \\
+        \textbf{gemini-2.5-flash-lite}    & G25F-L & 90.0\% & \$0.0003  & 7.18s \\
+        \textbf{gemini-2.5-flash}         & G25F   & 95.0\% & \$0.0111  & 23.65s \\
+        \textbf{gemini-2.5-pro}           & G25P   & 97.5\% & \$0.0708 & 68.78s \\
+        \textbf{gpt-4.1-nano}             & GPT4N  & 90.0\% & \$0.0003  & 10.61s \\
+        \textbf{gpt-4.1-mini}             & GPT4M  & 97.5\% & \$0.0043  & 11.98s \\
+        \textbf{gpt-4.1}                  & GPT4   & 97.5\% & \$0.004   & 7.45s \\
+        \textbf{o4-mini}                  & O4M    & 100\%  & \$0.007   & 21.54s \\
+        \textbf{claude-3-5-haiku}         & C35H   & 15.0\% & \$0.0076  & 23.98s \\
+        \textbf{claude-3-7-sonnet}        & C37S   & 95.0\% & \$0.0085  & 27.16s \\
+        \textbf{claude-sonnet-4-0}        & CS40   & 92.5\% & \$0.0117  & 16.80s \\
+        \hline
+    \end{tabular*}
+\end{table}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/repair_success_rate_per_model_grouped.png}
-    \caption{Repair Success Rate per Model, Source: own representation}
+    \caption{Repair success rate per model, Source: own representation}
     \label{fig:repair-success-rate}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/avg_cost_per_issue_per_model_grouped.png}
-    \caption{Average Cost per Issue per Model, Source: own representation}
+    \caption{Average cost per issue per model, Source: own representation}
     \label{fig:avg-cost-per-issue}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/avg_execution_time_per_issue_per_model_grouped.png}
-    \caption{Average Execution Time per Issue per Model, Source: own representation}
+    \caption{Average execution time per issue per model, Source: own representation}
     \label{fig:avg-execution-time-per-issue}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_1.png}
-    \caption{CI Overhead per Run with 1 Attempt, Source: own representation}
+    \caption{CI overhead per run with 1 attempt, Source: own representation}
     \label{fig:ci-vs-exec-time-per-run-attempts-1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/diagrams/ci_vs_exec_time_per_run_stacked_attempts_3.png}
-    \caption{CI Overhead per Run with 3 Attempts, Source: own representation}
+    \caption{CI overhead per run with 3 attempts, Source: own representation}
     \label{fig:ci-vs-exec-time-per-run-attempts-3}
 \end{figure}
 

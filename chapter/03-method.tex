@@ -16,7 +16,7 @@ To answer these questions, we structured the process into three phases: preparat
 
 In the preparation phase, we select a suitable \ac{APR} benchmark and a pool of \acp{LLM}. With the benchmark, we set up a realistic development environment on GitHub. By specifying requirements, we lay the groundwork for the implementation of the APR system.
 In the second part, we implement the \ac{APR} system based on the requirements.
-With this implementation we evaluate the self-developed prototype using the evaluation metrics (listed in Section \ref{section:evaluation}) collected during and after the execution of the APR system. Furthermore, we showcase the resulting workflow of using the system in the prepared repository.
+With this implementation, we evaluate the self-developed prototype using the evaluation metrics (listed in Section \ref{section:evaluation}) collected during and after the execution of the APR system. Furthermore, we showcase the resulting workflow of using the system in the prepared repository.
 The following sections will go into detail about each of these phases.
 
 \section{Preparation}
@@ -29,7 +29,7 @@ For evaluating the effectiveness of our APR integration, we selected the QuixBug
 Compared to other APR benchmarks \ref{table:benchmarks} like SWE-Bench \cite{jimenezSWEbenchCanLanguage2024}, QuixBugs is relatively small, which allows for accelerated setup and development.
 
 \subsection{Large Language Model Selection} \label{subsection:llm-selection}
-For the evaluation of our APR system, we test a selected pool of \acp{LLM}. We evaluate with the latest models\footnote{released before 11 July 2025} from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. %TODO cite
+For the evaluation of our APR system, we test a selected pool of \acp{LLM}. We evaluate with the latest models\footnote{released before 11 July 2025} from the three vendors that currently dominate AI-assisted coding workflows: Google, OpenAI, and Anthropic. \cite{Technology2025Stack}
 The models are selected to cover a range of capabilities and costs, with a focus on lower-tier models, allowing us to evaluate the performance, execution times and cost-effectiveness of the APR system. Table \ref{table:llms} shows twelve selected models that are used for evaluation with the following data:
 \begin{itemize}
     \item (1) Model Name: The name of the \ac{LLM}.
@@ -76,7 +76,7 @@ Using the 40 buggy files, we generate a GitHub issue for each. A consistent issu
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/github/github_issue.png}
-    \caption{Example of a generated GitHub Issue, Source: screenshot}
+    \caption{Example of a generated GitHub issue, Source: screenshot}
     \label{fig:gh-issue2}
 \end{figure}
 
@@ -95,7 +95,7 @@ Figure \ref{fig:high-level} shows that once the system is in place, a \ac{CI} pi
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/overview.png}
-    \caption{Overview of the CI Pipeline, Source: own representation}
+    \caption{Overview of the CI pipeline, Source: own representation}
     \label{fig:high-level}
 \end{figure}
 
@@ -109,7 +109,6 @@ Figure \ref{fig:high-level} shows that once the system is in place, a \ac{CI} pi
 
 
 \section{Evaluation} \label{section:evaluation}
-%TODO should I mention showcase of results here?
 This section describes how we measure the effectiveness, performance and cost of the APR system when integrated into a GitHub repository. We use GitHub Actions' \ac{CI} capabilities in combination with the prepared QuixBugs repository as a base. All twelve selected LLM models from Table \ref{subsection:llm-selection} are evaluated using the prototype. The evaluation is based on data collected during and after a execution of the APR system.
 
 We focus on several key data metrics to assess the system's performance and capabilities in repairing software bugs. These metrics provide insights into effectiveness, performance, reliability, cost and overall impact on the \ac{SDLC}.
@@ -162,7 +161,7 @@ Each execution of the APR system collects repair process data. Using self-develo
     Number of Attempts & Total attempts made & APR Core \\ \hline
     Execution Time & Time taken to process the issue, including all stages & APR Core \\ \hline
     Tokens Used & Number of tokens processed by the LLM during the repair process & LLM API \\ \hline
-    Cost & Cost associated with the repair process, calculated based on tokens * cost per token & APR Core \\ \hline
+    Cost & Cost associated with the repair process, calculated based on tokens * cost pe`r t'oken & APR Core \\ \hline
     Stage Information & Details about each stage of the repair process shown in Table \ref{table:stage-metrics} & APR Core \\
     \hline
 \end{longtable}

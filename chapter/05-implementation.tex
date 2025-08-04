@@ -1,4 +1,4 @@
-In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous chapters. The complete implementation and source code be found in the appendix \ref{chapter:appendix}.
+In this section we break down the implementation of the system into its core components, following the methodology and requirements outlined in the previous chapters. The complete implementation and source code can be found in the Appendix \ref{chapter:appendix}.
 
 The resulting prototype consists of two main components. The \textbf{APR Core} which holds the core logic for the repair process and a \textbf{CI pipeline} which integrates the APR core logic within a GitHub repository. The \ac{CI} pipeline serves as an entry point and orchestrates the execution of the APR Core based on configured trigger events in the repository.
 
@@ -150,19 +150,18 @@ Figure \ref{fig:ci} visualizes an overview of the workflow and its functionality
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/flowcharts/ci.png}
-    \caption{CI Pipeline, Source: screenshot}
+    \caption{CI pipeline, Source: screenshot}
     \label{fig:ci}
 \end{figure}
 
 To use this integration in a repository, the workflow file must be placed in the ``.github/workflows'' directory of the repository along with ``filter\_issues.py'' in ``.github/scripts''. With this in place, an ``LLM\_API\_KEY'' must be set as a secret in the repository settings. This key is used by the APR Core to authenticate with the configured \ac{LLM} provider API. Lastly, GitHub Actions must be granted permissions to create pull requests and write to issues in the repository. This is done by setting the workflow permissions in the repository settings under Actions > General > Workflow permissions. Detailed setup instructions can be found in the repository listed in the Appendix \ref{chapter:appendix}
 
 \section{System Configuration}
-%TODO add  collision avoidance
 To make the system easily adjustable, the APR Core and the \ac{CI} pipeline can be configured using a YAML configuration file. This configuration is optional, when no configuration is provided, the system falls back to a default setup. A custom configuration must be named ``bugfix.yml'' and placed at the root of the repository. A placed configuration is read by system components during execution. This setup allows for easy customization of the systems behavior without modifying the underlying code. Table \ref{table:configuration} lists the available configuration fields along with their descriptions.
 
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{@{\extracolsep{\fill}} p{3.5cm} | p{11cm} @{}}
-    \caption{Configuration Fields and Descriptions} \label{table:configuration}             \\
+    \caption{Configuration fields and descriptions} \label{table:configuration}             \\
     \toprule
     \textbf{Configuration Field} & \textbf{Description}                                     \\
     \midrule
@@ -191,7 +190,7 @@ This section demonstrates how the prototype satisfies the functional and non-fun
 
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{@{\extracolsep{\fill}} p{0.5cm} | p{3.5cm} | p{1.5cm} | p{6cm} @{}}
-    \caption{Requirement Satisfaction and Validation} \label{tab:req-validation}                                                                                                                                                                      \\
+    \caption{Requirement satisfaction and validation} \label{tab:req-validation}                                                                                                                                                                      \\
     \hline
     \textbf{ID} & \textbf{Title}                      & \textbf{Satisfied} & \textbf{Verification / Reference}                                                                                                                                        \\
     \hline
@@ -334,7 +333,7 @@ root - INFO - [localize] LLM response: ["next_palindrome.py"]
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{images/verification/artifacts.png}
-    \caption{Downloadable Artifacts from workflow run, Source: screenshot}
+    \caption{Downloadable artifacts from workflow run, Source: screenshot}
     \label{fig:logs-artifacts}
 \end{figure}
 
